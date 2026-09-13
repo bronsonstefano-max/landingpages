@@ -1,0 +1,18 @@
+# Netlify cache headers.
+#
+# assets/ holds the hero photo — long-lived. If you swap the photo, either
+# change its filename or drop this max-age, or returning visitors will keep
+# the old one.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# js/ deliberately gets a SHORT lifetime, not a year: js/config.js is the
+# file you edit to change the phone number, brand name, and claims. An
+# immutable year-long cache would strand returning visitors on a stale
+# phone number, which costs far more than the few KiB saved.
+/js/*
+  Cache-Control: public, max-age=86400
+
+# HTML must always revalidate so copy/markup edits go live immediately.
+/*
+  Cache-Control: public, max-age=0, must-revalidate

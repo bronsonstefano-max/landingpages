@@ -61,7 +61,7 @@ business. Before launch:
   "Appliance Helpers".
 - The Company/Disclaimer sections in the footer are always expanded —
   not togglable `<details>` accordions — at the user's request. They're
-  plain `.footer-accordion` blocks in `index.html`/`css/styles.css`; the
+  plain `.footer-accordion` blocks in `index.html`; the
   class name is a holdover from when they were collapsible.
 - The footer's Company links (About Us, Privacy Policy, How It Works,
   Terms of Service, Contact Us, Do Not Sell My Info) point to `#` —
@@ -70,20 +70,75 @@ business. Before launch:
 
 ## Stack
 
-Plain HTML, CSS, and vanilla JavaScript, plus one Google Font (Poppins,
-loaded with `font-display: swap`) to match the reference's bold/rounded
-headline typography. No framework, no build step, no npm dependencies.
+Plain HTML, CSS, and vanilla JavaScript. No framework, no build step, no
+npm dependencies, and **no third-party requests at all** — the page loads
+entirely from its own origin.
 
 ```
-index.html        Page markup and copy
-css/styles.css     Design system + all styling
+index.html        Page markup AND the stylesheet (inlined — see Performance)
 js/config.js       Centralized business config (phone, brand, claims, rating)
 js/main.js         Injects config into the DOM, syncs <title>/meta, renders
                     the star rating, drives the scroll-triggered sticky
                     call bar, and pushes a dataLayer event on call clicks
 assets/            Hero photo (WebP)
+assets/fonts/      Self-hosted Poppins (latin subset) + its OFL license
+_headers            Netlify cache lifetimes
 robots.txt          Allow-all crawling
 ```
+
+> **Where's the CSS?** There is no `css/styles.css` anymore. The
+> stylesheet is inlined in a single `<style>` block in `index.html` to
+> remove a render-blocking round trip. There's no build step, so that
+> block *is* the stylesheet — edit it directly.
+
+## Performance
+
+PageSpeed (mobile, Slow 4G) originally reported FCP 2.4s / LCP 2.6s. The
+work done to fix that:
+
+| Change | Why |
+| --- | --- |
+| Inlined the stylesheet | It was render-blocking; PageSpeed measured 210ms |
+| Self-hosted Poppins | The Google Fonts CSS was render-blocking for **750ms**, and pulled in two third-party origins |
+| Cut 5 font weights to 3 | Each weight is a separate file; 500 and 600 were used once each, remapped to 400/700 |
+| Hero photo 1670px → 800px wide | It displays at 360 CSS px. 98 KiB → 25 KiB, and it's the LCP element |
+| Preloaded the hero photo | Starts the LCP request in the first bytes of the document |
+| `defer` on both scripts | Fetch during parse instead of blocking it |
+| `min-height` on the star rating | It was empty until JS filled it, shifting the hero down |
+
+Measured locally under Lighthouse's Slow 4G profile (1.6 Mbps, 150ms RTT,
+4x CPU throttle), median of 3 runs:
+
+```
+before   FCP 1.21s   LCP 1.24s   9 requests
+after    FCP 0.44s   LCP 0.68s   7 requests, 0 third-party
+```
+
+Those absolute numbers are lower than PageSpeed's because a local server
+has effectively no TTFB — trust the *relative* improvement (~64% FCP,
+~45% LCP) and re-run PageSpeed after deploying to confirm.
+
+Two things deliberately *not* done:
+- **`font-display: optional`** would guarantee zero font-related layout
+  shift, but only bought ~40ms of LCP while costing first-visit mobile
+  visitors the brand typeface entirely. Kept `swap`.
+- **Font preloading** made things *worse* (FCP 0.44s → 0.56s): because
+  the CSS is inlined, `@font-face` is discovered immediately anyway, so
+  the preloads only competed with the LCP image for bandwidth.
+
+### Side effect: a header overflow bug surfaced
+
+Self-hosting made Poppins load locally for the first time (the Google
+Fonts request had been silently failing in the dev sandbox, so every
+previous screenshot was actually the system fallback). Poppins renders
+about 20% wider — "(800) 555-5555" measures 165px in Poppins vs 137px in
+Arial — which pushed the header row (brand + phone, both `nowrap`) past
+the viewport and gave the page a horizontal scrollbar on phones.
+
+This was almost certainly already happening in production, since the live
+site did load Poppins. Fixed with two `max-width` tiers at the bottom of
+the stylesheet that scale the header and sticky bar down on narrow
+phones; verified clean at 320px, 360px and 390px.
 
 ## Editing business info
 
@@ -133,7 +188,7 @@ The hero illustration is absolutely positioned and anchored to the
 bottom of the dark hero section, then shifted down by 50% of its own
 height, so it always straddles the hero/white boundary regardless of
 viewport width. The following section reserves matching top padding
-(`--hero-overlap` in `css/styles.css`) so its text clears the bottom half
+(`--hero-overlap` in the inlined stylesheet) so its text clears the bottom
 of the image.
 
 ## Call tracking / analytics
@@ -176,7 +231,6 @@ python3 -m http.server 8080
 # open http://localhost:8080/
 ```
 
-No build step is required; any static file server works. (The Google
-Fonts request requires normal internet access — it degrades gracefully
-to the system font stack if blocked, as it is in some sandboxed/offline
-environments.)
+No build step is required; any static file server works. Everything the
+page needs — fonts included — is served from this directory, so it also
+works fully offline.
