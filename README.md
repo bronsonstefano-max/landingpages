@@ -44,16 +44,17 @@ adding that label next to the stars for credibility.
 
 Several lines mirror marketing claims from the reference design:
 **"Same & Next-Day Service Available"**, **"24-Hour Support 7 Days a
-Week"**, **"Certified Experts"**, **"Factory-Trained Technicians"**.
-These are factual claims about business operations and credentials, not
-just style — copying the wording doesn't make them true for this
-business. Before launch:
+Week"**, **"Certified Experts"**, **"Factory-Trained Technicians"**, and
+now also **"Available 24/7"** (the header badge added to match the
+reference's desktop layout). These are factual claims about business
+operations and credentials, not just style — copying the wording doesn't
+make them true for this business. Before launch:
 
 - Confirm each one is accurate, or edit/delete it.
-- All four are centralized as named strings in `js/config.js`
+- All five are centralized as named strings in `js/config.js`
   (`availabilityClaim`, `supportClaim`, `certifiedClaim`,
-  `factoryTrainedClaim`) so this is a one-line edit each, everywhere the
-  claim appears.
+  `factoryTrainedClaim`, `availabilityBadge`) so this is a one-line edit
+  each, everywhere the claim appears.
 - The footer's Disclaimer section has real, user-supplied legal copy (a
   referral-service disclaimer). It originally said "Appliance Helpers"
   while the rest of the site said "Appliance Wiz" — that mismatch is now
@@ -191,6 +192,46 @@ viewport width. The following section reserves matching top padding
 (`--hero-overlap` in the inlined stylesheet) so its text clears the bottom
 of the image.
 
+## Desktop: two-column layout with a sticky sidebar card
+
+At ≥960px, the services/benefits/brands/how-it-works content (previously
+four separate full-width sections) shares one `.content-grid`: a left
+column (`.content-main`) with everything stacked as before, and a right
+column (`.content-sidebar`) holding a single sticky photo+call card that
+stays pinned in view for the entire scroll through that content — matching
+the reference design's desktop layout. Below 960px, `.content-sidebar` is
+`display: none` and `.content-main`'s blocks just stack full-width,
+identical to how the page worked before this existed; the mobile sticky
+call bar and inline callouts already cover the same job there, so nothing
+was lost by not showing a second card.
+
+Two things worth knowing if you touch this:
+
+- **`align-items` on `.content-grid` is deliberately left at its default
+  (`stretch`), not `start`.** `start` was the first thing tried, and it
+  silently broke the sticky effect: it shrinks the sidebar's grid cell
+  down to the card's own short height, so the sticky card has nothing
+  left to stay pinned against once the (much taller) main column scrolls
+  past it — the card just scrolls away with everything else instead of
+  stopping. `stretch` makes the sidebar's grid cell match the main
+  column's full height, giving the sticky card room to actually stick.
+  This only showed up scrolled all the way down to the last section, not
+  at the top of the page, so it's an easy thing to reintroduce without
+  noticing.
+- The sidebar reuses the hero's own photo (`assets/appliance-technician-blue.webp`,
+  `alt=""` since it's decorative repetition of an image already described
+  once) rather than a second asset, matching the reference.
+
+## Desktop header: availability badge
+
+At ≥900px, a divider appears after the logo, then a pulsing-dot "Available
+24/7" badge (`data-cfg="availabilityBadge"`), then another divider before
+the phone number — matching the reference's desktop header. Below 900px
+the header is unchanged from before this existed (no badge, no dividers,
+dot sits after the phone number instead) — that layout went through two
+rounds of overflow debugging already, so it was left alone rather than
+folded into the new desktop treatment.
+
 ## Call tracking / analytics
 
 No tracking IDs are hardcoded or invented.
@@ -202,7 +243,8 @@ No tracking IDs are hardcoded or invented.
   Build a GTM trigger on that event — no code changes required.
 - Named call buttons have stable, unique `id`s: `header-call-button`,
   `hero-call-button`, `hero-phone-link`, `final-call-button`,
-  `mobile-sticky-call-button`. There is no footer call button — the
+  `mobile-sticky-call-button`, `sidebar-call-button` (desktop-only sticky
+  card). There is no footer call button — the
   footer no longer has a phone link at the user's request; the sticky
   mobile bar and the final CTA above the footer remain reachable. The
   service-list rows, brand-adjacent closing paragraphs, and callout links
