@@ -11,17 +11,19 @@
  *    to key off of. No tracking IDs are configured here; this only
  *    pushes an event if a dataLayer already exists.
  * 4. On the generic/national build of the page (config.city still the
- *    "[CITY]" placeholder), best-effort inserts the visitor's detected
- *    city into every [data-geo-location-prefix] element plus
- *    <title>/meta description ("{City} Appliance Repair"). Detection
- *    order: (a) the browser's own Geolocation API (GPS/Wi-Fi position),
- *    reverse-geocoded to a city name -- this is real city-accurate,
- *    since it doesn't depend on IP address registration; (b) if that's
- *    denied, unsupported, or fails, falls back to an IP-geolocation
- *    API's *region* (state/province), never its city guess, since
- *    IP-to-city is unreliable (see fallbackToIpRegion's comment).
- *    Silently does nothing further if both fail, geo is disabled, or
- *    config.city is already a real value -- see config.js's
+ *    "[CITY]" placeholder), best-effort inserts a per-visitor city into
+ *    every [data-geo-location-prefix] element plus <title>/meta
+ *    description ("{City} Appliance Repair"). Never prompts the visitor
+ *    for anything. Source, in order: (a) a `city` URL query parameter --
+ *    the accurate, zero-guesswork path, meant to be populated by the ad
+ *    campaign itself (e.g. a Google Ads Custom Parameter set per
+ *    location-targeted ad group, so the city comes from how the visitor
+ *    was targeted, not a runtime guess); (b) if that's absent, an
+ *    IP-geolocation API's *region* (state/province), never its city
+ *    guess, since IP-to-city is unreliable (see fallbackToIpRegion's
+ *    comment) -- covers direct/organic traffic with no city parameter.
+ *    Silently does nothing further if both are unavailable, geo is
+ *    disabled, or config.city is already a real value -- see config.js's
  *    geoCityEnabled comment.
  *
  * No dependencies, no build step.
@@ -148,106 +150,49 @@
       });
   }
 
-  // Reverse-geocodes the browser's actual GPS/Wi-Fi position into a city
-  // name via BigDataCloud's free, key-less, CORS-enabled endpoint made for
-  // exactly this client-side use case. This is what makes *city*-level
-  // accuracy possible at all -- it doesn't depend on IP address
-  // registration, so it isn't fooled by the neighboring-city problem that
-  // affects every IP-only approach.
-  function reverseGeocode(latitude, longitude) {
-    if (typeof fetch !== "function") {
-      fallbackToIpRegion();
-      return;
-    }
-
-    var controller = typeof AbortController === "function" ? new AbortController() : null;
-    var timeoutId = controller
-      ? setTimeout(function () {
-          controller.abort();
-        }, 3000)
-      : null;
-    var url =
-      "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" +
-      latitude +
-      "&longitude=" +
-      longitude +
-      "&localityLanguage=en";
-
-    fetch(url, { signal: controller ? controller.signal : undefined })
-      .then(function (res) {
-        return res.ok ? res.json() : null;
-      })
-      .then(function (data) {
-        if (timeoutId) clearTimeout(timeoutId);
-        var city = data && (data.city || data.locality);
-        if (!city) {
-          fallbackToIpRegion();
-          return;
-        }
-        applyLocationPrefix(city);
-        cacheLocation(city);
-      })
-      .catch(function () {
-        fallbackToIpRegion();
-      });
-  }
-
-  function attemptDeviceGeolocation() {
-    if (!("geolocation" in navigator)) {
-      fallbackToIpRegion();
-      return;
-    }
-
-    function requestPosition() {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          reverseGeocode(position.coords.latitude, position.coords.longitude);
-        },
-        function () {
-          // Permission denied, position unavailable, or timed out.
-          // Fall back to the (safe, region-only) IP-based guess rather
-          // than showing no personalization at all.
-          fallbackToIpRegion();
-        },
-        { timeout: 5000, maximumAge: 300000 }
-      );
-    }
-
-    // Checking permission state first (where supported) avoids a wasted
-    // round trip through getCurrentPosition's own async permission flow
-    // when we already know the answer -- doesn't change behavior, since
-    // getCurrentPosition would reach the same result, but avoids
-    // triggering it at all when the visitor has already said no.
-    if (navigator.permissions && typeof navigator.permissions.query === "function") {
-      navigator.permissions.query({ name: "geolocation" }).then(
-        function (status) {
-          if (status.state === "denied") {
-            fallbackToIpRegion();
-          } else {
-            requestPosition();
-          }
-        },
-        function () {
-          requestPosition();
-        }
-      );
-    } else {
-      requestPosition();
+  // Reads the city from a URL query parameter (?city=Cape+Coral by
+  // default -- the param name is configurable via geoCityUrlParam) rather
+  // than guessing it. This is meant to be populated by the ad campaign,
+  // not the visitor's browser: e.g. a Google Ads Custom Parameter set on
+  // each location-targeted ad group's Final URL, so the value reflects
+  // how the advertiser actually targeted that click, not an IP or device
+  // guess. Never prompts anyone for anything -- it's just reading text
+  // already present in the URL the visitor arrived on.
+  function getCityFromUrl() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var city = params.get(cfg.geoCityUrlParam || "city");
+      if (!city) return null;
+      city = city.trim();
+      // Guard against a malformed or absurdly long value ending up in a
+      // headline -- not a security concern (this is inserted via
+      // textContent, never HTML), just a sanity bound.
+      if (!city || city.length > 60) return null;
+      return city;
+    } catch (e) {
+      return null;
     }
   }
 
   function initGeoCity() {
     // A real configured city means this page is for one fixed service
-    // area -- show it immediately (no network call, no layout-shift
-    // risk) and skip detection entirely. See the long comment on
-    // geoCityEnabled in config.js for why these two are mutually
-    // exclusive rather than "static first, then upgrade to detected."
+    // area -- show it immediately (no lookup, no layout-shift risk) and
+    // skip everything else. See the long comment on geoCityEnabled in
+    // config.js for why these two are mutually exclusive rather than
+    // "static first, then upgrade to detected."
     if (!isPlaceholder(cfg.city)) {
       applyLocationPrefix(cfg.city);
       return;
     }
 
     if (cfg.geoCityEnabled === false) return;
+
+    var urlCity = getCityFromUrl();
+    if (urlCity) {
+      applyLocationPrefix(urlCity);
+      cacheLocation(urlCity);
+      return;
+    }
 
     var cachedLocation = null;
     try {
@@ -261,7 +206,10 @@
       return;
     }
 
-    attemptDeviceGeolocation();
+    // No campaign-supplied city and nothing cached from earlier in this
+    // session (e.g. direct/organic traffic with no ?city= parameter) --
+    // fall back to the region-only IP guess. Never prompts for anything.
+    fallbackToIpRegion();
   }
 
   function renderStarRating() {

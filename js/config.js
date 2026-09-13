@@ -55,28 +55,38 @@ window.SITE_CONFIG = {
   // misrepresent where the business actually works, not just be a missed
   // personalization.
   //
-  // Detects the visitor's city via the browser's own Geolocation API
-  // (GPS/Wi-Fi position, reverse-geocoded to a city name) -- not IP
-  // address lookup. Real GPS/Wi-Fi position is what makes city-level
-  // accuracy possible at all: IP-to-city geolocation is unreliable
-  // because ISPs register address blocks against a regional hub rather
-  // than the subscriber's actual address, so a smaller city routinely
-  // gets attributed to a larger neighboring one (e.g. a Cape Coral
-  // visitor reported as "Fort Myers"), especially on mobile carriers.
-  // That's true of every IP geolocation provider, so there's no
-  // "better API" fix at the city level. If the visitor denies the
-  // location permission prompt, or the browser doesn't support it, this
-  // falls back to `geoCityApiUrl` below for a *region*-only guess
-  // (state/province, e.g. "Florida Appliance Repair") -- IP geolocation
-  // is reliably accurate at that broader level, so the fallback never
-  // repeats the wrong-city problem.
+  // Never asks the visitor for anything -- no location permission prompt.
+  // The city comes from a `city` URL query parameter (name configurable
+  // below via geoCityUrlParam), which the *ad campaign* is meant to set,
+  // not the browser: add a Custom Parameter to each location-targeted
+  // Google Ads ad group's Final URL (e.g. Final URL
+  // `https://yoursite.com/?city={_city}` with a per-ad-group Custom
+  // Parameter `_city` set to a literal city name like "Cape Coral"). This
+  // is how city-accurate ad landing pages are done in practice -- the
+  // advertiser already knows which city each ad group targets, so
+  // there's nothing to guess and nothing to detect. It's also exactly
+  // how competitor sites that show a consistently correct city are
+  // doing it: per-city ad targeting or per-city URLs decided before the
+  // page ever loads, not client-side geolocation.
+  //
+  // If a visitor arrives with no `city` parameter (organic/direct
+  // traffic, or ad groups not yet set up with one), this falls back to
+  // `geoCityApiUrl` below for a *region*-only IP-geolocation guess
+  // (state/province, e.g. "Florida Appliance Repair") -- never a city
+  // guess, since IP-to-city is unreliable: ISPs register address blocks
+  // against a regional hub rather than the subscriber's actual address,
+  // so a smaller city routinely gets attributed to a larger neighboring
+  // one (e.g. a Cape Coral visitor reported as "Fort Myers"), especially
+  // on mobile carriers. That's true of every IP geolocation provider,
+  // not just this one -- there's no "better API" fix at the city level
+  // from IP alone, which is exactly why this feature no longer tries.
   //
   // Read the README's "Dynamic city insertion" section before enabling
-  // this in production -- it covers the location-permission prompt this
-  // shows visitors, the third-party privacy implications (both the
-  // browser's own location provider and the reverse-geocoding API see
-  // the visitor's coordinates), the layout-shift trade-off, and why none
-  // of this could be tested end-to-end from this development environment.
+  // this in production -- it covers setting up the Google Ads Custom
+  // Parameter, the third-party privacy implication of the IP-region
+  // fallback, the layout-shift trade-off, and why the IP fallback could
+  // not be tested end-to-end from this development environment.
   geoCityEnabled: true,
+  geoCityUrlParam: "city",
   geoCityApiUrl: "https://ipapi.co/json/",
 };
