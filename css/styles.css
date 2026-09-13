@@ -30,7 +30,11 @@
   --fs-xl: clamp(1.375rem, 1.25rem + 0.7vw, 1.75rem);
   --fs-2xl: clamp(1.75rem, 1.5rem + 1.4vw, 2.375rem);
 
-  --hero-overlap: 72px;
+  /* Half the hero illustration's typical rendered height, plus a visible
+     breathing-room gap on each side of the dark/white seam it straddles. */
+  --hero-visual-half: 105px;
+  --hero-visual-gap: 40px;
+  --hero-overlap: calc(var(--hero-visual-half) + var(--hero-visual-gap));
 
   /* Spacing scale */
   --space-1: 0.25rem;
@@ -372,7 +376,7 @@ button {
   background-color: var(--color-ink);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg stroke='%23ffffff' stroke-opacity='0.05' fill='none'%3E%3Cpath d='M-20 30 Q 40 -10 100 30 T 220 30 T 340 30'/%3E%3Cpath d='M-20 90 Q 40 50 100 90 T 220 90 T 340 90'/%3E%3Cpath d='M-20 150 Q 40 110 100 150 T 220 150 T 340 150'/%3E%3Cpath d='M-20 210 Q 40 170 100 210 T 220 210 T 340 210'/%3E%3C/g%3E%3C/svg%3E");
   color: #ffffff;
-  padding-block: var(--space-8) calc(var(--space-5) + var(--hero-overlap));
+  padding-block: var(--space-8) var(--hero-overlap);
   text-align: center;
   overflow: visible;
 }
