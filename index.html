@@ -435,6 +435,12 @@ button {
   font-size: var(--fs-base);
 }
 
+/* Bumped up specifically in the header -- the hero/final-CTA reuses of
+   this class already sit at a larger size in their own context. */
+.header-phone .header-phone-number {
+  font-size: var(--fs-md);
+}
+
 .header-online-dot {
   position: relative;
   width: 8px;
@@ -1044,7 +1050,7 @@ button {
     font-size: 0.875rem;
   }
 
-  .header-phone-number {
+  .header-phone .header-phone-number {
     font-size: 0.875rem;
   }
 
@@ -1066,7 +1072,7 @@ button {
   }
 
   .brand-name,
-  .header-phone-number {
+  .header-phone .header-phone-number {
     font-size: 0.8125rem;
   }
 
