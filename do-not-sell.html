@@ -1389,13 +1389,15 @@ button {
         </div>
 
         <!--
-          No backend is wired up yet -- this is a static site with no
-          server. Submitting this form right now does nothing. Point
-          `action` at a real endpoint (a form-handling service like
-          Formspree, a serverless function, or your CRM's intake API)
-          before launch. Do not fake a success message here: this is a
-          legal-compliance request form, and a visitor needs to actually
-          know whether their request went through.
+          Submission is handled by the inline script at the bottom of
+          this file, which posts to SITE_CONFIG.doNotSellSheetEndpoint
+          (js/config.js) -- a Google Apps Script Web App URL that appends
+          each submission as a row in a Google Sheet. `action="#"` below
+          is just the no-JS fallback; see the README's "Do Not Sell form
+          backend" section for the exact script to deploy. Left blank,
+          the static note after this form (not the fake-success kind --
+          a visitor filing a legal CCPA request needs to actually know
+          whether it went through) stays visible instead of submitting.
         -->
         <form class="ccpa-form" action="#" method="post">
           <div class="form-field">
@@ -1493,5 +1495,60 @@ button {
 
   <script src="js/config.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script defer>
+    // Submits the CCPA form to SITE_CONFIG.doNotSellSheetEndpoint (a
+    // Google Apps Script Web App URL) instead of navigating -- see the
+    // README's "Do Not Sell form backend" section for how to deploy one.
+    // Page-specific, so it lives here rather than in the shared
+    // js/main.js loaded by all four pages.
+    document.addEventListener("DOMContentLoaded", function () {
+      var form = document.querySelector(".ccpa-form");
+      var note = document.querySelector(".ccpa-form-note");
+      var submitButton = form.querySelector('button[type="submit"]');
+      var cfg = window.SITE_CONFIG || {};
+      var endpoint = cfg.doNotSellSheetEndpoint || "";
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (!endpoint) return; // the static note already explains why
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Submitting...";
+
+        var formData = new FormData(form);
+        if (cfg.doNotSellSheetToken) {
+          formData.append("token", cfg.doNotSellSheetToken);
+        }
+
+        // mode: "no-cors" is required -- Apps Script Web Apps don't send
+        // CORS headers back. The POST still reaches the script and the
+        // row still gets appended; we just can't read a response back,
+        // so this can't tell a working submission apart from one hitting
+        // a broken or misconfigured endpoint. Confirm end-to-end against
+        // the real deployed URL once you have one.
+        fetch(endpoint, { method: "POST", mode: "no-cors", body: formData })
+          .then(function () {
+            // .hidden alone isn't enough here: .ccpa-form's own CSS sets
+            // display: grid, which overrides the browser's default
+            // [hidden] { display: none } rule (author styles win over
+            // the user-agent stylesheet regardless of the hidden
+            // attribute). Set display explicitly instead.
+            form.style.display = "none";
+            if (note) {
+              note.textContent =
+                "Thanks — we've received your request and will follow up shortly.";
+            }
+          })
+          .catch(function () {
+            submitButton.disabled = false;
+            submitButton.textContent = "Submit";
+            if (note) {
+              note.textContent =
+                "Something went wrong sending your request. Please call us instead.";
+            }
+          });
+      });
+    });
+  </script>
 </body>
 </html>

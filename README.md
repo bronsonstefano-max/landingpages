@@ -86,7 +86,8 @@ index.html         Main landing page. Markup AND the stylesheet (inlined
 about-us.html       Secondary page (footer "About Us" link)
 how-it-works.html   Secondary page (footer "How It Works" link)
 do-not-sell.html    Secondary page (footer "Do Not Sell My Info" link) --
-                    CCPA request form, not yet wired to a backend
+                    CCPA request form, submits to Google Sheets via Apps
+                    Script once doNotSellSheetEndpoint is set (see below)
 js/config.js        Centralized business config (phone, brand, claims, rating)
 js/main.js          Injects config into the DOM, syncs <title>/meta, renders
                     the star rating, drives the scroll-triggered sticky
@@ -296,15 +297,94 @@ pages can't drift out of sync with it. If you add a fourth or fifth
 secondary page, consider extracting a shared `css/pages.css` instead of
 copying the block a third time.
 
-**`do-not-sell.html`'s CCPA request form is not wired to anything yet.**
-It's a plain `<form action="#" method="post">` with the seven fields the
-user specified (Name, Email, State, Street Address, City, Zip Code,
-Message) and a Submit button — submitting it right now does nothing.
-Before launch, point `action` at a real endpoint: a form-handling service
-(Formspree, etc.), a serverless function, or your CRM's intake API.
-Deliberately not faked with a JS success message — a visitor filing a
-legal CCPA request needs to actually know whether it went through, not
-be told it did when it didn't.
+## Do Not Sell form backend
+
+`do-not-sell.html`'s CCPA request form (Name, Email, State, Street
+Address, City, Zip Code, Message) submits to a Google Sheet via Google
+Apps Script — no third-party service, no server of our own, and the data
+lands directly in a spreadsheet you own. This is a Google-account setup
+step that has to happen in your own account (nothing here can create or
+authorize it remotely), but it's about five minutes:
+
+1. **Create a blank Google Sheet.** Name it whatever you like. In row 1,
+   add headers so the data's readable later: `Timestamp | Name | Email |
+   State | Street Address | City | Zip Code | Message`.
+2. **Extensions → Apps Script.** Delete the placeholder code and paste
+   this in:
+
+   ```javascript
+   // Optional: set this to any secret string, and set the same value as
+   // doNotSellSheetToken in js/config.js, to reject submissions that
+   // don't include it. Leave blank to skip the check entirely.
+   var SHARED_TOKEN = "";
+
+   function doPost(e) {
+     var params = e.parameter;
+
+     if (SHARED_TOKEN && params.token !== SHARED_TOKEN) {
+       return ContentService
+         .createTextOutput(JSON.stringify({ result: "error", message: "invalid token" }))
+         .setMimeType(ContentService.MimeType.JSON);
+     }
+
+     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+     sheet.appendRow([
+       new Date(),
+       params.name || "",
+       params.email || "",
+       params.state || "",
+       params.street_address || "",
+       params.city || "",
+       params.zip_code || "",
+       params.message || "",
+     ]);
+
+     return ContentService
+       .createTextOutput(JSON.stringify({ result: "success" }))
+       .setMimeType(ContentService.MimeType.JSON);
+   }
+   ```
+
+3. **Deploy → New deployment → type "Web app".** Execute as **Me**; who
+   has access **Anyone**. (This has to be "Anyone" for the visitor's
+   browser to reach it — the URL is what's protected, not the sheet
+   itself. The sheet's actual contents are only visible to whoever you
+   share the sheet with, same as any other Google Sheet. See the caveat
+   below about that public-URL trade-off.)
+4. Click **Deploy**, and click through Google's "this app isn't
+   verified" warning — expected for a script you just wrote yourself in
+   your own account. Google will ask you to authorize it (it needs
+   permission to write to your own Sheet).
+5. Copy the resulting Web App URL (it ends in `/exec`).
+6. Paste that URL into `doNotSellSheetEndpoint` in `js/config.js`. That's
+   the only code change needed — the form's submit handler (an inline
+   `<script>` at the bottom of `do-not-sell.html`) already checks for it
+   and posts there instead of showing the "not yet connected" note.
+
+Two trade-offs worth knowing about this approach:
+
+- **The Web App URL itself isn't secret** — anyone who discovers it can
+  POST a row to your sheet, since "Anyone" access is required for a
+  visitor's browser (not logged into your Google account) to reach it at
+  all. `SHARED_TOKEN` in the script above, paired with
+  `doNotSellSheetToken` in `config.js`, is a cheap deterrent (a
+  visitor's browser sends it as a hidden field) — not real security,
+  since anyone who views the page source can read it too, but enough to
+  stop opportunistic spam against a leaked or guessed URL. For anything
+  more sensitive than a CCPA contact form, use a real backend instead.
+- **The client can't tell success from failure.** Apps Script Web Apps
+  don't return CORS headers, so the form submits with `fetch(..., {mode:
+  "no-cors"})` — this still delivers the row, but the browser can't read
+  a response back, so the same "thanks, we got it" message shows whether
+  the row was appended or the URL is broken. Test the deployed URL for
+  real (submit the form, check the sheet) after setup, and periodically
+  afterward — nothing here would surface a silent failure.
+
+Until `doNotSellSheetEndpoint` is set, the form shows its "not yet
+connected" note instead of submitting anywhere — deliberately not faked
+with a JS success message, since a visitor filing a legal CCPA request
+needs to actually know whether it went through, not be told it did when
+it didn't.
 
 ## Call tracking / analytics
 
