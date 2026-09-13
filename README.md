@@ -1,95 +1,123 @@
-# General Appliance Repair Landing Page
+# Appliance Wiz — Appliance Repair Landing Page
 
-A single, dependency-free landing page built as a phone-call funnel for
+A single, dependency-light landing page built as a phone-call funnel for
 Google Search Ads traffic:
 
 `Google Search → Landing Page → Phone Call → Lead`
 
+## Design basis
+
+This page's **structure and visual language** (section order, dark hero
+with a light contour-line texture, blue pill CTA with a trailing circular
+arrow icon, dashed-divider service list, gray callout boxes, two-column
+brand list, split bold/regular section headings) were modeled closely on
+screenshots of appliance-pros.com's mobile page, at the user's request.
+
+What was **not** copied: their actual HTML/CSS, their stock technician
+photo (replaced with an original flat-illustration), their exact color
+values (recreated independently to the same visual effect), and their
+longer body paragraphs (paraphrased in original wording — same message,
+length, and position, different sentences). Short labels, benefit
+headings, and the service/brand category names are generic industry
+terms and are reused as-is.
+
+The FAQ, final-CTA, and footer sections are original — the reference
+screenshots didn't extend that far down the page, so there was nothing to
+model there.
+
+## ⚠️ Claims to verify before launch
+
+Several lines mirror marketing claims from the reference design:
+**"Same & Next-Day Service Available"**, **"24-Hour Support 7 Days a
+Week"**, **"Certified Experts"**, **"Factory-Trained Technicians"**.
+These are factual claims about business operations and credentials, not
+just style — copying the wording doesn't make them true for this
+business. Before launch:
+
+- Confirm each one is accurate, or edit/delete it.
+- All four are centralized as named strings in `js/config.js`
+  (`availabilityClaim`, `supportClaim`, `certifiedClaim`,
+  `factoryTrainedClaim`) specifically so this is a one-line edit each,
+  everywhere the claim appears.
+
+No fabricated review counts, star ratings, or badges were added — the
+reference's 4.5-star graphic was deliberately not replicated, since
+displaying a rating implies real aggregated review data this business
+doesn't have.
+
 ## Stack
 
-Plain HTML, CSS, and vanilla JavaScript. No framework, no build step, no
-npm dependencies. This was a deliberate choice: the repository was empty
-when this page was built, so there was no existing architecture to extend,
-and a call-funnel landing page's top priorities (load speed, reliability,
-zero dependency risk) are best served by static files that any static
-host (Netlify, Vercel, S3/CloudFront, GitHub Pages, etc.) can serve as-is.
+Plain HTML, CSS, and vanilla JavaScript, plus one Google Font (Poppins,
+loaded with `font-display: swap`) to match the reference's bold/rounded
+headline typography. No framework, no build step, no npm dependencies.
 
 ```
 index.html        Page markup and copy
 css/styles.css     Design system + all styling
-js/config.js       Centralized business config (phone, brand, location)
+js/config.js       Centralized business config (phone, brand, claims)
 js/main.js         Injects config into the DOM, syncs <title>/meta, and
                     pushes a dataLayer event on call-button clicks
 robots.txt          Allow-all crawling
 ```
 
-## Editing business info (do this before launch)
+## Editing business info
 
-Everything visitor-facing that's business-specific is a bracketed
-placeholder, and every one of them is driven from **`js/config.js`**:
+Every phone number, brand mention, and claim string is driven from
+**`js/config.js`**:
 
 ```js
 window.SITE_CONFIG = {
-  brandName: "[BRAND NAME]",
-  phoneDisplay: "[PHONE NUMBER]",   // e.g. "(555) 123-4567"
-  phoneHref: "tel:[PHONE NUMBER]",  // e.g. "tel:+15551234567"
+  brandName: "Appliance Wiz",
+  phoneDisplay: "(800) 555-5555",
+  phoneHref: "tel:+18005555555",
   city: "[CITY]",
   state: "[STATE]",
-  serviceArea: "[SERVICE AREA]",    // e.g. "the Greater Springfield Area"
-  hours: "[HOURS]",                 // e.g. "Mon–Sat, 8AM–7PM"
+  serviceArea: "[SERVICE AREA]",
+  hours: "[HOURS]",
+  availabilityClaim: "Same & Next-Day Service Available",
+  supportClaim: "24-Hour Support 7 Days a Week",
+  certifiedClaim: "Certified Experts",
+  factoryTrainedClaim: "Factory-Trained Technicians",
 };
 ```
 
-Update these six values and every phone number, brand mention, and
-location reference across the page updates automatically (header, hero,
-appliance cards, footer, mobile sticky bar, FAQ answers, etc. — anything
-tagged `data-cfg`/`data-cfg-href` in `index.html`).
+Update these and every mention across the page updates automatically via
+`data-cfg`/`data-cfg-href` attributes in `index.html`.
 
-The `<title>` and meta description in `index.html`'s `<head>` also contain
-the same bracketed placeholders as static text (for crawlers/ad reviewers
-that don't execute JavaScript) and are additionally synced at runtime from
-`config.js` by `main.js`. **When you set real values, update both** —
-`config.js` for the live page, and the literal text in `index.html`'s
-`<head>` so the correct title/description are present on first byte.
-
-## Localization (future city pages)
-
-The page is structured so a new city/brand variant is just: copy
-`index.html` + `config.js` into a new folder, update the six config
-values, update the `<title>`/meta placeholders to match, done. No other
-code changes are needed. This intentionally does **not** build out
-multiple city pages now — only the infrastructure to do so later.
+The `<title>` and meta description in `index.html`'s `<head>`, and the
+`tel:+18005555555` values hardcoded as the no-JS fallback on every call
+link, should also be updated to match if the phone number changes —
+`main.js` syncs `<title>`/meta and every `data-cfg-href` at runtime, but
+the raw HTML should stay correct for crawlers and ad reviewers that don't
+execute JavaScript.
 
 ## Call tracking / analytics
 
-No tracking IDs are hardcoded or invented. To wire up tracking:
+No tracking IDs are hardcoded or invented.
 
-- Add your GTM container snippet or `gtag.js` in the `<head>` comment
-  block in `index.html` marked "Analytics / tag manager placeholder."
-- `js/main.js` already pushes `{ event: "phone_call_click", call_source: ... }`
+- Add a GTM container snippet or `gtag.js` in the `<head>` comment block
+  in `index.html` marked "Analytics / tag manager placeholder."
+- `js/main.js` pushes `{ event: "phone_call_click", call_source: ... }`
   to `window.dataLayer` on every `tel:` link click, if a dataLayer exists.
   Build a GTM trigger on that event — no code changes required.
-- Every call button has a stable, unique `id` for direct GA4/Ads event
-  binding: `header-call-button`, `hero-call-button`,
-  `appliance-call-button-{refrigerator|freezer|washer|dryer|dishwasher|oven|stove|range}`,
-  `final-call-button`, `footer-call-button`, `mobile-sticky-call-button`.
-- All `tel:` links additionally share the selector `a[href^="tel:"]` if a
-  call-tracking platform (e.g. dynamic number insertion) needs to rewrite
-  every phone link at once.
+- Named call buttons have stable, unique `id`s: `header-call-button`,
+  `hero-call-button`, `hero-phone-link`, `final-call-button`,
+  `footer-call-button`, `mobile-sticky-call-button`. The 18 service-list
+  rows and the 2 gray callout links share `data-call-source` values
+  (`service-list`, `callout-1`, `callout-2`) instead of unique IDs, since
+  they're identical in intent.
+- Every `tel:` link shares the selector `a[href^="tel:"]` for any
+  call-tracking platform that needs to rewrite phone numbers site-wide
+  (e.g. dynamic number insertion).
 
-## What's intentionally NOT included
-
-Per the build brief, nothing here fabricates trust signals:
+## What's intentionally not included
 
 - No reviews, star ratings, testimonials, or customer counts.
 - No BBB/certification/award badges.
-- No claims of 24/7 availability, same-day service, or licensing —
-  add these only once they're true and you're ready to state them.
 - No `LocalBusiness` structured data — add it once a real business name,
-  address, and phone number exist; fake structured data violates
-  Google's guidelines and this page has no real data yet.
-- No canonical URL — add `<link rel="canonical">` in `index.html`'s
-  `<head>` once the page has a real deployed domain.
+  address, and phone number exist.
+- No canonical URL — add `<link rel="canonical">` once deployed to a
+  real domain.
 
 ## Local preview
 
@@ -98,4 +126,7 @@ python3 -m http.server 8080
 # open http://localhost:8080/
 ```
 
-No build step is required; any static file server works.
+No build step is required; any static file server works. (The Google
+Fonts request requires normal internet access — it degrades gracefully
+to the system font stack if blocked, as it is in some sandboxed/offline
+environments.)
