@@ -1508,6 +1508,14 @@ button {
       var cfg = window.SITE_CONFIG || {};
       var endpoint = cfg.doNotSellSheetEndpoint || "";
 
+      // The "not yet connected" text in the static HTML is only correct
+      // when doNotSellSheetEndpoint is blank -- hide it once a real
+      // endpoint is configured. The submit handler below un-hides it to
+      // show a success/error message after an actual attempt.
+      if (endpoint && note) {
+        note.hidden = true;
+      }
+
       form.addEventListener("submit", function (event) {
         event.preventDefault();
         if (!endpoint) return; // the static note already explains why
@@ -1535,6 +1543,7 @@ button {
             // attribute). Set display explicitly instead.
             form.style.display = "none";
             if (note) {
+              note.hidden = false;
               note.textContent =
                 "Thanks — we've received your request and will follow up shortly.";
             }
@@ -1543,6 +1552,7 @@ button {
             submitButton.disabled = false;
             submitButton.textContent = "Submit";
             if (note) {
+              note.hidden = false;
               note.textContent =
                 "Something went wrong sending your request. Please call us instead.";
             }
