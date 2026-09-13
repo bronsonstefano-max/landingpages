@@ -12,10 +12,15 @@
  *    pushes an event if a dataLayer already exists.
  * 4. On the generic/national build of the page (config.city still the
  *    "[CITY]" placeholder), best-effort inserts the visitor's
- *    IP-detected city into every [data-geo-city-prefix] element plus
- *    <title>/meta description ("{City} Appliance Repair"). Silently
- *    does nothing if the lookup fails, is disabled, or config.city is
- *    already a real value -- see config.js's geoCityEnabled comment.
+ *    IP-detected *region* (state/province -- not the city) into every
+ *    [data-geo-location-prefix] element plus <title>/meta description
+ *    ("{Region} Appliance Repair"). Region, not city: IP geolocation
+ *    reliably narrows down to a region but frequently attributes a
+ *    smaller city to a larger neighboring one (e.g. a Cape Coral visitor
+ *    shown as Fort Myers), which reads as a wrong, oddly specific claim.
+ *    Region-level accuracy doesn't have that failure mode. Silently does
+ *    nothing if the lookup fails, is disabled, or config.city is already
+ *    a real value -- see config.js's geoCityEnabled comment.
  *
  * No dependencies, no build step.
  */
@@ -71,15 +76,15 @@
     return !value || /^\[.*\]$/.test(value);
   }
 
-  function applyCityPrefix(city) {
-    if (!city) return;
+  function applyLocationPrefix(location) {
+    if (!location) return;
 
-    document.querySelectorAll("[data-geo-city-prefix]").forEach(function (el) {
-      el.textContent = city + " ";
+    document.querySelectorAll("[data-geo-location-prefix]").forEach(function (el) {
+      el.textContent = location + " ";
     });
 
     if (cfg.brandName) {
-      document.title = city + " Appliance Repair | " + cfg.brandName;
+      document.title = location + " Appliance Repair | " + cfg.brandName;
     }
 
     var metaDescription = document.querySelector('meta[name="description"]');
@@ -88,7 +93,7 @@
         "content",
         cfg.brandName +
           " provides " +
-          city +
+          location +
           " appliance repair — refrigerators, washers, dryers, dishwashers, ovens, and more. Call " +
           cfg.phoneDisplay +
           " to get help fast."
@@ -103,7 +108,7 @@
     // geoCityEnabled in config.js for why these two are mutually
     // exclusive rather than "static first, then upgrade to detected."
     if (!isPlaceholder(cfg.city)) {
-      applyCityPrefix(cfg.city);
+      applyLocationPrefix(cfg.city);
       return;
     }
 
@@ -111,15 +116,15 @@
       return;
     }
 
-    var cachedCity = null;
+    var cachedRegion = null;
     try {
-      cachedCity = sessionStorage.getItem("geoCityDetected");
+      cachedRegion = sessionStorage.getItem("geoRegionDetected");
     } catch (e) {
       /* sessionStorage unavailable (private browsing, locked-down
          browser settings, etc.) -- just skip caching, not fatal. */
     }
-    if (cachedCity) {
-      applyCityPrefix(cachedCity);
+    if (cachedRegion) {
+      applyLocationPrefix(cachedRegion);
       return;
     }
 
@@ -136,11 +141,17 @@
       })
       .then(function (data) {
         if (timeoutId) clearTimeout(timeoutId);
-        var city = data && data.city;
-        if (!city) return;
-        applyCityPrefix(city);
+        // Use the region (state/province), not the city: IP geolocation
+        // is reliably accurate at region level, but routinely attributes
+        // a smaller city to a larger neighboring one -- e.g. a Cape Coral
+        // visitor gets shown as Fort Myers, a Wellington visitor as Royal
+        // Palm Beach. That reads as a specific, wrong claim. A region is
+        // broad enough to virtually never be wrong.
+        var region = data && data.region;
+        if (!region) return;
+        applyLocationPrefix(region);
         try {
-          sessionStorage.setItem("geoCityDetected", city);
+          sessionStorage.setItem("geoRegionDetected", region);
         } catch (e) {
           /* no caching this visit -- not fatal */
         }

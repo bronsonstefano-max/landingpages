@@ -44,16 +44,23 @@ window.SITE_CONFIG = {
   // it reflects actual aggregated review data — never a placeholder value.
   ratingValue: 4.5,
 
-  // Dynamic per-visitor city insertion ("{City} Appliance Repair" in the
-  // H1, the sidebar card heading, the final CTA heading, <title>, and the
-  // meta description). Uses a third-party IP-geolocation API, so it only
-  // ever runs when `city` above is still the "[CITY]" placeholder --
+  // Dynamic per-visitor location insertion ("{Region} Appliance Repair" in
+  // the H1, the sidebar card heading, the final CTA heading, <title>, and
+  // the meta description). Uses a third-party IP-geolocation API, so it
+  // only ever runs when `city` above is still the "[CITY]" placeholder --
   // i.e. this is the generic/national version of the page. If `city` is
   // set to a real value instead (a single-location business), that
   // static city is shown immediately and this whole feature is skipped:
   // showing a Chicago visitor "Chicago Appliance Repair" on a page for a
   // business that only serves Springfield would misrepresent where the
   // business actually works, not just be a missed personalization.
+  //
+  // This inserts the visitor's *region* (state/province), not their city.
+  // IP geolocation is reliably accurate down to region level, but at city
+  // level it routinely attributes a smaller city to a larger neighboring
+  // one (e.g. a Cape Coral visitor shown as "Fort Myers"), which reads as
+  // a specific, wrong claim rather than a vague miss. Region-level text
+  // ("Florida Appliance Repair") doesn't have that failure mode.
   //
   // Read the README's "Dynamic city insertion" section before enabling
   // this in production -- it covers the third-party privacy implication,
