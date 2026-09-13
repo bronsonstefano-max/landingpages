@@ -10,21 +10,6 @@
  *    GTM/GA4/call-tracking integration has a single, consistent hook
  *    to key off of. No tracking IDs are configured here; this only
  *    pushes an event if a dataLayer already exists.
- * 4. On the generic/national build of the page (config.city still the
- *    "[CITY]" placeholder), best-effort inserts a per-visitor city into
- *    every [data-geo-location-prefix] element plus <title>/meta
- *    description ("{City} Appliance Repair"). Never prompts the visitor
- *    for anything. Source, in order: (a) a `city` URL query parameter --
- *    the accurate, zero-guesswork path, meant to be populated by the ad
- *    campaign itself (e.g. a Google Ads Custom Parameter set per
- *    location-targeted ad group, so the city comes from how the visitor
- *    was targeted, not a runtime guess); (b) if that's absent, an
- *    IP-geolocation API's *region* (state/province), never its city
- *    guess, since IP-to-city is unreliable (see fallbackToIpRegion's
- *    comment) -- covers direct/organic traffic with no city parameter.
- *    Silently does nothing further if both are unavailable, geo is
- *    disabled, or config.city is already a real value -- see config.js's
- *    geoCityEnabled comment.
  *
  * No dependencies, no build step.
  */
@@ -74,142 +59,6 @@
         applyReplacements(metaDescription.getAttribute("content") || "")
       );
     }
-  }
-
-  function isPlaceholder(value) {
-    return !value || /^\[.*\]$/.test(value);
-  }
-
-  function applyLocationPrefix(location) {
-    if (!location) return;
-
-    document.querySelectorAll("[data-geo-location-prefix]").forEach(function (el) {
-      el.textContent = location + " ";
-    });
-
-    if (cfg.brandName) {
-      document.title = location + " Appliance Repair | " + cfg.brandName;
-    }
-
-    var metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription && cfg.brandName && cfg.phoneDisplay) {
-      metaDescription.setAttribute(
-        "content",
-        cfg.brandName +
-          " provides " +
-          location +
-          " appliance repair — refrigerators, washers, dryers, dishwashers, ovens, and more. Call " +
-          cfg.phoneDisplay +
-          " to get help fast."
-      );
-    }
-  }
-
-  function cacheLocation(value) {
-    try {
-      sessionStorage.setItem("geoLocationDetected", value);
-    } catch (e) {
-      /* no caching this visit -- not fatal */
-    }
-  }
-
-  // IP-based fallback: only reaches for the *region* (state/province), not
-  // the city. Straight IP-to-city geolocation is unreliable -- ISPs
-  // register address blocks against a regional hub, not the subscriber's
-  // actual address, so a smaller city routinely gets attributed to a
-  // larger neighboring one (e.g. a Cape Coral visitor reported as "Fort
-  // Myers"), especially on mobile carriers where traffic funnels through
-  // a handful of regional gateways. That's true of every IP geolocation
-  // provider, not just this one, so there's no "better API" fix at the
-  // city level -- only the region is reliably accurate from IP alone.
-  function fallbackToIpRegion() {
-    if (!cfg.geoCityApiUrl || typeof fetch !== "function") return;
-
-    var controller = typeof AbortController === "function" ? new AbortController() : null;
-    var timeoutId = controller
-      ? setTimeout(function () {
-          controller.abort();
-        }, 2000)
-      : null;
-
-    fetch(cfg.geoCityApiUrl, { signal: controller ? controller.signal : undefined })
-      .then(function (res) {
-        return res.ok ? res.json() : null;
-      })
-      .then(function (data) {
-        if (timeoutId) clearTimeout(timeoutId);
-        var region = data && data.region;
-        if (!region) return;
-        applyLocationPrefix(region);
-        cacheLocation(region);
-      })
-      .catch(function () {
-        // Network error, timeout, blocked by an ad/privacy blocker, or a
-        // non-OK response. Fail silently -- the page already reads
-        // correctly with the generic "Appliance Repair" headline.
-      });
-  }
-
-  // Reads the city from a URL query parameter (?city=Cape+Coral by
-  // default -- the param name is configurable via geoCityUrlParam) rather
-  // than guessing it. This is meant to be populated by the ad campaign,
-  // not the visitor's browser: e.g. a Google Ads Custom Parameter set on
-  // each location-targeted ad group's Final URL, so the value reflects
-  // how the advertiser actually targeted that click, not an IP or device
-  // guess. Never prompts anyone for anything -- it's just reading text
-  // already present in the URL the visitor arrived on.
-  function getCityFromUrl() {
-    try {
-      var params = new URLSearchParams(window.location.search);
-      var city = params.get(cfg.geoCityUrlParam || "city");
-      if (!city) return null;
-      city = city.trim();
-      // Guard against a malformed or absurdly long value ending up in a
-      // headline -- not a security concern (this is inserted via
-      // textContent, never HTML), just a sanity bound.
-      if (!city || city.length > 60) return null;
-      return city;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function initGeoCity() {
-    // A real configured city means this page is for one fixed service
-    // area -- show it immediately (no lookup, no layout-shift risk) and
-    // skip everything else. See the long comment on geoCityEnabled in
-    // config.js for why these two are mutually exclusive rather than
-    // "static first, then upgrade to detected."
-    if (!isPlaceholder(cfg.city)) {
-      applyLocationPrefix(cfg.city);
-      return;
-    }
-
-    if (cfg.geoCityEnabled === false) return;
-
-    var urlCity = getCityFromUrl();
-    if (urlCity) {
-      applyLocationPrefix(urlCity);
-      cacheLocation(urlCity);
-      return;
-    }
-
-    var cachedLocation = null;
-    try {
-      cachedLocation = sessionStorage.getItem("geoLocationDetected");
-    } catch (e) {
-      /* sessionStorage unavailable (private browsing, locked-down
-         browser settings, etc.) -- just skip caching, not fatal. */
-    }
-    if (cachedLocation) {
-      applyLocationPrefix(cachedLocation);
-      return;
-    }
-
-    // No campaign-supplied city and nothing cached from earlier in this
-    // session (e.g. direct/organic traffic with no ?city= parameter) --
-    // fall back to the region-only IP guess. Never prompts for anything.
-    fallbackToIpRegion();
   }
 
   function renderStarRating() {
@@ -278,7 +127,6 @@
   document.addEventListener("DOMContentLoaded", function () {
     fillConfigValues();
     syncHeadMetadata();
-    initGeoCity();
     renderStarRating();
     initMobileCallBarReveal();
     initCallTracking();
