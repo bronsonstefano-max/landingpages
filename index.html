@@ -1038,21 +1038,26 @@ button {
    ========================================================================== */
 @media (max-width: 479px) {
   .site-header .container {
-    padding-inline: var(--space-4);
+    padding-inline: 20px;
     gap: var(--space-3);
   }
 
   .brand-icon {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
   }
 
+  /* Fluid rather than flat: at exactly 360px (this tier's tightest fit,
+     verified against real layout, not just text-metric estimates) 18px+
+     silently eats into the intended padding and 15px+ overflows outright.
+     There's real extra room by 450px, so scale continuously between the
+     two measured-safe endpoints instead of leaving that room unused. */
   .brand-name {
-    font-size: 0.875rem;
+    font-size: clamp(14px, -2px + 4.445vw, 18px);
   }
 
   .header-phone .header-phone-number {
-    font-size: 0.875rem;
+    font-size: clamp(14px, -2px + 4.445vw, 18px);
   }
 
   .mobile-call-bar-main {
@@ -1068,7 +1073,7 @@ button {
 /* Smallest phones still in use (320px, e.g. iPhone SE 1st gen). */
 @media (max-width: 359px) {
   .site-header .container {
-    padding-inline: var(--space-3);
+    padding-inline: 16px;
     gap: var(--space-2);
   }
 
