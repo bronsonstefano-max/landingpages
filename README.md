@@ -276,3 +276,32 @@ python3 -m http.server 8080
 No build step is required; any static file server works. Everything the
 page needs — fonts included — is served from this directory, so it also
 works fully offline.
+
+## Hosting on GitHub Pages
+
+The site is currently deployed via GitHub Pages rather than Netlify.
+Enable it once per repo: **Settings → Pages → Source: "Deploy from a
+branch" → Branch: the branch you want live, folder `/` (root) → Save.**
+GitHub rebuilds automatically on every push to that branch, usually live
+within a minute.
+
+Two things that differ from the Netlify setup described above:
+
+- **`.nojekyll`** (empty file, repo root) tells GitHub Pages to serve
+  files as-is instead of running them through Jekyll first. Without it,
+  Jekyll's default behavior excludes any file or folder starting with
+  `_` from the published output — which would silently drop `_headers`
+  below.
+- **`_headers` has no effect here.** It's Netlify-specific syntax for
+  setting `Cache-Control`; GitHub Pages doesn't support a custom-headers
+  file, so it just falls back to GitHub's own defaults instead (short,
+  reasonable cache lifetimes — not the fine-grained per-path tuning in
+  the Performance section above). If cache staleness ever causes
+  confusion again (e.g. a code change not showing up after a normal
+  refresh), hard-refresh or use a private window first — that rules out
+  the browser's own cache before assuming anything server-side is wrong.
+
+All paths in `index.html` are relative, so the site works correctly
+whether it's served from a domain root (Netlify) or a repo subpath like
+`https://<username>.github.io/<repo>/` (GitHub Pages) — no path changes
+needed either way.
