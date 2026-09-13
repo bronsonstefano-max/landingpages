@@ -102,7 +102,7 @@
   --fs-md: clamp(1.125rem, 1.08rem + 0.3vw, 1.25rem);
   --fs-lg: clamp(1.25rem, 1.18rem + 0.4vw, 1.5rem);
   --fs-xl: clamp(1.375rem, 1.25rem + 0.7vw, 1.75rem);
-  --fs-2xl: clamp(1.75rem, 1.5rem + 1.4vw, 2.375rem);
+  --fs-2xl: clamp(2.125rem, 1.8rem + 1.8vw, 2.875rem);
 
   /* Half the hero photo's rendered height (scales with viewport since the
      photo's own width does), plus a visible breathing-room gap on each
@@ -306,8 +306,8 @@ button {
   background: var(--color-blue);
   color: var(--color-blue-contrast);
   border-radius: var(--radius-pill);
-  padding: var(--space-4) var(--space-3) var(--space-4) var(--space-6);
-  font-size: var(--fs-md);
+  padding: var(--space-5) var(--space-3) var(--space-5) var(--space-7);
+  font-size: clamp(1.1875rem, 1.1rem + 0.5vw, 1.375rem);
   box-shadow: var(--shadow-cta);
 }
 
@@ -433,6 +433,7 @@ button {
   font-weight: 800;
   text-decoration: underline;
   font-size: var(--fs-base);
+  white-space: nowrap;
 }
 
 /* Bumped up specifically in the header -- the hero/final-CTA reuses of
@@ -532,7 +533,7 @@ button {
 
 .hero-subhead {
   margin-top: var(--space-4);
-  font-size: var(--fs-md);
+  font-size: clamp(1.1875rem, 1.1rem + 0.5vw, 1.375rem);
   color: #c7ccd6;
 }
 
@@ -605,7 +606,7 @@ button {
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
-  font-size: var(--fs-sm);
+  font-size: clamp(0.9375rem, 0.88rem + 0.3vw, 1.0625rem);
   font-weight: 700;
   color: #e6e9ef;
 }
