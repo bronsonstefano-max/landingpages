@@ -15,7 +15,7 @@
  * centralized, changing or deleting one updates every place it appears.
  */
 window.SITE_CONFIG = {
-  brandName: "Appliance Wiz",
+  brandName: "Appliance Helpers",
 
   // Phone number as displayed to visitors.
   phoneDisplay: "(800) 555-5555",

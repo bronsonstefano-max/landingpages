@@ -1,4 +1,4 @@
-# Appliance Wiz — Appliance Repair Landing Page
+# Appliance Helpers — Appliance Repair Landing Page
 
 A single, dependency-light landing page built as a phone-call funnel for
 Google Search Ads traffic:
@@ -54,12 +54,11 @@ business. Before launch:
   (`availabilityClaim`, `supportClaim`, `certifiedClaim`,
   `factoryTrainedClaim`) so this is a one-line edit each, everywhere the
   claim appears.
-- The footer's Disclaimer section now has real, user-supplied legal
-  copy (a referral-service disclaimer). One thing worth double-checking:
-  it refers to the business as **"Appliance Helpers"** three times,
-  while the rest of the site (header, hero, config) says **"Appliance
-  Wiz"** — two different brand names on one page. This was flagged when
-  the text was added; confirm which name is correct before launch.
+- The footer's Disclaimer section has real, user-supplied legal copy (a
+  referral-service disclaimer). It originally said "Appliance Helpers"
+  while the rest of the site said "Appliance Wiz" — that mismatch is now
+  resolved; the whole site (including this disclaimer) consistently says
+  "Appliance Helpers".
 - The Company/Disclaimer sections in the footer are always expanded —
   not togglable `<details>` accordions — at the user's request. They're
   plain `.footer-accordion` blocks in `index.html`/`css/styles.css`; the
@@ -93,7 +92,7 @@ driven from **`js/config.js`**:
 
 ```js
 window.SITE_CONFIG = {
-  brandName: "Appliance Wiz",
+  brandName: "Appliance Helpers",
   phoneDisplay: "(800) 555-5555",
   phoneHref: "tel:+18005555555",
   city: "[CITY]",
