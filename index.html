@@ -926,12 +926,24 @@ button {
      image twice on screen at once. The reference hero has no photo at
      all at this width -- only the sidebar does. Mobile/tablet (< 960px,
      no sidebar) keep the hero photo exactly as before. */
-  .hero {
-    padding-block: var(--space-8) var(--space-7);
-  }
-
   .hero-visual {
     display: none;
+  }
+
+  /* Reference hero fills the full first viewport with its content
+     vertically centered, so nothing below it is visible until the
+     visitor scrolls; ours ended as soon as the content did. 64px
+     accounts for the sticky header sitting above the hero in normal
+     flow (it isn't position:fixed, so it isn't "on top of" the hero --
+     it takes up its own 64px above it). min-height (not height) means a
+     desktop window shorter than that, or content that needs more room,
+     still isn't clipped -- it just grows past 100vh instead. */
+  .hero {
+    min-height: calc(100vh - 64px);
+    padding-block: var(--space-8) var(--space-7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .intro-section {
