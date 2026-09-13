@@ -45,7 +45,8 @@ window.SITE_CONFIG = {
   // App URL (ends in /exec) to have submissions land as new rows in a
   // Google Sheet you own -- see the README's "Do Not Sell form backend"
   // section for the exact script to paste in and how to deploy it.
-  doNotSellSheetEndpoint: "",
+  doNotSellSheetEndpoint:
+    "https://script.google.com/macros/s/AKfycbxt4fEmct5uQl8ETRdWq0h9OUUPn0Ap3hsdznmsGIVuO5rD9ybD7sGIJAAZe1Ivs06e/exec",
 
   // Optional shared secret, sent as a hidden `token` field with every
   // submission. Only useful if the same value is also set as SHARED_TOKEN
