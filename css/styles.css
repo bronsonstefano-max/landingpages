@@ -33,8 +33,8 @@
   /* Half the hero photo's rendered height (scales with viewport since the
      photo's own width does), plus a visible breathing-room gap on each
      side of the dark/white seam it straddles. */
-  --hero-visual-half: clamp(90px, 6vw + 70px, 135px);
-  --hero-visual-gap: 40px;
+  --hero-visual-half: clamp(75px, 7vw + 50px, 105px);
+  --hero-visual-gap: 64px;
   --hero-overlap: calc(var(--hero-visual-half) + var(--hero-visual-gap));
 
   /* Spacing scale */
@@ -503,7 +503,7 @@ button {
 
 .hero-photo {
   width: 100%;
-  max-width: 480px;
+  max-width: 360px;
   height: auto;
   border-radius: var(--radius-md);
   box-shadow: 0 24px 48px rgba(9, 10, 14, 0.4);
