@@ -17,13 +17,17 @@ brand list, a numbered "how it works" section, a decorative dark divider,
 a hero-style repeated final CTA, and a footer built as COMPANY/DISCLAIMER
 accordions.
 
-What was **not** copied: their actual HTML/CSS, their stock technician
-photo (replaced with an original flat SVG illustration), their exact
-color values (recreated independently to the same visual effect), and
-their longer body paragraphs (paraphrased in original wording — same
-message, length, and position, different sentences). Short labels,
-benefit headings, and the service/brand category names are generic
-industry terms and are reused as-is.
+What was **not** copied: their actual HTML/CSS, their exact color values
+(recreated independently to the same visual effect), and their longer
+body paragraphs (paraphrased in original wording — same message, length,
+and position, different sentences). Short labels, benefit headings, and
+the service/brand category names are generic industry terms and are
+reused as-is.
+
+The hero photo (`assets/appliance-technician-blue.webp`) is a separate
+image the user supplied directly and owns the rights to use — not a copy
+of the reference site's photo. It replaced an earlier original SVG
+illustration once the user provided it.
 
 ## The 4.5-star rating
 
@@ -73,6 +77,7 @@ js/config.js       Centralized business config (phone, brand, claims, rating)
 js/main.js         Injects config into the DOM, syncs <title>/meta, renders
                     the star rating, drives the scroll-triggered sticky
                     call bar, and pushes a dataLayer event on call clicks
+assets/            Hero photo (WebP)
 robots.txt          Allow-all crawling
 ```
 

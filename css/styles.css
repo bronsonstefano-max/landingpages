@@ -30,9 +30,10 @@
   --fs-xl: clamp(1.375rem, 1.25rem + 0.7vw, 1.75rem);
   --fs-2xl: clamp(1.75rem, 1.5rem + 1.4vw, 2.375rem);
 
-  /* Half the hero illustration's typical rendered height, plus a visible
-     breathing-room gap on each side of the dark/white seam it straddles. */
-  --hero-visual-half: 105px;
+  /* Half the hero photo's rendered height (scales with viewport since the
+     photo's own width does), plus a visible breathing-room gap on each
+     side of the dark/white seam it straddles. */
+  --hero-visual-half: clamp(90px, 6vw + 70px, 135px);
   --hero-visual-gap: 40px;
   --hero-overlap: calc(var(--hero-visual-half) + var(--hero-visual-gap));
 
@@ -498,12 +499,15 @@ button {
   z-index: 5;
   display: flex;
   justify-content: center;
-  pointer-events: none;
 }
 
-.hero-illustration {
+.hero-photo {
   width: 100%;
-  max-width: 380px;
+  max-width: 480px;
+  height: auto;
+  border-radius: var(--radius-md);
+  box-shadow: 0 24px 48px rgba(9, 10, 14, 0.4);
+  object-fit: cover;
 }
 
 /* ==========================================================================
