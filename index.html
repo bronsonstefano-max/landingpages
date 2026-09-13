@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>[BRAND NAME] | Appliance Repair in [CITY], [STATE]</title>
+  <meta
+    name="description"
+    content="Need appliance repair in [CITY], [STATE]? Call [BRAND NAME] for help with refrigerators, washers, dryers, dishwashers, ovens, and more."
+  />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0b1f33" />
+  <link
+    rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230b1f33'/%3E%3Cpath d='M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3.7c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z' fill='none' stroke='%23c04a09' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+  />
+
+  <!-- Canonical URL: set once this page is deployed to a real domain. -->
+  <!-- <link rel="canonical" href="https://www.example.com/" /> -->
+
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!--
+    Analytics / tag manager placeholder.
+    Add Google Tag Manager or gtag.js here once container/measurement IDs
+    are available. js/main.js already pushes a `phone_call_click` event to
+    window.dataLayer on every tel: link click, so GTM triggers can be wired
+    up without further code changes.
+  -->
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Reusable icon sprite (defined once, referenced everywhere via <use>) -->
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="icon-phone" viewBox="0 0 24 24">
+      <path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3.7c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8Z"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="M4 12.5 9.5 18 20 6" />
+    </symbol>
+    <symbol id="icon-map-pin" viewBox="0 0 24 24">
+      <path d="M12 21s7-6.6 7-11.6A7 7 0 0 0 5 9.4C5 14.4 12 21 12 21Z"/>
+      <circle cx="12" cy="9.5" r="2.4" />
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24">
+      <path d="M12 5v14M5 12h14" />
+    </symbol>
+    <symbol id="icon-message" viewBox="0 0 24 24">
+      <path d="M4 5h16v11H8l-4 4V5Z" />
+    </symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24">
+      <rect x="3.5" y="5" width="17" height="15" rx="2" />
+      <path d="M3.5 9.5h17M8 3v4M16 3v4" />
+    </symbol>
+    <symbol id="icon-appliance" viewBox="0 0 24 24">
+      <rect x="5" y="3" width="14" height="18" rx="1.5" />
+      <path d="M5 9.5h14M9 6.2h.01" />
+    </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24">
+      <path d="M12 3.5 19 6.3v5.4c0 4.6-3 7.9-7 8.8-4-.9-7-4.2-7-8.8V6.3L12 3.5Z" />
+    </symbol>
+    <symbol id="icon-tools" viewBox="0 0 24 24">
+      <path d="m14.5 6.5 3 3L8 19H5v-3l9.5-9.5Z" />
+      <path d="M14.8 8.8 16 6.4a3 3 0 0 1 4.2 4.2l-2.4 1.2" />
+    </symbol>
+    <symbol id="icon-fridge" viewBox="0 0 24 24">
+      <rect x="6" y="2.5" width="12" height="19" rx="1.5" />
+      <path d="M6 9.5h12M9 5v2.5M9 12.5V16" />
+    </symbol>
+    <symbol id="icon-freezer" viewBox="0 0 24 24">
+      <rect x="4" y="4" width="16" height="16" rx="1.5" />
+      <path d="M12 8v8M8.5 10l7 4M15.5 10l-7 4" />
+    </symbol>
+    <symbol id="icon-washer" viewBox="0 0 24 24">
+      <rect x="4" y="3" width="16" height="18" rx="1.5" />
+      <circle cx="12" cy="13" r="5" />
+      <path d="M8.5 6h.01M12 6h.01" />
+    </symbol>
+    <symbol id="icon-dryer" viewBox="0 0 24 24">
+      <rect x="4" y="3" width="16" height="18" rx="1.5" />
+      <circle cx="12" cy="13" r="5" />
+      <path d="M9.5 13a2.5 2.5 0 0 1 3.8-2.1" />
+      <path d="M8.5 6h.01M12 6h.01" />
+    </symbol>
+    <symbol id="icon-dishwasher" viewBox="0 0 24 24">
+      <rect x="4" y="3" width="16" height="18" rx="1.5" />
+      <path d="M4 8h16" />
+      <circle cx="9" cy="5.5" r=".6" fill="currentColor" stroke="none" />
+      <path d="M7.5 13h9M7.5 16.5h9" />
+    </symbol>
+    <symbol id="icon-oven" viewBox="0 0 24 24">
+      <rect x="4" y="3" width="16" height="18" rx="1.5" />
+      <rect x="6" y="11" width="12" height="7.5" rx="1" />
+      <path d="M6.5 6.5h.01M9.5 6.5h.01" />
+    </symbol>
+    <symbol id="icon-stove" viewBox="0 0 24 24">
+      <rect x="3.5" y="4" width="17" height="16" rx="1.5" />
+      <circle cx="8.5" cy="9.5" r="2" />
+      <circle cx="15.5" cy="9.5" r="2" />
+      <circle cx="8.5" cy="16" r="2" />
+      <circle cx="15.5" cy="16" r="2" />
+    </symbol>
+    <symbol id="icon-range" viewBox="0 0 24 24">
+      <rect x="3.5" y="3" width="17" height="18" rx="1.5" />
+      <path d="M3.5 10h17" />
+      <circle cx="8.5" cy="6.5" r="1.6" />
+      <circle cx="15.5" cy="6.5" r="1.6" />
+    </symbol>
+  </svg>
+
+  <!-- ============================== HEADER ============================== -->
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">
+        <span class="brand-name" data-cfg="brandName">[BRAND NAME]</span>
+        <span class="brand-tagline">Local Appliance Repair Help</span>
+      </div>
+      <div class="header-actions">
+        <span class="header-service-area">
+          <svg class="icon" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
+          Serving <span data-cfg="serviceArea">[SERVICE AREA]</span>
+        </span>
+        <a
+          id="header-call-button"
+          class="btn btn-call btn-md header-call"
+          href="tel:[PHONE NUMBER]"
+          data-cfg-href="phoneHref"
+          data-call-source="header"
+        >
+          <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+          <span class="visually-hidden">Call </span>
+          <span class="phone-text" data-cfg="phoneDisplay" aria-hidden="true">[PHONE NUMBER]</span>
+          <span class="visually-hidden" data-cfg="phoneDisplay">[PHONE NUMBER]</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ============================== HERO ============================== -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-copy">
+          <span class="hero-eyebrow">
+            <svg class="icon" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
+            Serving <span data-cfg="city">[CITY]</span>, <span data-cfg="state">[STATE]</span>
+          </span>
+          <h1>Appliance Repair in <span data-cfg="city">[CITY]</span>, <span data-cfg="state">[STATE]</span></h1>
+          <p class="hero-subhead">
+            Refrigerator, washer, dryer, dishwasher, oven, or stove acting up?
+            Call and describe what's happening &mdash; we'll help you get it
+            sorted out.
+          </p>
+
+          <div class="hero-cta-row">
+            <a
+              id="hero-call-button"
+              class="btn btn-call btn-lg"
+              href="tel:[PHONE NUMBER]"
+              data-cfg-href="phoneHref"
+              data-call-source="hero"
+            >
+              <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+              Call Now: <span data-cfg="phoneDisplay">[PHONE NUMBER]</span>
+            </a>
+            <span class="hero-cta-note">Tap to call &mdash; talk to a real person</span>
+          </div>
+
+          <ul class="hero-trust-list">
+            <li class="hero-trust-item">
+              <svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg>
+              <span>All major appliances, one call</span>
+            </li>
+            <li class="hero-trust-item">
+              <svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg>
+              <span>Serving <span data-cfg="serviceArea">[SERVICE AREA]</span></span>
+            </li>
+            <li class="hero-trust-item">
+              <svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg>
+              <span>A real person answers &mdash; no chatbot</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-visual-card">
+            <div class="hero-visual-grid">
+              <div class="hero-visual-item"><svg class="icon"><use href="#icon-fridge"></use></svg></div>
+              <div class="hero-visual-item"><svg class="icon"><use href="#icon-washer"></use></svg></div>
+              <div class="hero-visual-item"><svg class="icon"><use href="#icon-dryer"></use></svg></div>
+              <div class="hero-visual-item"><svg class="icon"><use href="#icon-dishwasher"></use></svg></div>
+              <div class="hero-visual-item"><svg class="icon"><use href="#icon-oven"></use></svg></div>
+              <div class="hero-visual-item"><svg class="icon"><use href="#icon-stove"></use></svg></div>
+              <div class="hero-visual-item"><svg class="icon"><use href="#icon-freezer"></use></svg></div>
+              <div class="hero-visual-item"><svg class="icon"><use href="#icon-range"></use></svg></div>
+            </div>
+            <p class="hero-visual-caption">Refrigerators &middot; Washers &middot; Dryers &middot; Dishwashers &middot; Ovens &middot; Stoves &middot; Ranges &middot; Freezers</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= APPLIANCE GRID ========================= -->
+    <section class="section" id="appliances" aria-labelledby="appliances-heading">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">What We Help With</span>
+          <h2 id="appliances-heading">Appliance Repair Services</h2>
+          <p>Find your appliance below, or just call and describe the problem &mdash; we'll take it from there.</p>
+        </div>
+
+        <div class="appliance-grid">
+          <article class="appliance-card">
+            <div class="appliance-card-icon"><svg class="icon" aria-hidden="true"><use href="#icon-fridge"></use></svg></div>
+            <h3>Refrigerator Repair</h3>
+            <p class="appliance-card-symptoms">Not cooling, leaking, or making strange noises</p>
+            <a class="appliance-card-call" id="appliance-call-button-refrigerator" href="tel:[PHONE NUMBER]" data-cfg-href="phoneHref" data-call-source="appliance-refrigerator">
+              Call for help
+              <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            </a>
+          </article>
+
+          <article class="appliance-card">
+            <div class="appliance-card-icon"><svg class="icon" aria-hidden="true"><use href="#icon-freezer"></use></svg></div>
+            <h3>Freezer Repair</h3>
+            <p class="appliance-card-symptoms">Not freezing, frost buildup, or won't start</p>
+            <a class="appliance-card-call" id="appliance-call-button-freezer" href="tel:[PHONE NUMBER]" data-cfg-href="phoneHref" data-call-source="appliance-freezer">
+              Call for help
+              <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            </a>
+          </article>
+
+          <article class="appliance-card">
+            <div class="appliance-card-icon"><svg class="icon" aria-hidden="true"><use href="#icon-washer"></use></svg></div>
+            <h3>Washer Repair</h3>
+            <p class="appliance-card-symptoms">Won't drain, won't spin, or leaking water</p>
+            <a class="appliance-card-call" id="appliance-call-button-washer" href="tel:[PHONE NUMBER]" data-cfg-href="phoneHref" data-call-source="appliance-washer">
+              Call for help
+              <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            </a>
+          </article>
+
+          <article class="appliance-card">
+            <div class="appliance-card-icon"><svg class="icon" aria-hidden="true"><use href="#icon-dryer"></use></svg></div>
+            <h3>Dryer Repair</h3>
+            <p class="appliance-card-symptoms">Not heating, won't start, or noisy tumbling</p>
+            <a class="appliance-card-call" id="appliance-call-button-dryer" href="tel:[PHONE NUMBER]" data-cfg-href="phoneHref" data-call-source="appliance-dryer">
+              Call for help
+              <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            </a>
+          </article>
+
+          <article class="appliance-card">
+            <div class="appliance-card-icon"><svg class="icon" aria-hidden="true"><use href="#icon-dishwasher"></use></svg></div>
+            <h3>Dishwasher Repair</h3>
+            <p class="appliance-card-symptoms">Not cleaning, won't drain, or leaking</p>
+            <a class="appliance-card-call" id="appliance-call-button-dishwasher" href="tel:[PHONE NUMBER]" data-cfg-href="phoneHref" data-call-source="appliance-dishwasher">
+              Call for help
+              <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            </a>
+          </article>
+
+          <article class="appliance-card">
+            <div class="appliance-card-icon"><svg class="icon" aria-hidden="true"><use href="#icon-oven"></use></svg></div>
+            <h3>Oven Repair</h3>
+            <p class="appliance-card-symptoms">Not heating, won't turn on, or uneven cooking</p>
+            <a class="appliance-card-call" id="appliance-call-button-oven" href="tel:[PHONE NUMBER]" data-cfg-href="phoneHref" data-call-source="appliance-oven">
+              Call for help
+              <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            </a>
+          </article>
+
+          <article class="appliance-card">
+            <div class="appliance-card-icon"><svg class="icon" aria-hidden="true"><use href="#icon-stove"></use></svg></div>
+            <h3>Stove Repair</h3>
+            <p class="appliance-card-symptoms">Burners not working or won't ignite</p>
+            <a class="appliance-card-call" id="appliance-call-button-stove" href="tel:[PHONE NUMBER]" data-cfg-href="phoneHref" data-call-source="appliance-stove">
+              Call for help
+              <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            </a>
+          </article>
+
+          <article class="appliance-card">
+            <div class="appliance-card-icon"><svg class="icon" aria-hidden="true"><use href="#icon-range"></use></svg></div>
+            <h3>Range Repair</h3>
+            <p class="appliance-card-symptoms">Oven or cooktop issues, electrical problems</p>
+            <a class="appliance-card-call" id="appliance-call-button-range" href="tel:[PHONE NUMBER]" data-cfg-href="phoneHref" data-call-source="appliance-range">
+              Call for help
+              <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ BENEFITS ============================ -->
+    <section class="section section--alt" aria-labelledby="benefits-heading">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Why Call Us</span>
+          <h2 id="benefits-heading">Why Homeowners Call <span data-cfg="brandName">[BRAND NAME]</span></h2>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon"><svg class="icon" aria-hidden="true"><use href="#icon-appliance"></use></svg></div>
+            <h3>Every Major Appliance</h3>
+            <p>From refrigerators to ranges, one call covers the essentials in your home.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon"><svg class="icon" aria-hidden="true"><use href="#icon-tools"></use></svg></div>
+            <h3>Simple, Straightforward Process</h3>
+            <p>Call, describe the issue, and get pointed in the right direction &mdash; no complicated forms.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon"><svg class="icon" aria-hidden="true"><use href="#icon-map-pin"></use></svg></div>
+            <h3>Local Service Area</h3>
+            <p>Proudly connecting <span data-cfg="city">[CITY]</span>, <span data-cfg="state">[STATE]</span> homeowners with appliance repair help.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon"><svg class="icon" aria-hidden="true"><use href="#icon-message"></use></svg></div>
+            <h3>Real Conversations</h3>
+            <p>Speak directly with someone who can answer your questions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= HOW IT WORKS ========================= -->
+    <section class="section" aria-labelledby="how-it-works-heading">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Getting Help Is Easy</span>
+          <h2 id="how-it-works-heading">How It Works</h2>
+        </div>
+
+        <ol class="steps-list">
+          <li class="step">
+            <span class="step-number" aria-hidden="true">1</span>
+            <h3>Call <span data-cfg="phoneDisplay">[PHONE NUMBER]</span></h3>
+            <p>Reach out and tell us what's going on with your appliance.</p>
+          </li>
+          <li class="step">
+            <span class="step-number" aria-hidden="true">2</span>
+            <h3>Describe the Problem</h3>
+            <p>Let us know the appliance, the symptoms, and your location.</p>
+          </li>
+          <li class="step">
+            <span class="step-number" aria-hidden="true">3</span>
+            <h3>Get Help Scheduled</h3>
+            <p>We'll help get your repair on the calendar as quickly as possible.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================== FAQ ============================== -->
+    <section class="section section--alt" aria-labelledby="faq-heading">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Questions</span>
+          <h2 id="faq-heading">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>
+              What appliances do you help with?
+              <svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
+            </summary>
+            <p class="faq-answer">We help connect homeowners with repair for refrigerators, freezers, washers, dryers, dishwashers, ovens, stoves, ranges, and more.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              What areas do you serve?
+              <svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
+            </summary>
+            <p class="faq-answer">
+              We serve <span data-cfg="city">[CITY]</span>, <span data-cfg="state">[STATE]</span> and the surrounding area.
+              Call <span data-cfg="phoneDisplay">[PHONE NUMBER]</span> to confirm we cover your location.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              How much will my repair cost?
+              <svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
+            </summary>
+            <p class="faq-answer">Cost depends on the appliance, the issue, and the parts needed. Call and describe the problem, and we'll walk you through next steps.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              Do I need to know what's wrong with my appliance?
+              <svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
+            </summary>
+            <p class="faq-answer">No. Just describe what you're noticing &mdash; a strange noise, a leak, an appliance that won't start &mdash; and we'll help from there.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              How do I get started?
+              <svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
+            </summary>
+            <p class="faq-answer">Call <span data-cfg="phoneDisplay">[PHONE NUMBER]</span>. That's it &mdash; we'll take it from there.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ FINAL CTA ============================ -->
+    <section class="section final-cta" aria-labelledby="final-cta-heading">
+      <div class="container">
+        <h2 id="final-cta-heading">Ready to Get Your Appliance Fixed?</h2>
+        <p>Call now and describe the issue &mdash; we'll help you take the next step.</p>
+        <div class="final-cta-actions">
+          <a
+            id="final-call-button"
+            class="btn btn-call btn-lg"
+            href="tel:[PHONE NUMBER]"
+            data-cfg-href="phoneHref"
+            data-call-source="final-cta"
+          >
+            <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+            Call Now: <span data-cfg="phoneDisplay">[PHONE NUMBER]</span>
+          </a>
+          <span class="final-cta-note">Serving <span data-cfg="serviceArea">[SERVICE AREA]</span></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand" data-cfg="brandName">[BRAND NAME]</div>
+          <p>Local appliance repair help for <span data-cfg="city">[CITY]</span>, <span data-cfg="state">[STATE]</span></p>
+        </div>
+        <div class="footer-meta">
+          <a id="footer-call-button" href="tel:[PHONE NUMBER]" data-cfg-href="phoneHref" data-call-source="footer">
+            <span class="visually-hidden">Call </span><span data-cfg="phoneDisplay">[PHONE NUMBER]</span>
+          </a>
+          <span>Serving <span data-cfg="serviceArea">[SERVICE AREA]</span></span>
+          <span>Hours: <span data-cfg="hours">[HOURS]</span></span>
+        </div>
+      </div>
+      <p class="footer-copyright">&copy; 2026 <span data-cfg="brandName">[BRAND NAME]</span>. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ===================== MOBILE STICKY CALL BAR ===================== -->
+  <div class="mobile-call-bar">
+    <a
+      id="mobile-sticky-call-button"
+      href="tel:[PHONE NUMBER]"
+      data-cfg-href="phoneHref"
+      data-call-source="mobile-sticky"
+    >
+      <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+      Call Now &mdash; <span data-cfg="phoneDisplay">[PHONE NUMBER]</span>
+    </a>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
