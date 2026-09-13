@@ -54,11 +54,16 @@ business. Before launch:
   (`availabilityClaim`, `supportClaim`, `certifiedClaim`,
   `factoryTrainedClaim`) so this is a one-line edit each, everywhere the
   claim appears.
-- The footer's Disclaimer accordion is a **placeholder** — it does not
-  assert a specific business model (e.g. "referral service" vs. direct
-  repair company) because that wasn't specified. Replace it with real
-  legal copy (service terms, licensing, and any conditions on the
-  same/next-day and 24-hour claims above) before launch.
+- The footer's Disclaimer section now has real, user-supplied legal
+  copy (a referral-service disclaimer). One thing worth double-checking:
+  it refers to the business as **"Appliance Helpers"** three times,
+  while the rest of the site (header, hero, config) says **"Appliance
+  Wiz"** — two different brand names on one page. This was flagged when
+  the text was added; confirm which name is correct before launch.
+- The Company/Disclaimer sections in the footer are always expanded —
+  not togglable `<details>` accordions — at the user's request. They're
+  plain `.footer-accordion` blocks in `index.html`/`css/styles.css`; the
+  class name is a holdover from when they were collapsible.
 - The footer's Company links (About Us, Privacy Policy, How It Works,
   Terms of Service, Contact Us, Do Not Sell My Info) point to `#` —
   they're placeholders for pages that don't exist yet, per "main page
@@ -143,8 +148,11 @@ No tracking IDs are hardcoded or invented.
   Build a GTM trigger on that event — no code changes required.
 - Named call buttons have stable, unique `id`s: `header-call-button`,
   `hero-call-button`, `hero-phone-link`, `final-call-button`,
-  `footer-call-button`, `mobile-sticky-call-button`. The service-list rows,
-  brand-adjacent closing paragraphs, and callout links share
+  `mobile-sticky-call-button`. There is no footer call button — the
+  footer no longer has a phone link at the user's request; the sticky
+  mobile bar and the final CTA above the footer remain reachable. The
+  service-list rows, brand-adjacent closing paragraphs, and callout links
+  share
   `data-call-source` values (`service-list`, `callout-1`, `callout-2`,
   `brands-closing`, `how-it-works-closing`, `final-cta-inline`) instead of
   unique IDs, since each group is identical in intent.
