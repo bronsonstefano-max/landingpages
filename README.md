@@ -7,23 +7,34 @@ Google Search Ads traffic:
 
 ## Design basis
 
-This page's **structure and visual language** (section order, dark hero
-with a light contour-line texture, blue pill CTA with a trailing circular
-arrow icon, dashed-divider service list, gray callout boxes, two-column
-brand list, split bold/regular section headings) were modeled closely on
-screenshots of appliance-pros.com's mobile page, at the user's request.
+This page's **structure and visual language** were modeled closely on a
+full set of mobile screenshots of appliance-pros.com, at the user's
+request: dark hero with a light contour-line texture and an image that
+bleeds from the hero into the white section below it, blue pill CTA with
+a trailing circular-arrow icon, a 2-column checklist, a 5-star rating
+graphic, a dashed-divider service list, gray callout boxes, a two-column
+brand list, a numbered "how it works" section, a decorative dark divider,
+a hero-style repeated final CTA, and a footer built as COMPANY/DISCLAIMER
+accordions.
 
 What was **not** copied: their actual HTML/CSS, their stock technician
-photo (replaced with an original flat-illustration), their exact color
-values (recreated independently to the same visual effect), and their
-longer body paragraphs (paraphrased in original wording — same message,
-length, and position, different sentences). Short labels, benefit
-headings, and the service/brand category names are generic industry
-terms and are reused as-is.
+photo (replaced with an original flat SVG illustration), their exact
+color values (recreated independently to the same visual effect), and
+their longer body paragraphs (paraphrased in original wording — same
+message, length, and position, different sentences). Short labels,
+benefit headings, and the service/brand category names are generic
+industry terms and are reused as-is.
 
-The FAQ, final-CTA, and footer sections are original — the reference
-screenshots didn't extend that far down the page, so there was nothing to
-model there.
+## The 4.5-star rating
+
+Unlike the first version of this page, a star rating **is** shown — the
+user confirmed this business is actually rated 4.5 stars, so it's real
+data, not the fabricated social proof the original build brief warned
+against. It's centralized as `ratingValue: 4.5` in `js/config.js` and
+rendered by `renderStarRating()` in `js/main.js` (full/half/empty stars
+computed from that single number — update the number, not the markup).
+If you can name the source (e.g. "based on Google reviews"), consider
+adding that label next to the stars for credibility.
 
 ## ⚠️ Claims to verify before launch
 
@@ -37,13 +48,17 @@ business. Before launch:
 - Confirm each one is accurate, or edit/delete it.
 - All four are centralized as named strings in `js/config.js`
   (`availabilityClaim`, `supportClaim`, `certifiedClaim`,
-  `factoryTrainedClaim`) specifically so this is a one-line edit each,
-  everywhere the claim appears.
-
-No fabricated review counts, star ratings, or badges were added — the
-reference's 4.5-star graphic was deliberately not replicated, since
-displaying a rating implies real aggregated review data this business
-doesn't have.
+  `factoryTrainedClaim`) so this is a one-line edit each, everywhere the
+  claim appears.
+- The footer's Disclaimer accordion is a **placeholder** — it does not
+  assert a specific business model (e.g. "referral service" vs. direct
+  repair company) because that wasn't specified. Replace it with real
+  legal copy (service terms, licensing, and any conditions on the
+  same/next-day and 24-hour claims above) before launch.
+- The footer's Company links (About Us, Privacy Policy, How It Works,
+  Terms of Service, Contact Us, Do Not Sell My Info) point to `#` —
+  they're placeholders for pages that don't exist yet, per "main page
+  only for now."
 
 ## Stack
 
@@ -54,16 +69,17 @@ headline typography. No framework, no build step, no npm dependencies.
 ```
 index.html        Page markup and copy
 css/styles.css     Design system + all styling
-js/config.js       Centralized business config (phone, brand, claims)
-js/main.js         Injects config into the DOM, syncs <title>/meta, and
-                    pushes a dataLayer event on call-button clicks
+js/config.js       Centralized business config (phone, brand, claims, rating)
+js/main.js         Injects config into the DOM, syncs <title>/meta, renders
+                    the star rating, drives the scroll-triggered sticky
+                    call bar, and pushes a dataLayer event on call clicks
 robots.txt          Allow-all crawling
 ```
 
 ## Editing business info
 
-Every phone number, brand mention, and claim string is driven from
-**`js/config.js`**:
+Every phone number, brand mention, claim string, and the rating value is
+driven from **`js/config.js`**:
 
 ```js
 window.SITE_CONFIG = {
@@ -78,6 +94,7 @@ window.SITE_CONFIG = {
   supportClaim: "24-Hour Support 7 Days a Week",
   certifiedClaim: "Certified Experts",
   factoryTrainedClaim: "Factory-Trained Technicians",
+  ratingValue: 4.5,
 };
 ```
 
@@ -91,6 +108,25 @@ link, should also be updated to match if the phone number changes —
 the raw HTML should stay correct for crawlers and ad reviewers that don't
 execute JavaScript.
 
+## Mobile sticky call bar
+
+The bottom call bar is hidden until the visitor scrolls past the hero's
+"Schedule Service" button (an `IntersectionObserver` in `main.js` toggles
+an `is-visible` class), rather than being visible immediately — this was
+a deliberate change from the first version, at the user's request. On
+browsers without `IntersectionObserver` support (effectively none in
+current use), it degrades to simply staying hidden; every other call
+button on the page is unaffected.
+
+## Hero image bleed effect
+
+The hero illustration is absolutely positioned and anchored to the
+bottom of the dark hero section, then shifted down by 50% of its own
+height, so it always straddles the hero/white boundary regardless of
+viewport width. The following section reserves matching top padding
+(`--hero-overlap` in `css/styles.css`) so its text clears the bottom half
+of the image.
+
 ## Call tracking / analytics
 
 No tracking IDs are hardcoded or invented.
@@ -102,20 +138,22 @@ No tracking IDs are hardcoded or invented.
   Build a GTM trigger on that event — no code changes required.
 - Named call buttons have stable, unique `id`s: `header-call-button`,
   `hero-call-button`, `hero-phone-link`, `final-call-button`,
-  `footer-call-button`, `mobile-sticky-call-button`. The 18 service-list
-  rows and the 2 gray callout links share `data-call-source` values
-  (`service-list`, `callout-1`, `callout-2`) instead of unique IDs, since
-  they're identical in intent.
+  `footer-call-button`, `mobile-sticky-call-button`. The service-list rows,
+  brand-adjacent closing paragraphs, and callout links share
+  `data-call-source` values (`service-list`, `callout-1`, `callout-2`,
+  `brands-closing`, `how-it-works-closing`, `final-cta-inline`) instead of
+  unique IDs, since each group is identical in intent.
 - Every `tel:` link shares the selector `a[href^="tel:"]` for any
   call-tracking platform that needs to rewrite phone numbers site-wide
   (e.g. dynamic number insertion).
 
 ## What's intentionally not included
 
-- No reviews, star ratings, testimonials, or customer counts.
+- No fabricated reviews, testimonials, or customer counts (the star
+  rating is real, confirmed data — see above, not an exception to this).
 - No BBB/certification/award badges.
-- No `LocalBusiness` structured data — add it once a real business name,
-  address, and phone number exist.
+- No `LocalBusiness` structured data — add it once a real business
+  address exists, and once the claims above are confirmed accurate.
 - No canonical URL — add `<link rel="canonical">` once deployed to a
   real domain.
 

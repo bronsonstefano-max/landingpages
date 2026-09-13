@@ -38,4 +38,8 @@ window.SITE_CONFIG = {
   supportClaim: "24-Hour Support 7 Days a Week",
   certifiedClaim: "Certified Experts",
   factoryTrainedClaim: "Factory-Trained Technicians",
+
+  // Real, user-confirmed rating (out of 5). Only display a rating here if
+  // it reflects actual aggregated review data — never a placeholder value.
+  ratingValue: 4.5,
 };

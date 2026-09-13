@@ -83,6 +83,12 @@
       <circle cx="12" cy="9.5" r="2.6" />
       <path d="M6 21v-2.5A6 6 0 0 1 12 12.5a6 6 0 0 1 6 6V21" />
     </symbol>
+    <symbol id="icon-star" viewBox="0 0 24 24">
+      <path d="M12 2.5l2.9 6.4 6.9.6-5.2 4.6 1.6 6.8L12 17.6l-6.2 3.3 1.6-6.8L2.2 9.5l6.9-.6L12 2.5Z" />
+    </symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24">
+      <path d="M6 9l6 6 6-6" />
+    </symbol>
   </svg>
 
   <!-- ============================== HEADER ============================== -->
@@ -142,6 +148,8 @@
             </span>
           </a>
         </div>
+
+        <div class="star-rating" data-star-rating role="img" aria-label="Rated 4.5 out of 5 stars"></div>
 
         <ul class="hero-checklist">
           <li class="hero-checklist-item">
@@ -363,83 +371,88 @@
           <li class="simple-list-row">Kenmore <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
           <li class="simple-list-row">KitchenAid <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
           <li class="simple-list-row">LG <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
+          <li class="simple-list-row">Magic Chef <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
+          <li class="simple-list-row">Marvel <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
           <li class="simple-list-row">Maytag <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
+          <li class="simple-list-row">Miele <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
           <li class="simple-list-row">Samsung <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
           <li class="simple-list-row">Speed Queen <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
           <li class="simple-list-row">Sub-Zero <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
           <li class="simple-list-row">Thermador <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
+          <li class="simple-list-row">U-Line <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
           <li class="simple-list-row">Viking <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
           <li class="simple-list-row">Whirlpool <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
+          <li class="simple-list-row">Wolf <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
+          <li class="simple-list-row">And More&hellip; <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
         </ul>
+
+        <p class="closing-copy">
+          Ready to speak with a certified appliance repair expert?
+          Contact us anytime at
+          <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="brands-closing">
+            <span data-cfg="phoneDisplay">(800) 555-5555</span>
+          </a>
+          to troubleshoot a problem, schedule your appointment, or request a quote.
+        </p>
       </div>
     </section>
 
     <!--
-      Everything below this point (FAQ, final CTA, footer) is original —
-      the reference screenshots provided didn't extend this far down the
-      page, so this content was written fresh in the same visual language
-      rather than copied from an unseen source.
+      Everything below this point continues in the same visual language as
+      the reference this page was modeled on. Body paragraphs are
+      paraphrased in original wording (same message/length/position,
+      different sentences); the footer's Company links and Disclaimer text
+      are placeholders to fill in with this business's real pages/policies.
     -->
 
-    <!-- ============================== FAQ ============================== -->
-    <section class="section" aria-labelledby="faq-heading">
+    <!-- =================== HOW IT WORKS / TRUSTED NAME =================== -->
+    <section class="section" style="border-top: 1px dashed var(--color-border-dashed);">
       <div class="container">
         <div class="section-heading">
-          <h2 id="faq-heading"><span class="heading-strong">Common Questions</span> About Our Repair Service</h2>
+          <h2><span class="heading-strong" data-cfg="brandName">Appliance Wiz</span>: The Trusted Name For Appliance Repair</h2>
+          <p>
+            Looking for help getting the most out of your home appliances?
+            From the kitchen to the laundry room, <span data-cfg="brandName">Appliance Wiz</span>
+            is your one-stop shop for appliance repair. Here's how it works:
+          </p>
         </div>
 
-        <div class="faq-list">
-          <details class="faq-item">
-            <summary>
-              What appliances do you repair?
-              <svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
-            </summary>
-            <p class="faq-answer">We repair refrigerators, freezers, washers, dryers, dishwashers, ovens, ranges, stoves, microwaves, garbage disposals, and most other major home appliances.</p>
-          </details>
+        <ol class="numbered-steps">
+          <li class="numbered-step">
+            <span class="numbered-step-number" aria-hidden="true">1</span>
+            <p><strong>Schedule Your Appliance Repair:</strong> Call our phone line, let us know about your appliance problem, and we'll find a technician to help as soon as possible.</p>
+          </li>
+          <li class="numbered-step">
+            <span class="numbered-step-number" aria-hidden="true">2</span>
+            <p><strong>Your Appliance Gets Fixed:</strong> Once your technician arrives, they'll diagnose the problem and explain what work is needed. If you'd like to move forward, they'll get to work on the repair.</p>
+          </li>
+        </ol>
 
-          <details class="faq-item">
-            <summary>
-              What areas do you serve?
-              <svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
-            </summary>
-            <p class="faq-answer">
-              We serve <span data-cfg="serviceArea">[SERVICE AREA]</span>.
-              Call <span data-cfg="phoneDisplay">(800) 555-5555</span> to confirm we cover your location.
-            </p>
-          </details>
-
-          <details class="faq-item">
-            <summary>
-              How much will my repair cost?
-              <svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
-            </summary>
-            <p class="faq-answer">Cost depends on the appliance, the issue, and the parts needed. Call and describe the problem, and we'll walk you through next steps before any work begins.</p>
-          </details>
-
-          <details class="faq-item">
-            <summary>
-              Do you work on all major brands?
-              <svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
-            </summary>
-            <p class="faq-answer">Yes. Our technicians work on nearly every major appliance brand and model, regardless of where it was purchased.</p>
-          </details>
-
-          <details class="faq-item">
-            <summary>
-              How do I get started?
-              <svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
-            </summary>
-            <p class="faq-answer">Call <span data-cfg="phoneDisplay">(800) 555-5555</span>. Tell us the appliance and what's going on, and we'll take it from there.</p>
-          </details>
-        </div>
+        <p class="closing-copy">
+          Discover the <span data-cfg="brandName">Appliance Wiz</span> difference today! All you have to do is
+          pick up the phone and call
+          <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="how-it-works-closing">
+            <span data-cfg="phoneDisplay">(800) 555-5555</span>
+          </a>. Let us do the rest.
+        </p>
       </div>
     </section>
 
+    <div class="section-divider" role="presentation"></div>
+
     <!-- ============================ FINAL CTA ============================ -->
-    <section class="section final-cta" aria-labelledby="final-cta-heading">
+    <section class="final-cta" aria-labelledby="final-cta-heading">
       <div class="container">
-        <h2 id="final-cta-heading">Ready to Get Your Appliance Fixed?</h2>
-        <p>Call now and describe the issue &mdash; we'll help you take the next step.</p>
+        <h2 id="final-cta-heading">Appliance Repair</h2>
+        <p class="hero-subhead">
+          Fast, <span data-cfg="availabilityClaim">Same-Day Service Available</span>! Call us at
+          <a
+            href="tel:+18005555555"
+            class="header-phone-number"
+            data-cfg-href="phoneHref"
+            data-call-source="final-cta-inline"
+          ><span data-cfg="phoneDisplay">(800) 555-5555</span></a>.
+        </p>
         <div class="final-cta-actions">
           <a
             id="final-call-button"
@@ -448,7 +461,7 @@
             data-cfg-href="phoneHref"
             data-call-source="final-cta"
           >
-            Call <span data-cfg="phoneDisplay">(800) 555-5555</span>
+            Schedule Service
             <span class="btn-pill-icon" aria-hidden="true">
               <svg class="icon"><use href="#icon-arrow-right"></use></svg>
             </span>
@@ -461,7 +474,38 @@
   <!-- ============================== FOOTER ============================== -->
   <footer class="site-footer">
     <div class="container">
-      <div class="footer-grid">
+      <details class="footer-accordion" open>
+        <summary>
+          Company
+          <span class="footer-accordion-icon" aria-hidden="true"><svg class="icon"><use href="#icon-chevron-down"></use></svg></span>
+        </summary>
+        <div class="footer-links">
+          <a href="#">About Us</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">How It Works</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Do Not Sell My Info</a>
+        </div>
+      </details>
+
+      <details class="footer-accordion">
+        <summary>
+          Disclaimer
+          <span class="footer-accordion-icon" aria-hidden="true"><svg class="icon"><use href="#icon-chevron-down"></use></svg></span>
+        </summary>
+        <p class="footer-disclaimer-text">
+          [Placeholder — replace with language accurate to this business:
+          service area and licensing details, whether repairs are performed
+          directly or through independent contractors, and any conditions
+          on <span data-cfg="availabilityClaim">same/next-day</span> or
+          <span data-cfg="supportClaim">24-hour</span> availability (e.g.
+          "subject to technician availability and schedule"). Have this
+          reviewed before publishing.]
+        </p>
+      </details>
+
+      <div class="footer-bottom">
         <div class="brand">
           <span class="brand-icon">
             <svg class="icon icon-filled" aria-hidden="true"><use href="#icon-bolt"></use></svg>

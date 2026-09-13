@@ -61,6 +61,55 @@
     }
   }
 
+  function renderStarRating() {
+    var container = document.querySelector("[data-star-rating]");
+    if (!container || cfg.ratingValue == null) return;
+
+    var rating = Math.max(0, Math.min(5, cfg.ratingValue));
+    var full = Math.floor(rating);
+    var remainder = rating - full;
+    var hasHalf = remainder >= 0.25 && remainder < 0.75;
+    if (remainder >= 0.75) full += 1;
+    var empty = 5 - full - (hasHalf ? 1 : 0);
+
+    var starUse = '<svg class="icon icon-filled star-icon"><use href="#icon-star"></use></svg>';
+    var html = "";
+    for (var i = 0; i < full; i++) {
+      html += '<span class="star star-full">' + starUse + "</span>";
+    }
+    if (hasHalf) {
+      html +=
+        '<span class="star star-half">' +
+        '<span class="star-bg">' + starUse + "</span>" +
+        '<span class="star-fill">' + starUse + "</span>" +
+        "</span>";
+    }
+    for (var j = 0; j < empty; j++) {
+      html += '<span class="star star-empty">' + starUse + "</span>";
+    }
+
+    container.innerHTML = html;
+    container.setAttribute("aria-label", "Rated " + rating + " out of 5 stars");
+  }
+
+  function initMobileCallBarReveal() {
+    var bar = document.querySelector(".mobile-call-bar");
+    var trigger = document.querySelector("#hero-call-button");
+    if (!bar || !trigger || !("IntersectionObserver" in window)) return;
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          var shouldShow = !entry.isIntersecting;
+          bar.classList.toggle("is-visible", shouldShow);
+          document.body.classList.toggle("has-mobile-call-bar", shouldShow);
+        });
+      },
+      { rootMargin: "0px" }
+    );
+    observer.observe(trigger);
+  }
+
   function initCallTracking() {
     var callLinks = document.querySelectorAll('a[href^="tel:"]');
     callLinks.forEach(function (link) {
@@ -78,6 +127,8 @@
   document.addEventListener("DOMContentLoaded", function () {
     fillConfigValues();
     syncHeadMetadata();
+    renderStarRating();
+    initMobileCallBarReveal();
     initCallTracking();
   });
 })();
