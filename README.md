@@ -232,72 +232,98 @@ dot sits after the phone number instead) — that layout went through two
 rounds of overflow debugging already, so it was left alone rather than
 folded into the new desktop treatment.
 
-## Dynamic location insertion
+## Dynamic city insertion
 
 When `city` in `js/config.js` is still the `[CITY]` placeholder (the
 generic/national version of the page), the H1, the sidebar card heading,
 the final CTA heading, `<title>`, and the meta description all get the
-visitor's **region** (state/province) prefixed on — "Florida Appliance
-Repair" instead of the generic "Appliance Repair" — using a best-effort
-IP geolocation lookup against a third-party API (`ipapi.co/json/` by
-default, configurable via `geoCityApiUrl`; disable entirely with
-`geoCityEnabled: false`).
+visitor's **city** prefixed on — "Cape Coral Appliance Repair" instead of
+the generic "Appliance Repair."
 
-**Region, not city — deliberately.** The first version of this feature
-inserted the IP-detected *city*, and it shipped a real accuracy problem:
-IP-to-city geolocation routinely attributes a smaller city to a larger
-neighboring one, because ISPs register address blocks against a regional
-hub rather than the visitor's actual town. Real users hit this
-immediately — a Cape Coral visitor was shown "Fort Myers," a Wellington
-visitor was shown "Royal Palm Beach." Region-level (state) geolocation
-doesn't have that failure mode — it's reliably accurate — so the
-insertion point was changed from `data.city` to `data.region` in the API
-response. This is a real accuracy ceiling of IP geolocation in general,
-not a quirk of this particular provider; any IP-based service (MaxMind,
-IPinfo, etc.) has the same city-level imprecision.
+**Why this uses the browser's Geolocation API, not just an IP lookup.**
+The first version of this feature detected the city from the visitor's IP
+address, and it shipped a real accuracy problem reported by real users: a
+Cape Coral visitor was shown "Fort Myers," a Wellington visitor was shown
+"Royal Palm Beach." That's not a quirk of the provider chosen — every
+IP-to-city geolocation service has the same failure mode, because ISPs
+register address blocks against a regional hub, not the subscriber's
+actual address, and mobile carriers make it worse by routing traffic
+through a handful of regional gateways. There is no "better API" fix at
+the city level from IP alone. The only way to get real city accuracy is
+the device's actual GPS/Wi-Fi position, which is what the browser's
+`navigator.geolocation` API provides — so that's the primary path now,
+with the coordinates reverse-geocoded to a city name via BigDataCloud's
+free, key-less, client-side reverse-geocoding endpoint.
 
-Three more things worth knowing before turning this on for a real
-deployment:
+Detection order, implemented in `initGeoCity()`/`attemptDeviceGeolocation()`
+in `js/main.js`:
+
+1. **Browser Geolocation API** (GPS/Wi-Fi position) → reverse-geocoded to
+   a city name. Accurate, but requires the visitor to accept the
+   browser's native location-permission prompt.
+2. **If that's denied, unsupported, or fails** (no permission, no
+   `navigator.geolocation`, timeout, or the reverse-geocode call itself
+   fails) → falls back to an IP-geolocation lookup (`ipapi.co/json/` by
+   default, configurable via `geoCityApiUrl`), but only reads its
+   **region** (state/province) field, never its city guess — e.g.
+   "Florida Appliance Repair" rather than a specific, possibly wrong,
+   city. IP geolocation is reliably accurate at region level even though
+   it isn't at city level.
+3. **If both fail** → the generic "Appliance Repair" headline stays in
+   place. Never a broken or blank state.
+
+Disable the whole feature with `geoCityEnabled: false` in `config.js`.
+
+Things worth knowing before turning this on for a real deployment:
 
 - **It's mutually exclusive with a real configured `city`, not layered on
   top of it.** If `city` is already set to a real value, that exact
-  static city displays immediately and IP detection never runs — an
-  owner-entered city doesn't have the IP-geolocation accuracy problem, so
-  it isn't broadened to a region. Showing a visitor physically in Chicago
-  the headline "Chicago Appliance Repair" on a page for a business that
-  only serves Springfield would misrepresent where the business actually
-  works — this isn't a missed personalization opportunity, it's a
-  correctness issue, so the two modes never mix.
-- **Privacy:** this sends the visitor's IP address to a third-party
-  service (ipapi.co) before they've interacted with the page at all —
-  worth disclosing in a privacy policy, and worth choosing a provider
-  you're comfortable with contractually if this ever handles real
-  traffic.
-- **Layout shift:** the affected headings are empty (well, just
-  "Appliance Repair" with no region) until the lookup resolves, so
-  there's a small text reflow when it succeeds. Mitigated with a
-  2-second fetch timeout, firing the lookup in parallel with the rest of
-  `main.js`'s init work rather than blocking on it, and caching the
-  detected region in `sessionStorage` so it's instant on every subsequent
-  page in the same session. It fails silently on error/timeout/block,
-  leaving the generic "Appliance Repair" headline in place — never a
-  broken or blank state.
+  static city displays immediately and detection never runs at all — an
+  owner-entered city is already correct, so there's nothing to detect.
+  Showing a visitor physically in Chicago the headline "Chicago Appliance
+  Repair" on a page for a business that only serves Springfield would
+  misrepresent where the business actually works — this isn't a missed
+  personalization opportunity, it's a correctness issue, so the two modes
+  never mix.
+- **The browser will show a native location-permission prompt** shortly
+  after the page loads, unprompted by any user action. This is the
+  unavoidable cost of real city accuracy — no browser lets a site read
+  device location silently. Weigh this against the page's job as a
+  low-friction phone-call funnel for Google Ads traffic; a permission
+  popup on load is a meaningfully more visible ask than the invisible
+  IP-only version was. If that trade-off isn't acceptable, either accept
+  region-level accuracy instead (skip step 1, go straight to
+  `fallbackToIpRegion()`) or disable the feature entirely.
+- **Privacy:** two third parties are involved now — the browser's own
+  location provider (Google/Apple/etc., outside this page's control) and
+  BigDataCloud's reverse-geocoding API, which receives the visitor's raw
+  coordinates. The IP-region fallback path sends the visitor's IP address
+  to ipapi.co. All of this is worth disclosing in a privacy policy.
+- **Layout shift:** the affected headings read as generic "Appliance
+  Repair" until detection resolves, so there's a small text reflow when
+  it succeeds. Mitigated with timeouts at every step (5s for the
+  position request, 3s for reverse geocoding, 2s for the IP fallback),
+  firing in parallel with the rest of `main.js`'s init work rather than
+  blocking on it, and caching the detected value in `sessionStorage` so
+  it's instant on every subsequent page in the same session.
 
-**Untested against the live API in this dev environment** — every
+**Untested against the live APIs in this dev environment** — every
 IP-geolocation provider tried (ipapi.co, ipwho.is, geojs.io, ipinfo.io)
-is blocked by this sandbox's outbound network proxy. The implementation
-was instead verified with Playwright by mocking the fetch response and
-exercising all three code paths: request blocked/failed (falls back to
-generic), a real `city` configured (skips the network call entirely,
-confirmed via a request-count check), and a successful mocked response
-(all five targets update, and a second page load reuses the
-`sessionStorage`-cached region instead of re-fetching). Confirm the real
-API call end-to-end once this is deployed somewhere with normal internet
-access.
+is blocked by this sandbox's outbound network proxy, and there's no real
+browser/device to grant a location permission to. The implementation was
+instead verified with Playwright by mocking both the reverse-geocode and
+IP-geolocation responses, exercising the fallback path (fetch blocked →
+generic headline, no errors), the static-city path (skips detection
+entirely, confirmed via a request-count check), and the successful path
+(mocked city update propagates to all five targets, with the
+`sessionStorage` cache preventing a second lookup on reload). Confirm the
+full flow — especially the real permission-prompt UX — once this is
+deployed somewhere with normal internet access and a real browser.
 
-Implementation: `[data-geo-city-prefix]` empty `<span>`s in `index.html`
-mark each insertion point; `initGeoCity()` in `js/main.js` fills them in
-(plus `<title>`/meta) once a city is available, from either source.
+Implementation: `[data-geo-location-prefix]` empty `<span>`s in
+`index.html` mark each insertion point; `initGeoCity()` in `js/main.js`
+fills them in (plus `<title>`/meta) once a city or region is available,
+from whichever source resolved first.
 
 ## Call tracking / analytics
 

@@ -44,28 +44,39 @@ window.SITE_CONFIG = {
   // it reflects actual aggregated review data — never a placeholder value.
   ratingValue: 4.5,
 
-  // Dynamic per-visitor location insertion ("{Region} Appliance Repair" in
-  // the H1, the sidebar card heading, the final CTA heading, <title>, and
-  // the meta description). Uses a third-party IP-geolocation API, so it
-  // only ever runs when `city` above is still the "[CITY]" placeholder --
-  // i.e. this is the generic/national version of the page. If `city` is
-  // set to a real value instead (a single-location business), that
-  // static city is shown immediately and this whole feature is skipped:
-  // showing a Chicago visitor "Chicago Appliance Repair" on a page for a
-  // business that only serves Springfield would misrepresent where the
-  // business actually works, not just be a missed personalization.
+  // Dynamic per-visitor city insertion ("{City} Appliance Repair" in the
+  // H1, the sidebar card heading, the final CTA heading, <title>, and the
+  // meta description). Only ever runs when `city` above is still the
+  // "[CITY]" placeholder -- i.e. this is the generic/national version of
+  // the page. If `city` is set to a real value instead (a single-location
+  // business), that static city is shown immediately and this whole
+  // feature is skipped: showing a Chicago visitor "Chicago Appliance
+  // Repair" on a page for a business that only serves Springfield would
+  // misrepresent where the business actually works, not just be a missed
+  // personalization.
   //
-  // This inserts the visitor's *region* (state/province), not their city.
-  // IP geolocation is reliably accurate down to region level, but at city
-  // level it routinely attributes a smaller city to a larger neighboring
-  // one (e.g. a Cape Coral visitor shown as "Fort Myers"), which reads as
-  // a specific, wrong claim rather than a vague miss. Region-level text
-  // ("Florida Appliance Repair") doesn't have that failure mode.
+  // Detects the visitor's city via the browser's own Geolocation API
+  // (GPS/Wi-Fi position, reverse-geocoded to a city name) -- not IP
+  // address lookup. Real GPS/Wi-Fi position is what makes city-level
+  // accuracy possible at all: IP-to-city geolocation is unreliable
+  // because ISPs register address blocks against a regional hub rather
+  // than the subscriber's actual address, so a smaller city routinely
+  // gets attributed to a larger neighboring one (e.g. a Cape Coral
+  // visitor reported as "Fort Myers"), especially on mobile carriers.
+  // That's true of every IP geolocation provider, so there's no
+  // "better API" fix at the city level. If the visitor denies the
+  // location permission prompt, or the browser doesn't support it, this
+  // falls back to `geoCityApiUrl` below for a *region*-only guess
+  // (state/province, e.g. "Florida Appliance Repair") -- IP geolocation
+  // is reliably accurate at that broader level, so the fallback never
+  // repeats the wrong-city problem.
   //
   // Read the README's "Dynamic city insertion" section before enabling
-  // this in production -- it covers the third-party privacy implication,
-  // the layout-shift trade-off, and why the geo API call could not be
-  // tested end-to-end from this development environment.
+  // this in production -- it covers the location-permission prompt this
+  // shows visitors, the third-party privacy implications (both the
+  // browser's own location provider and the reverse-geocoding API see
+  // the visitor's coordinates), the layout-shift trade-off, and why none
+  // of this could be tested end-to-end from this development environment.
   geoCityEnabled: true,
   geoCityApiUrl: "https://ipapi.co/json/",
 };

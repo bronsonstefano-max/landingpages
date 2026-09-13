@@ -11,16 +11,18 @@
  *    to key off of. No tracking IDs are configured here; this only
  *    pushes an event if a dataLayer already exists.
  * 4. On the generic/national build of the page (config.city still the
- *    "[CITY]" placeholder), best-effort inserts the visitor's
- *    IP-detected *region* (state/province -- not the city) into every
- *    [data-geo-location-prefix] element plus <title>/meta description
- *    ("{Region} Appliance Repair"). Region, not city: IP geolocation
- *    reliably narrows down to a region but frequently attributes a
- *    smaller city to a larger neighboring one (e.g. a Cape Coral visitor
- *    shown as Fort Myers), which reads as a wrong, oddly specific claim.
- *    Region-level accuracy doesn't have that failure mode. Silently does
- *    nothing if the lookup fails, is disabled, or config.city is already
- *    a real value -- see config.js's geoCityEnabled comment.
+ *    "[CITY]" placeholder), best-effort inserts the visitor's detected
+ *    city into every [data-geo-location-prefix] element plus
+ *    <title>/meta description ("{City} Appliance Repair"). Detection
+ *    order: (a) the browser's own Geolocation API (GPS/Wi-Fi position),
+ *    reverse-geocoded to a city name -- this is real city-accurate,
+ *    since it doesn't depend on IP address registration; (b) if that's
+ *    denied, unsupported, or fails, falls back to an IP-geolocation
+ *    API's *region* (state/province), never its city guess, since
+ *    IP-to-city is unreliable (see fallbackToIpRegion's comment).
+ *    Silently does nothing further if both fail, geo is disabled, or
+ *    config.city is already a real value -- see config.js's
+ *    geoCityEnabled comment.
  *
  * No dependencies, no build step.
  */
@@ -101,32 +103,25 @@
     }
   }
 
-  function initGeoCity() {
-    // A real configured city means this page is for one fixed service
-    // area -- show it immediately (no network call, no layout-shift
-    // risk) and skip IP detection entirely. See the long comment on
-    // geoCityEnabled in config.js for why these two are mutually
-    // exclusive rather than "static first, then upgrade to detected."
-    if (!isPlaceholder(cfg.city)) {
-      applyLocationPrefix(cfg.city);
-      return;
-    }
-
-    if (cfg.geoCityEnabled === false || !cfg.geoCityApiUrl || typeof fetch !== "function") {
-      return;
-    }
-
-    var cachedRegion = null;
+  function cacheLocation(value) {
     try {
-      cachedRegion = sessionStorage.getItem("geoRegionDetected");
+      sessionStorage.setItem("geoLocationDetected", value);
     } catch (e) {
-      /* sessionStorage unavailable (private browsing, locked-down
-         browser settings, etc.) -- just skip caching, not fatal. */
+      /* no caching this visit -- not fatal */
     }
-    if (cachedRegion) {
-      applyLocationPrefix(cachedRegion);
-      return;
-    }
+  }
+
+  // IP-based fallback: only reaches for the *region* (state/province), not
+  // the city. Straight IP-to-city geolocation is unreliable -- ISPs
+  // register address blocks against a regional hub, not the subscriber's
+  // actual address, so a smaller city routinely gets attributed to a
+  // larger neighboring one (e.g. a Cape Coral visitor reported as "Fort
+  // Myers"), especially on mobile carriers where traffic funnels through
+  // a handful of regional gateways. That's true of every IP geolocation
+  // provider, not just this one, so there's no "better API" fix at the
+  // city level -- only the region is reliably accurate from IP alone.
+  function fallbackToIpRegion() {
+    if (!cfg.geoCityApiUrl || typeof fetch !== "function") return;
 
     var controller = typeof AbortController === "function" ? new AbortController() : null;
     var timeoutId = controller
@@ -141,26 +136,132 @@
       })
       .then(function (data) {
         if (timeoutId) clearTimeout(timeoutId);
-        // Use the region (state/province), not the city: IP geolocation
-        // is reliably accurate at region level, but routinely attributes
-        // a smaller city to a larger neighboring one -- e.g. a Cape Coral
-        // visitor gets shown as Fort Myers, a Wellington visitor as Royal
-        // Palm Beach. That reads as a specific, wrong claim. A region is
-        // broad enough to virtually never be wrong.
         var region = data && data.region;
         if (!region) return;
         applyLocationPrefix(region);
-        try {
-          sessionStorage.setItem("geoRegionDetected", region);
-        } catch (e) {
-          /* no caching this visit -- not fatal */
-        }
+        cacheLocation(region);
       })
       .catch(function () {
         // Network error, timeout, blocked by an ad/privacy blocker, or a
         // non-OK response. Fail silently -- the page already reads
         // correctly with the generic "Appliance Repair" headline.
       });
+  }
+
+  // Reverse-geocodes the browser's actual GPS/Wi-Fi position into a city
+  // name via BigDataCloud's free, key-less, CORS-enabled endpoint made for
+  // exactly this client-side use case. This is what makes *city*-level
+  // accuracy possible at all -- it doesn't depend on IP address
+  // registration, so it isn't fooled by the neighboring-city problem that
+  // affects every IP-only approach.
+  function reverseGeocode(latitude, longitude) {
+    if (typeof fetch !== "function") {
+      fallbackToIpRegion();
+      return;
+    }
+
+    var controller = typeof AbortController === "function" ? new AbortController() : null;
+    var timeoutId = controller
+      ? setTimeout(function () {
+          controller.abort();
+        }, 3000)
+      : null;
+    var url =
+      "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" +
+      latitude +
+      "&longitude=" +
+      longitude +
+      "&localityLanguage=en";
+
+    fetch(url, { signal: controller ? controller.signal : undefined })
+      .then(function (res) {
+        return res.ok ? res.json() : null;
+      })
+      .then(function (data) {
+        if (timeoutId) clearTimeout(timeoutId);
+        var city = data && (data.city || data.locality);
+        if (!city) {
+          fallbackToIpRegion();
+          return;
+        }
+        applyLocationPrefix(city);
+        cacheLocation(city);
+      })
+      .catch(function () {
+        fallbackToIpRegion();
+      });
+  }
+
+  function attemptDeviceGeolocation() {
+    if (!("geolocation" in navigator)) {
+      fallbackToIpRegion();
+      return;
+    }
+
+    function requestPosition() {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          reverseGeocode(position.coords.latitude, position.coords.longitude);
+        },
+        function () {
+          // Permission denied, position unavailable, or timed out.
+          // Fall back to the (safe, region-only) IP-based guess rather
+          // than showing no personalization at all.
+          fallbackToIpRegion();
+        },
+        { timeout: 5000, maximumAge: 300000 }
+      );
+    }
+
+    // Checking permission state first (where supported) avoids a wasted
+    // round trip through getCurrentPosition's own async permission flow
+    // when we already know the answer -- doesn't change behavior, since
+    // getCurrentPosition would reach the same result, but avoids
+    // triggering it at all when the visitor has already said no.
+    if (navigator.permissions && typeof navigator.permissions.query === "function") {
+      navigator.permissions.query({ name: "geolocation" }).then(
+        function (status) {
+          if (status.state === "denied") {
+            fallbackToIpRegion();
+          } else {
+            requestPosition();
+          }
+        },
+        function () {
+          requestPosition();
+        }
+      );
+    } else {
+      requestPosition();
+    }
+  }
+
+  function initGeoCity() {
+    // A real configured city means this page is for one fixed service
+    // area -- show it immediately (no network call, no layout-shift
+    // risk) and skip detection entirely. See the long comment on
+    // geoCityEnabled in config.js for why these two are mutually
+    // exclusive rather than "static first, then upgrade to detected."
+    if (!isPlaceholder(cfg.city)) {
+      applyLocationPrefix(cfg.city);
+      return;
+    }
+
+    if (cfg.geoCityEnabled === false) return;
+
+    var cachedLocation = null;
+    try {
+      cachedLocation = sessionStorage.getItem("geoLocationDetected");
+    } catch (e) {
+      /* sessionStorage unavailable (private browsing, locked-down
+         browser settings, etc.) -- just skip caching, not fatal. */
+    }
+    if (cachedLocation) {
+      applyLocationPrefix(cachedLocation);
+      return;
+    }
+
+    attemptDeviceGeolocation();
   }
 
   function renderStarRating() {
