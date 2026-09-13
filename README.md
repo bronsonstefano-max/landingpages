@@ -232,6 +232,55 @@ dot sits after the phone number instead) — that layout went through two
 rounds of overflow debugging already, so it was left alone rather than
 folded into the new desktop treatment.
 
+## Dynamic city insertion
+
+When `city` in `js/config.js` is still the `[CITY]` placeholder (the
+generic/national version of the page), the H1, the sidebar card heading,
+the final CTA heading, `<title>`, and the meta description all get the
+visitor's city prefixed on — "Austin Appliance Repair" instead of the
+generic "Appliance Repair" — using a best-effort IP geolocation lookup
+against a third-party API (`ipapi.co/json/` by default, configurable via
+`geoCityApiUrl`; disable entirely with `geoCityEnabled: false`).
+
+Three things worth knowing before turning this on for a real deployment:
+
+- **It's mutually exclusive with a real configured `city`, not layered on
+  top of it.** If `city` is already set to a real value, that static city
+  displays immediately and IP detection never runs. Showing a visitor
+  physically in Chicago the headline "Chicago Appliance Repair" on a page
+  for a business that only serves Springfield would misrepresent where
+  the business actually works — this isn't a missed personalization
+  opportunity, it's a correctness issue, so the two modes never mix.
+- **Privacy:** this sends the visitor's IP address to a third-party
+  service (ipapi.co) before they've interacted with the page at all —
+  worth disclosing in a privacy policy, and worth choosing a provider
+  you're comfortable with contractually if this ever handles real
+  traffic.
+- **Layout shift:** the affected headings are empty (well, just
+  "Appliance Repair" with no city) until the lookup resolves, so there's
+  a small text reflow when it succeeds. Mitigated with a 2-second fetch
+  timeout, firing the lookup in parallel with the rest of `main.js`'s
+  init work rather than blocking on it, and caching the detected city in
+  `sessionStorage` so it's instant on every subsequent page in the same
+  session. It fails silently on error/timeout/block, leaving the generic
+  "Appliance Repair" headline in place — never a broken or blank state.
+
+**Untested against the live API in this dev environment** — every
+IP-geolocation provider tried (ipapi.co, ipwho.is, geojs.io, ipinfo.io)
+is blocked by this sandbox's outbound network proxy. The implementation
+was instead verified with Playwright by mocking the fetch response and
+exercising all three code paths: request blocked/failed (falls back to
+generic), a real `city` configured (skips the network call entirely,
+confirmed via a request-count check), and a successful mocked response
+(all five targets update, and a second page load reuses the
+`sessionStorage`-cached city instead of re-fetching). Confirm the real
+API call end-to-end once this is deployed somewhere with normal internet
+access.
+
+Implementation: `[data-geo-city-prefix]` empty `<span>`s in `index.html`
+mark each insertion point; `initGeoCity()` in `js/main.js` fills them in
+(plus `<title>`/meta) once a city is available, from either source.
+
 ## Call tracking / analytics
 
 No tracking IDs are hardcoded or invented.

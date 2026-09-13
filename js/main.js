@@ -10,6 +10,12 @@
  *    GTM/GA4/call-tracking integration has a single, consistent hook
  *    to key off of. No tracking IDs are configured here; this only
  *    pushes an event if a dataLayer already exists.
+ * 4. On the generic/national build of the page (config.city still the
+ *    "[CITY]" placeholder), best-effort inserts the visitor's
+ *    IP-detected city into every [data-geo-city-prefix] element plus
+ *    <title>/meta description ("{City} Appliance Repair"). Silently
+ *    does nothing if the lookup fails, is disabled, or config.city is
+ *    already a real value -- see config.js's geoCityEnabled comment.
  *
  * No dependencies, no build step.
  */
@@ -59,6 +65,91 @@
         applyReplacements(metaDescription.getAttribute("content") || "")
       );
     }
+  }
+
+  function isPlaceholder(value) {
+    return !value || /^\[.*\]$/.test(value);
+  }
+
+  function applyCityPrefix(city) {
+    if (!city) return;
+
+    document.querySelectorAll("[data-geo-city-prefix]").forEach(function (el) {
+      el.textContent = city + " ";
+    });
+
+    if (cfg.brandName) {
+      document.title = city + " Appliance Repair | " + cfg.brandName;
+    }
+
+    var metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription && cfg.brandName && cfg.phoneDisplay) {
+      metaDescription.setAttribute(
+        "content",
+        cfg.brandName +
+          " provides " +
+          city +
+          " appliance repair — refrigerators, washers, dryers, dishwashers, ovens, and more. Call " +
+          cfg.phoneDisplay +
+          " to get help fast."
+      );
+    }
+  }
+
+  function initGeoCity() {
+    // A real configured city means this page is for one fixed service
+    // area -- show it immediately (no network call, no layout-shift
+    // risk) and skip IP detection entirely. See the long comment on
+    // geoCityEnabled in config.js for why these two are mutually
+    // exclusive rather than "static first, then upgrade to detected."
+    if (!isPlaceholder(cfg.city)) {
+      applyCityPrefix(cfg.city);
+      return;
+    }
+
+    if (cfg.geoCityEnabled === false || !cfg.geoCityApiUrl || typeof fetch !== "function") {
+      return;
+    }
+
+    var cachedCity = null;
+    try {
+      cachedCity = sessionStorage.getItem("geoCityDetected");
+    } catch (e) {
+      /* sessionStorage unavailable (private browsing, locked-down
+         browser settings, etc.) -- just skip caching, not fatal. */
+    }
+    if (cachedCity) {
+      applyCityPrefix(cachedCity);
+      return;
+    }
+
+    var controller = typeof AbortController === "function" ? new AbortController() : null;
+    var timeoutId = controller
+      ? setTimeout(function () {
+          controller.abort();
+        }, 2000)
+      : null;
+
+    fetch(cfg.geoCityApiUrl, { signal: controller ? controller.signal : undefined })
+      .then(function (res) {
+        return res.ok ? res.json() : null;
+      })
+      .then(function (data) {
+        if (timeoutId) clearTimeout(timeoutId);
+        var city = data && data.city;
+        if (!city) return;
+        applyCityPrefix(city);
+        try {
+          sessionStorage.setItem("geoCityDetected", city);
+        } catch (e) {
+          /* no caching this visit -- not fatal */
+        }
+      })
+      .catch(function () {
+        // Network error, timeout, blocked by an ad/privacy blocker, or a
+        // non-OK response. Fail silently -- the page already reads
+        // correctly with the generic "Appliance Repair" headline.
+      });
   }
 
   function renderStarRating() {
@@ -127,6 +218,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     fillConfigValues();
     syncHeadMetadata();
+    initGeoCity();
     renderStarRating();
     initMobileCallBarReveal();
     initCallTracking();

@@ -43,4 +43,22 @@ window.SITE_CONFIG = {
   // Real, user-confirmed rating (out of 5). Only display a rating here if
   // it reflects actual aggregated review data — never a placeholder value.
   ratingValue: 4.5,
+
+  // Dynamic per-visitor city insertion ("{City} Appliance Repair" in the
+  // H1, the sidebar card heading, the final CTA heading, <title>, and the
+  // meta description). Uses a third-party IP-geolocation API, so it only
+  // ever runs when `city` above is still the "[CITY]" placeholder --
+  // i.e. this is the generic/national version of the page. If `city` is
+  // set to a real value instead (a single-location business), that
+  // static city is shown immediately and this whole feature is skipped:
+  // showing a Chicago visitor "Chicago Appliance Repair" on a page for a
+  // business that only serves Springfield would misrepresent where the
+  // business actually works, not just be a missed personalization.
+  //
+  // Read the README's "Dynamic city insertion" section before enabling
+  // this in production -- it covers the third-party privacy implication,
+  // the layout-shift trade-off, and why the geo API call could not be
+  // tested end-to-end from this development environment.
+  geoCityEnabled: true,
+  geoCityApiUrl: "https://ipapi.co/json/",
 };
