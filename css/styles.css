@@ -362,11 +362,67 @@ button {
 }
 
 .header-online-dot {
+  position: relative;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: #22c55e;
   flex-shrink: 0;
+}
+
+.header-online-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: dot-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes dot-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  75%,
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Phone icons take a brief, occasional shake to draw the eye without
+   being distracting -- most of each cycle they sit still. */
+.icon-phone-shake {
+  display: inline-block;
+  animation: phone-shake 4.5s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes phone-shake {
+  0%,
+  90%,
+  100% {
+    transform: rotate(0deg);
+  }
+  91% {
+    transform: rotate(-16deg);
+  }
+  92.5% {
+    transform: rotate(13deg);
+  }
+  94% {
+    transform: rotate(-10deg);
+  }
+  95.5% {
+    transform: rotate(7deg);
+  }
+  97% {
+    transform: rotate(-4deg);
+  }
+  98.5% {
+    transform: rotate(0deg);
+  }
 }
 
 /* ==========================================================================
@@ -715,6 +771,16 @@ button {
   color: var(--color-text-muted);
 }
 
+.closing-copy a {
+  color: var(--color-blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.closing-copy a:hover {
+  text-decoration: underline;
+}
+
 /* ==========================================================================
    Decorative section divider
    ========================================================================== */
@@ -728,6 +794,7 @@ button {
    Final CTA (repeats the hero pattern)
    ========================================================================== */
 .final-cta {
+  padding-block: var(--space-7);
   background-color: var(--color-ink);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cg stroke='%23ffffff' stroke-opacity='0.05' fill='none'%3E%3Cpath d='M-20 30 Q 40 -10 100 30 T 220 30 T 340 30'/%3E%3Cpath d='M-20 90 Q 40 50 100 90 T 220 90 T 340 90'/%3E%3Cpath d='M-20 150 Q 40 110 100 150 T 220 150 T 340 150'/%3E%3Cpath d='M-20 210 Q 40 170 100 210 T 220 210 T 340 210'/%3E%3C/g%3E%3C/svg%3E");
   color: #fff;
@@ -846,6 +913,9 @@ button {
 }
 
 .footer-meta a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
   color: #ffffff;
   text-decoration: none;
   font-weight: 700;
