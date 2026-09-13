@@ -920,6 +920,23 @@ button {
   .content-sidebar {
     display: block;
   }
+
+  /* The sidebar card (below) shows this same photo, so showing it again
+     bleeding out of the hero right above it would just be the same
+     image twice on screen at once. The reference hero has no photo at
+     all at this width -- only the sidebar does. Mobile/tablet (< 960px,
+     no sidebar) keep the hero photo exactly as before. */
+  .hero {
+    padding-block: var(--space-8) var(--space-7);
+  }
+
+  .hero-visual {
+    display: none;
+  }
+
+  .intro-section {
+    padding-top: var(--space-7);
+  }
 }
 
 .sidebar-card {
