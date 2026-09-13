@@ -3,7 +3,7 @@
  *
  * 1. Fills every element tagged with data-cfg / data-cfg-href from the
  *    single SITE_CONFIG object (js/config.js), so the phone number, brand
- *    name, and location only ever need to be edited in one place.
+ *    name, and claim strings only ever need to be edited in one place.
  * 2. Syncs <title> and the meta description with the same config, for
  *    crawlers/ad reviewers that execute JavaScript.
  * 3. Emits a dataLayer event on every call-button click so a future
@@ -34,9 +34,6 @@
     var replacements = {
       "\\[BRAND NAME\\]": cfg.brandName,
       "\\[PHONE NUMBER\\]": cfg.phoneDisplay,
-      "\\[CITY\\]": cfg.city,
-      "\\[STATE\\]": cfg.state,
-      "\\[SERVICE AREA\\]": cfg.serviceArea,
     };
 
     function applyReplacements(text) {

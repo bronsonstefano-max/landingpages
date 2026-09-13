@@ -29,16 +29,20 @@ image the user supplied directly and owns the rights to use — not a copy
 of the reference site's photo. It replaced an earlier original SVG
 illustration once the user provided it.
 
-## The 4.5-star rating
+## The star rating
 
-Unlike the first version of this page, a star rating **is** shown — the
-user confirmed this business is actually rated 4.5 stars, so it's real
-data, not the fabricated social proof the original build brief warned
-against. It's centralized as `ratingValue: 4.5` in `js/config.js` and
-rendered by `renderStarRating()` in `js/main.js` (full/half/empty stars
-computed from that single number — update the number, not the markup).
-If you can name the source (e.g. "based on Google reviews"), consider
-adding that label next to the stars for credibility.
+Unlike the first version of this page, a star rating **is** shown —
+currently `ratingValue: 5` in `js/config.js`, rendered at a larger size
+(`.star-rating`'s `font-size` was bumped to `var(--fs-xl)`) than the
+original build. `renderStarRating()` in `js/main.js` computes full/half/
+empty stars from that single number — update the number there, not the
+markup, and the aria-label fallback in `index.html`'s static HTML
+(`aria-label="Rated 5 out of 5 stars"`) to match if it changes again.
+**This must reflect real, confirmed rating data** — a 5-star claim is a
+stronger statement than the original 4.5, so before launch, verify it
+against an actual source (Google reviews, etc.) rather than displaying
+it as aspirational. If you can name the source, consider adding that
+label next to the stars for credibility.
 
 ## ⚠️ Claims to verify before launch
 
@@ -64,10 +68,11 @@ make them true for this business. Before launch:
   not togglable `<details>` accordions — at the user's request. They're
   plain `.footer-accordion` blocks in `index.html`; the
   class name is a holdover from when they were collapsible.
-- The footer's Company links (About Us, Privacy Policy, How It Works,
-  Terms of Service, Contact Us, Do Not Sell My Info) point to `#` —
-  they're placeholders for pages that don't exist yet, per "main page
-  only for now."
+- The footer's Company links: **About Us** (`about-us.html`), **How It
+  Works** (`how-it-works.html`), and **Do Not Sell My Info**
+  (`do-not-sell.html`) are now real pages — see "Secondary pages" below.
+  **Privacy Policy**, **Terms of Service**, and **Contact Us** still
+  point to `#` — placeholders for pages that don't exist yet.
 
 ## Stack
 
@@ -76,14 +81,21 @@ npm dependencies, and **no third-party requests at all** — the page loads
 entirely from its own origin.
 
 ```
-index.html        Page markup AND the stylesheet (inlined — see Performance)
-js/config.js       Centralized business config (phone, brand, claims, rating)
-js/main.js         Injects config into the DOM, syncs <title>/meta, renders
+index.html         Main landing page. Markup AND the stylesheet (inlined
+                    — see Performance) since it's the ad-funnel page.
+about-us.html       Secondary page (footer "About Us" link)
+how-it-works.html   Secondary page (footer "How It Works" link)
+do-not-sell.html    Secondary page (footer "Do Not Sell My Info" link) --
+                    CCPA request form, not yet wired to a backend
+js/config.js        Centralized business config (phone, brand, claims, rating)
+js/main.js          Injects config into the DOM, syncs <title>/meta, renders
                     the star rating, drives the scroll-triggered sticky
                     call bar, and pushes a dataLayer event on call clicks
-assets/            Hero photo (WebP)
-assets/fonts/      Self-hosted Poppins (latin subset) + its OFL license
-_headers            Netlify cache lifetimes
+                    -- shared by all four pages
+assets/             Hero photo (WebP)
+assets/fonts/       Self-hosted Poppins (latin subset) + its OFL license
+_headers            Netlify cache lifetimes (see Hosting on GitHub Pages)
+.nojekyll           Tells GitHub Pages to serve files as-is (see Hosting)
 robots.txt          Allow-all crawling
 ```
 
@@ -151,22 +163,27 @@ window.SITE_CONFIG = {
   brandName: "Appliance Helpers",
   phoneDisplay: "(800) 555-5555",
   phoneHref: "tel:+18005555555",
-  city: "[CITY]",
-  state: "[STATE]",
-  serviceArea: "[SERVICE AREA]",
   hours: "[HOURS]",
   availabilityClaim: "Same & Next-Day Service Available",
   supportClaim: "24-Hour Support 7 Days a Week",
   certifiedClaim: "Certified Experts",
   factoryTrainedClaim: "Factory-Trained Technicians",
-  ratingValue: 4.5,
+  availabilityBadge: "Available 24/7",
+  ratingValue: 5,
 };
 ```
 
-Update these and every mention across the page updates automatically via
-`data-cfg`/`data-cfg-href` attributes in `index.html`.
+There's no `city`/`state`/`serviceArea` here anymore — the site
+deliberately makes no city- or region-specific claims (see "No local/area
+claims" below), so nothing in `index.html` reads those fields.
 
-The `<title>` and meta description in `index.html`'s `<head>`, and the
+Update these and every mention across the page updates automatically via
+`data-cfg`/`data-cfg-href` attributes — shared identically by `index.html`
+and the three secondary pages, since all four load the same
+`js/config.js` and `js/main.js`.
+
+The `<title>` and meta description in `index.html`'s `<head>` (and the
+equivalent tags in the three secondary pages), and the
 `tel:+18005555555` values hardcoded as the no-JS fallback on every call
 link, should also be updated to match if the phone number changes —
 `main.js` syncs `<title>`/meta and every `data-cfg-href` at runtime, but
@@ -231,6 +248,63 @@ the header is unchanged from before this existed (no badge, no dividers,
 dot sits after the phone number instead) — that layout went through two
 rounds of overflow debugging already, so it was left alone rather than
 folded into the new desktop treatment.
+
+## No local/area claims
+
+At the user's request, the page makes no claim about a specific city,
+neighborhood, or defined service area. Two spots on the main page used to
+say otherwise and were reworded:
+
+- The "Why Choose" benefit list's last item was "In Your Neighborhood:
+  With technicians serving `[SERVICE AREA]`..." (a `[SERVICE AREA]`
+  placeholder that was never filled in). It's now "Statewide Coverage:
+  With technicians throughout the state, Appliance Helpers is your best
+  option for quick service, no matter where you're located."
+- The brands section heading "Your **Local** Appliance Service Center"
+  is now "Your **Go-To** Appliance Service Center."
+
+The `city`, `state`, and `serviceArea` fields were removed from
+`js/config.js` entirely (along with their `[CITY]`/`[STATE]`/
+`[SERVICE AREA]` bracket-replacement logic in `syncHeadMetadata()` in
+`js/main.js`) since nothing in the markup reads them anymore — keeping
+them would've been dead config that looked like it needed filling in.
+The footer's Disclaimer text still says "local appliance repair experts"
+in one place; that's real, user-supplied legal copy describing how the
+referral-service model works generically, not a specific-area marketing
+claim, so it was left as-is.
+
+## Secondary pages
+
+Three of the footer's Company links now go to real pages instead of `#`:
+`about-us.html`, `how-it-works.html`, and `do-not-sell.html`. Each is a
+fully self-contained HTML file (same pattern as `index.html`: no build
+step, so the file itself is fully readable/editable) that duplicates
+`index.html`'s entire inlined stylesheet plus the icon sprite, header,
+footer, and mobile sticky call bar verbatim, so all four pages look and
+behave identically. All four load the same `js/config.js` and
+`js/main.js`, so the phone number, brand name, and claim strings stay in
+sync across every page from one edit.
+
+This does mean the ~1,200-line stylesheet is duplicated four times
+rather than shared from one file. That trade-off was deliberate: these
+pages aren't Google Ads traffic destinations, so the render-blocking-
+stylesheet concern that justified inlining CSS on `index.html` doesn't
+apply here, but correctness does — the header/mobile-call-bar responsive
+behavior went through two rounds of hard-won overflow debugging (see
+Performance), and copying the whole block verbatim guarantees these
+pages can't drift out of sync with it. If you add a fourth or fifth
+secondary page, consider extracting a shared `css/pages.css` instead of
+copying the block a third time.
+
+**`do-not-sell.html`'s CCPA request form is not wired to anything yet.**
+It's a plain `<form action="#" method="post">` with the seven fields the
+user specified (Name, Email, State, Street Address, City, Zip Code,
+Message) and a Submit button — submitting it right now does nothing.
+Before launch, point `action` at a real endpoint: a form-handling service
+(Formspree, etc.), a serverless function, or your CRM's intake API.
+Deliberately not faked with a JS success message — a visitor filing a
+legal CCPA request needs to actually know whether it went through, not
+be told it did when it didn't.
 
 ## Call tracking / analytics
 

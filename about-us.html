@@ -3,19 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- LCP element. Preloaded here so the request starts in the first bytes
-       of the document, rather than when the parser reaches the <img>. -->
-  <link
-    rel="preload"
-    as="image"
-    href="assets/appliance-technician-blue.webp"
-    fetchpriority="high"
-  />
-  <title>Appliance Helpers | Appliance Repair Service</title>
+  <title>About Us | Appliance Helpers</title>
   <meta
     name="description"
-    content="Appliance Helpers repairs refrigerators, washers, dryers, dishwashers, ovens, and more. Call (800) 555-5555 to get help fast."
+    content="Appliance Helpers connects homeowners with trusted, factory-trained appliance repair technicians -- fast scheduling, upfront pricing, no surprises."
   />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0e0e11" />
@@ -23,24 +14,6 @@
     rel="icon"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%231657ff'/%3E%3Cpath d='M13 3 5 14h5l-1 7 8-11h-5l1-7Z' fill='white'/%3E%3C/svg%3E"
   />
-
-  <!-- Canonical URL: set once this page is deployed to a real domain. -->
-  <!-- <link rel="canonical" href="https://www.example.com/" /> -->
-
-  <!--
-    Poppins is self-hosted (latin subset, SIL OFL 1.1 -- see
-    assets/fonts/OFL.txt) rather than loaded from Google Fonts. That drops
-    two third-party origins from the critical path, and the @font-face
-    rules live in the inlined CSS below, so nothing blocks render. The
-    files are preloaded because all three weights appear above the fold;
-    arriving early keeps the swap from shifting layout.
-  -->
-
-  <!--
-    The stylesheet is inlined rather than linked so the page renders
-    without waiting on a second round trip. There is no build step: this
-    <style> block IS the stylesheet -- edit it directly.
-  -->
   <style>
 /* ==========================================================================
    Fonts (self-hosted, latin subset)
@@ -1235,19 +1208,36 @@ button {
   }
 }
   </style>
+  <style>
+/* ==========================================================================
+   Secondary-page additions (about-us / how-it-works / do-not-sell).
+   Kept separate from the main stylesheet above since only these simpler,
+   non-ad-funnel pages use them.
+   ========================================================================== */
+.page-hero {
+  padding-block: var(--space-8) var(--space-6);
+  border-bottom: 1px dashed var(--color-border-dashed);
+}
 
-  <!--
-    Analytics / tag manager placeholder.
-    Add Google Tag Manager or gtag.js here once container/measurement IDs
-    are available. js/main.js already pushes a `phone_call_click` event to
-    window.dataLayer on every tel: link click, so GTM triggers can be wired
-    up without further code changes.
-  -->
+.page-hero h1 {
+  font-size: var(--fs-2xl);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.prose {
+  max-width: 68ch;
+  color: var(--color-text-muted);
+}
+
+.prose p + p {
+  margin-top: var(--space-4);
+}
+  </style>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <!-- Reusable icon sprite (defined once, referenced everywhere via <use>) -->
   <svg class="icon-sprite" aria-hidden="true" focusable="false">
     <symbol id="icon-bolt" viewBox="0 0 24 24">
       <path d="M13 3 5 14h5l-1 7 8-11h-5l1-7Z" />
@@ -1298,7 +1288,6 @@ button {
     </symbol>
   </svg>
 
-  <!-- ============================== HEADER ============================== -->
   <header class="site-header">
     <div class="container">
       <div class="brand">
@@ -1330,388 +1319,57 @@ button {
     </div>
   </header>
 
-  <main id="main-content">
-    <!-- ============================== HERO ============================== -->
-    <section class="hero">
-      <div class="container">
-        <h1>Appliance Repair</h1>
-        <p class="hero-subhead">
-          <span data-cfg="availabilityClaim">Same &amp; Next-Day Service Available</span>.
-          Call us at
-          <a
-            id="hero-phone-link"
-            class="header-phone-number"
-            href="tel:+18005555555"
-            data-cfg-href="phoneHref"
-            data-call-source="hero-inline"
-          ><span data-cfg="phoneDisplay">(800) 555-5555</span></a>.
-        </p>
 
-        <div class="hero-cta">
-          <a
-            id="hero-call-button"
-            class="btn btn-pill"
-            href="tel:+18005555555"
-            data-cfg-href="phoneHref"
-            data-call-source="hero"
-          >
-            Schedule Service
-            <span class="btn-pill-icon" aria-hidden="true">
-              <svg class="icon"><use href="#icon-arrow-right"></use></svg>
-            </span>
-          </a>
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <h1>About Us</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="prose">
+          <p>
+            Finding a home service provider you can actually trust
+            shouldn&rsquo;t be this hard &mdash; but for a lot of
+            homeowners, it is. At <span data-cfg="brandName">Appliance Helpers</span>,
+            changing that is the whole point.
+          </p>
+          <p>
+            From your very first call to the moment your appliance is
+            running again, our team is working toward one goal: five-star
+            service, every time, with nothing cut short.
+          </p>
         </div>
 
-        <div class="star-rating" data-star-rating role="img" aria-label="Rated 5 out of 5 stars"></div>
-
-        <ul class="hero-checklist">
-          <li class="hero-checklist-item">
-            <span class="hero-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-            <span>We Service All Brands &amp; Models</span>
+        <ul class="benefit-list" style="margin-top: var(--space-6);">
+          <li class="benefit-list-item">
+            <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
+            <p><strong>Fast Service On Your Time:</strong> Scheduling shouldn&rsquo;t be the hard part. That&rsquo;s why we keep appointment times flexible, including same- and next-day service.</p>
           </li>
-          <li class="hero-checklist-item">
-            <span class="hero-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-            <span data-cfg="availabilityClaim">Same &amp; Next-Day Service Available</span>
+          <li class="benefit-list-item">
+            <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
+            <p><strong>Always Affordable, Upfront Pricing:</strong> No surprise charges, ever. Your technician walks you through the options available before any work begins, so you always know what to expect.</p>
           </li>
-          <li class="hero-checklist-item">
-            <span class="hero-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-            <span>Zero Obligation Up-Front Quotes</span>
-          </li>
-          <li class="hero-checklist-item">
-            <span class="hero-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-            <span data-cfg="supportClaim">24-Hour Support 7 Days a Week</span>
+          <li class="benefit-list-item">
+            <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
+            <p><strong>Factory-Trained Professionals:</strong> Whatever the brand or model, <span data-cfg="brandName">Appliance Helpers</span> is your go-to for kitchen and laundry appliance repair alike.</p>
           </li>
         </ul>
 
-        <div class="hero-visual">
-          <img
-            class="hero-photo"
-            src="assets/appliance-technician-blue.webp"
-            width="800"
-            height="451"
-            alt="Appliance repair technician standing in front of a refrigerator, oven, washer, dryer, microwave, and dishwasher"
-            fetchpriority="high"
-            decoding="async"
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================= SERVICES INTRO ========================= -->
-    <!--
-      Services/benefits/brands/how-it-works share one 2-column layout on
-      desktop: main content scrolls on the left, a sticky photo+call card
-      stays pinned in the right column the whole way down (matching the
-      reference design). Below 960px the sidebar is hidden -- content-grid
-      falls back to a single column and the sticky card would have nothing
-      useful to pin against anyway on a short viewport; the mobile sticky
-      call bar and inline callouts already cover the same job there.
-    -->
-    <section class="content-with-sidebar">
-      <div class="container content-grid">
-        <div class="content-main">
-          <div class="section intro-section">
-            <div class="section-heading">
-              <h2><span class="heading-strong">Quick &amp; Affordable</span> In-Home Appliance Repair Services</h2>
-              <p>
-                Whether it's a small glitch or a full breakdown, <span data-cfg="brandName">Appliance Helpers</span> has
-                technicians ready to help &mdash; no matter which store or brand
-                your appliance came from.
-              </p>
-            </div>
-
-            <nav class="simple-list" aria-label="Appliance repair services">
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Laundry Machine Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Washer Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Dryer Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Kitchen Appliance Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Refrigerator Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Freezer Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Ice Maker Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Dishwasher Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Oven &amp; Range Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Stove &amp; Cooktop Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Vent Hood Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Garbage Disposal Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Microwave Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Trash Compactor Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Ice Machine Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Wine &amp; Keg Cooler Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Beverage Center Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
-                <span><span class="visually-hidden">Call about </span>Water Softener Repair</span>
-                <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
-              </a>
-            </nav>
-          </div>
-
-          <!-- ============================ CALLOUT 1 ============================ -->
-          <div class="section" style="padding-block: var(--space-6);">
-            <p class="callout-box">
-              Need your appliance fixed today? Call us now at
-              <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="callout-1">
-                <span data-cfg="phoneDisplay">(800) 555-5555</span>
-              </a>
-              and we'll help get a technician out to you as soon as possible.
-            </p>
-          </div>
-
-          <!-- ============================ WHY CHOOSE ============================ -->
-          <div class="section">
-            <div class="section-heading">
-              <h2><span class="heading-strong">Appliance Repair Done Right:</span><br />Quality Service You Can Trust</h2>
-              <p>
-                A broken appliance can throw off your whole day. At <span data-cfg="brandName">Appliance Helpers</span>,
-                we aim to get things fixed quickly, professionally, and at
-                a fair price.
-              </p>
-            </div>
-
-            <ul class="benefit-list">
-              <li class="benefit-list-item">
-                <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-                <p><strong>Fast, On-Time Service:</strong> We keep scheduling simple, with flexible appointment windows built around your day.</p>
-              </li>
-              <li class="benefit-list-item">
-                <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-                <p><strong data-cfg="factoryTrainedClaim">Factory-Trained Technicians</strong>: Whatever the brand or model, <span data-cfg="brandName">Appliance Helpers</span> technicians come prepared to handle the repair.</p>
-              </li>
-              <li class="benefit-list-item">
-                <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-                <p><strong>Same-Day Appliance Repairs:</strong> Fully stocked service vehicles mean most repairs are completed in a single visit.</p>
-              </li>
-              <li class="benefit-list-item">
-                <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-                <p><strong>Always Affordable Pricing:</strong> No surprise charges &mdash; you'll know the cost before any work begins.</p>
-              </li>
-              <li class="benefit-list-item">
-                <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-                <p><strong>Statewide Coverage:</strong> With technicians throughout the state, <span data-cfg="brandName">Appliance Helpers</span> is your best option for quick service, no matter where you're located.</p>
-              </li>
-            </ul>
-          </div>
-
-          <!-- ============================ CALLOUT 2 ============================ -->
-          <div class="section" style="padding-block: var(--space-6);">
-            <p class="callout-box">
-              Don't wait another day with a broken appliance. Call
-              <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="callout-2">
-                <span data-cfg="phoneDisplay">(800) 555-5555</span>
-              </a>
-              for fast service, 7 days a week.
-            </p>
-          </div>
-
-          <!-- ============================== BRANDS ============================== -->
-          <div class="section">
-            <div class="section-heading">
-              <h2><span class="heading-strong">Your Go-To Appliance Service Center</span> For All Major Brands &amp; Models</h2>
-              <p>
-                No matter where or when you bought it, our repair technicians
-                work on nearly every major appliance brand. Here are some of the
-                brands we regularly service:
-              </p>
-            </div>
-
-            <ul class="simple-list simple-list--grid">
-              <li class="simple-list-row">Admiral <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Amana <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Bosch <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Dacor <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Crosley <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Electrolux <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Estate <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Fisher &amp; Paykel <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Frigidaire <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">General Electric <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Hotpoint <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Jenn-Air <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Kenmore <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">KitchenAid <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">LG <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Magic Chef <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Marvel <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Maytag <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Miele <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Samsung <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Speed Queen <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Sub-Zero <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Thermador <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">U-Line <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Viking <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Whirlpool <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">Wolf <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-              <li class="simple-list-row">And More&hellip; <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
-            </ul>
-
-            <p class="closing-copy">
-              Ready to speak with a certified appliance repair expert?
-              Contact us anytime at
-              <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="brands-closing">
-                <span data-cfg="phoneDisplay">(800) 555-5555</span>
-              </a>
-              to troubleshoot a problem, schedule your appointment, or request a quote.
-            </p>
-          </div>
-
-          <!--
-            Everything below this point continues in the same visual
-            language as the reference this page was modeled on. Body
-            paragraphs are paraphrased in original wording (same message/
-            length/position, different sentences); the footer's Company
-            links and Disclaimer text are placeholders to fill in with
-            this business's real pages/policies.
-          -->
-
-          <!-- =================== HOW IT WORKS / TRUSTED NAME =================== -->
-          <div class="section" style="border-top: 1px dashed var(--color-border-dashed);">
-            <div class="section-heading">
-              <h2><span class="heading-strong" data-cfg="brandName">Appliance Helpers</span>: The Trusted Name For Appliance Repair</h2>
-              <p>
-                Looking for help getting the most out of your home appliances?
-                From the kitchen to the laundry room, <span data-cfg="brandName">Appliance Helpers</span>
-                is your one-stop shop for appliance repair. Here's how it works:
-              </p>
-            </div>
-
-            <ol class="numbered-steps">
-              <li class="numbered-step">
-                <span class="numbered-step-number" aria-hidden="true">1</span>
-                <p><strong>Schedule Your Appliance Repair:</strong> Call our phone line, let us know about your appliance problem, and we'll find a technician to help as soon as possible.</p>
-              </li>
-              <li class="numbered-step">
-                <span class="numbered-step-number" aria-hidden="true">2</span>
-                <p><strong>Your Appliance Gets Fixed:</strong> Once your technician arrives, they'll diagnose the problem and explain what work is needed. If you'd like to move forward, they'll get to work on the repair.</p>
-              </li>
-            </ol>
-
-            <p class="closing-copy">
-              Discover the <span data-cfg="brandName">Appliance Helpers</span> difference today! All you have to do is
-              pick up the phone and call
-              <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="how-it-works-closing">
-                <span data-cfg="phoneDisplay">(800) 555-5555</span>
-              </a>. Let us do the rest.
-            </p>
-          </div>
-        </div>
-
-        <!-- Desktop-only sticky sidebar. Same photo as the hero, reused
-             intentionally (not a second asset) -- see the reference. -->
-        <aside class="content-sidebar">
-          <div class="sidebar-card">
-            <img
-              class="sidebar-card-photo"
-              src="assets/appliance-technician-blue.webp"
-              width="800"
-              height="451"
-              alt=""
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="sidebar-card-body">
-              <h3>Appliance Repair</h3>
-              <p>Need Your Repair Done Today? Call Now For Fast Service.</p>
-              <a
-                id="sidebar-call-button"
-                class="btn-banner"
-                href="tel:+18005555555"
-                data-cfg-href="phoneHref"
-                data-call-source="sidebar-card"
-              >
-                <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
-                <span data-cfg="phoneDisplay">(800) 555-5555</span>
-              </a>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <div class="section-divider" role="presentation"></div>
-
-    <!-- ============================ FINAL CTA ============================ -->
-    <section class="final-cta" aria-labelledby="final-cta-heading">
-      <div class="container">
-        <h2 id="final-cta-heading">Appliance Repair</h2>
-        <p class="hero-subhead">
-          Fast, <span data-cfg="availabilityClaim">Same-Day Service Available</span>! Call us at
-          <a
-            href="tel:+18005555555"
-            class="header-phone-number"
-            data-cfg-href="phoneHref"
-            data-call-source="final-cta-inline"
-          ><span data-cfg="phoneDisplay">(800) 555-5555</span></a>.
+        <p class="closing-copy" style="margin-top: var(--space-6);">
+          Discover the <span data-cfg="brandName">Appliance Helpers</span> difference
+          today! All you have to do is pick up the phone and call
+          <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="about-us-closing">
+            <span data-cfg="phoneDisplay">(800) 555-5555</span>
+          </a>. Let us do the rest.
         </p>
-        <div class="final-cta-actions">
-          <a
-            id="final-call-button"
-            class="btn btn-pill"
-            href="tel:+18005555555"
-            data-cfg-href="phoneHref"
-            data-call-source="final-cta"
-          >
-            Schedule Service
-            <span class="btn-pill-icon" aria-hidden="true">
-              <svg class="icon"><use href="#icon-arrow-right"></use></svg>
-            </span>
-          </a>
-        </div>
       </div>
     </section>
   </main>
 
-  <!-- ============================== FOOTER ============================== -->
+
   <footer class="site-footer">
     <div class="container">
       <div class="footer-accordion">
@@ -1749,7 +1407,6 @@ button {
     </div>
   </footer>
 
-  <!-- ===================== MOBILE STICKY CALL BAR ===================== -->
   <div class="mobile-call-bar">
     <a
       id="mobile-sticky-call-button"
@@ -1765,6 +1422,7 @@ button {
       Need Help Fast? Call Us Now For <span data-cfg="availabilityClaim">Same &amp; Next-Day Service</span>!
     </p>
   </div>
+
 
   <script src="js/config.js" defer></script>
   <script src="js/main.js" defer></script>
