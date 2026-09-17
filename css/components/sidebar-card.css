@@ -1,0 +1,40 @@
+.sidebar-card {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-bg-alt);
+  box-shadow: var(--shadow-md);
+}
+
+@media (min-width: 960px) {
+  .sidebar-card {
+    position: sticky;
+    /* header height (64px) + a visible gap so the card never touches it */
+    top: calc(64px + var(--space-6));
+  }
+}
+
+.sidebar-card-photo {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.sidebar-card-body {
+  padding: var(--space-5);
+  text-align: center;
+}
+
+.sidebar-card-body h3 {
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.sidebar-card-body p {
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+}

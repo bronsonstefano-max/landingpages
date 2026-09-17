@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Intro / body copy sections
+   ========================================================================== */
+.intro-section {
+  padding-top: var(--space-7);
+}
+
+.intro-section .section-heading {
+  text-align: left;
+  max-width: 640px;
+}
+
+.closing-copy {
+  margin-top: var(--space-6);
+  color: var(--color-text-muted);
+}
+
+.closing-copy a {
+  color: var(--color-blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.closing-copy a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Content + sticky sidebar (desktop only -- see the HTML comment above
+   .content-with-sidebar for why it collapses to a single column below
+   960px rather than showing a shortened/non-sticky version of the card)
+   ========================================================================== */
+.content-sidebar {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-8);
+    /* Deliberately NOT align-items:start: that would shrink the sidebar
+       grid cell down to the card's own (short) height, leaving the
+       sticky card nothing to stay pinned against once content-main
+       scrolls past it. Default (stretch) makes the sidebar cell match
+       content-main's full height; the card itself stays its natural
+       compact size and sticks within that tall cell. */
+  }
+
+  .content-sidebar {
+    display: block;
+  }
+
+  /* Hero fills the first viewport with its content vertically centered.
+     64px accounts for the sticky header sitting above it in normal flow.
+     min-height (not height) means a short window, or content that needs
+     more room, still isn't clipped. */
+  .hero {
+    min-height: calc(100vh - 64px);
+    padding-block: var(--space-8) var(--space-7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+

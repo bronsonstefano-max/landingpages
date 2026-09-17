@@ -1,0 +1,18 @@
+/* Callout boxes (inline phone prompts) */
+.callout-box {
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  font-size: var(--fs-base);
+  color: var(--color-text);
+}
+
+.callout-box a {
+  color: var(--color-blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.callout-box a:hover {
+  text-decoration: underline;
+}

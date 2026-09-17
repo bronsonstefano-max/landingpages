@@ -1,0 +1,37 @@
+/* ==========================================================================
+   Numbered steps ("how it works")
+   ========================================================================== */
+.numbered-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+
+.numbered-step {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.numbered-step-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(22, 87, 255, 0.1);
+  color: var(--color-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: var(--fs-sm);
+  flex-shrink: 0;
+}
+
+.numbered-step p {
+  color: var(--color-text-muted);
+}
+
+.numbered-step strong {
+  color: var(--color-text);
+  font-weight: 700;
+}

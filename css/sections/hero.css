@@ -1,0 +1,130 @@
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.hero {
+  position: relative;
+  isolation: isolate;
+  color: #ffffff;
+  background-color: var(--hero-fallback);
+  background-image: url("../../assets/images/hero-repair.webp");
+  background-size: cover;
+  background-position: 70% 40%;
+  background-repeat: no-repeat;
+  padding-block: var(--space-8);
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--hero-overlay);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 959px) {
+  .hero {
+    min-height: 32rem;
+    background-position: 82% 38%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.hero .container {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
+.hero h1 {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(4, 12, 40, 0.55), 0 2px 22px rgba(4, 12, 40, 0.5);
+}
+
+.hero-location {
+  display: none;
+  margin-top: var(--space-3);
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  color: #f4f7fd;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(4, 12, 40, 0.5), 0 1px 14px rgba(4, 12, 40, 0.45);
+}
+
+.hero-location:not([hidden]) {
+  display: inline-flex;
+}
+
+.hero-location .icon {
+  width: 1.05em;
+  height: 1.05em;
+}
+
+.hero-subhead {
+  margin-top: var(--space-4);
+  font-size: clamp(1.1875rem, 1.1rem + 0.5vw, 1.375rem);
+  color: #f4f7fd;
+  text-shadow: 0 1px 2px rgba(4, 12, 40, 0.5), 0 1px 16px rgba(4, 12, 40, 0.45);
+}
+
+.hero-subhead .header-phone-number {
+  color: #ffffff;
+}
+
+.hero-cta {
+  margin-top: var(--space-6);
+  display: inline-flex;
+}
+
+.hero-checklist {
+  margin-top: var(--space-6);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3) var(--space-4);
+  text-align: left;
+}
+
+.hero-checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: clamp(0.9375rem, 0.88rem + 0.3vw, 1.0625rem);
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(4, 12, 40, 0.5), 0 1px 12px rgba(4, 12, 40, 0.45);
+}
+
+.hero-check-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.1em;
+}
+
+.hero-check-icon .icon {
+  width: 0.75em;
+  height: 0.75em;
+  stroke-width: 3;
+}
+
+/* Floating cutout is unused: the hero background is now the repair scene. */
+.hero-visual {
+  display: none;
+}

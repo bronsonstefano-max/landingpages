@@ -1,0 +1,91 @@
+/* ==========================================================================
+   Brand logo wall — manufacturer plate, not a card grid
+   --------------------------------------------------------------------------
+   1px seams reuse the site's dashed-border language as a solid hairline so
+   the wall reads as one spec plate. Cells are not links; do not add hover
+   chrome that would look clickable.
+   ========================================================================== */
+#brands {
+  scroll-margin-top: 5rem;
+}
+
+.brand-logo-wall {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--color-border-dashed);
+  border: 1px solid var(--color-border-dashed);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.brand-logo-wall > li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.75rem;
+  padding: 0.7rem 0.65rem;
+  background: var(--color-bg);
+}
+
+.brand-logo-wall img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 1.85rem;
+  object-fit: contain;
+}
+
+.brand-logo-footnote {
+  margin-top: var(--space-3);
+  color: var(--color-text-faint);
+  font-size: var(--fs-sm);
+}
+
+/* 21 marks. Hide one at 2-col (20) and 4-col (20) so the last row is always full. */
+.brand-logo-wall > li.brand-logo-wall__omit-2 {
+  display: none;
+}
+
+@media (min-width: 360px) {
+  .brand-logo-wall {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .brand-logo-wall > li.brand-logo-wall__omit-2 {
+    display: flex;
+  }
+}
+
+@media (min-width: 520px) {
+  .brand-logo-wall > li {
+    min-height: 4.75rem;
+    padding: 0.95rem 0.8rem;
+  }
+
+  .brand-logo-wall img {
+    max-height: 2.05rem;
+  }
+}
+
+@media (min-width: 720px) {
+  .brand-logo-wall {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .brand-logo-wall > li.brand-logo-wall__omit-4 {
+    display: none;
+  }
+
+  .brand-logo-wall > li {
+    min-height: 5.15rem;
+  }
+
+  .brand-logo-wall img {
+    max-height: 2.2rem;
+  }
+}

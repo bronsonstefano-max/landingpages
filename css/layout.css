@@ -1,0 +1,47 @@
+/* ==========================================================================
+   Layout helpers
+   ========================================================================== */
+html {
+  scroll-padding-top: 80px; /* sticky header (64px) + a little air */
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+.section {
+  padding-block: var(--space-7);
+}
+
+.section-heading {
+  margin-bottom: var(--space-6);
+}
+
+.section-heading h2 {
+  font-size: var(--fs-xl);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.heading-strong {
+  font-weight: 800;
+}
+
+.section-heading p {
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--fs-base);
+  max-width: 60ch;
+}
+
+.section--tight {
+  padding-block: var(--space-6);
+}
+
+.section--ruled {
+  border-top: 1px dashed var(--color-border-dashed);
+}

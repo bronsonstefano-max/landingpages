@@ -1,0 +1,48 @@
+/* min-height reserves the row before main.js injects the stars, so the
+   rest of the hero doesn't shift down when they appear. */
+.star-rating {
+  margin-top: var(--space-4);
+  font-size: var(--fs-xl);
+  min-height: 1.2em;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.star-rating .star {
+  width: 1.2em;
+  height: 1.2em;
+  display: inline-block;
+  position: relative;
+}
+
+.star-rating .star-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.star-rating .star-full .star-icon {
+  color: var(--color-gold);
+}
+
+.star-rating .star-empty .star-icon {
+  color: var(--color-star-empty);
+}
+
+.star-rating .star-half .star-bg,
+.star-rating .star-half .star-fill {
+  position: absolute;
+  inset: 0;
+}
+
+.star-rating .star-half .star-bg .star-icon {
+  color: var(--color-star-empty);
+}
+
+.star-rating .star-half .star-fill {
+  clip-path: inset(0 50% 0 0);
+}
+
+.star-rating .star-half .star-fill .star-icon {
+  color: var(--color-gold);
+}

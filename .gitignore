@@ -1,0 +1,20 @@
+.DS_Store
+.playwright-mcp/
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.idea/
+.vscode/
+*.log
+.cache/
+dist/
+.wrangler/
+verify-*.png
+assets/images/352f9175-*.png
+assets/images/appliance-repair-image.png
+assets/images/favicon-logo-appliance-helpers.png
+# extensionless original dump; the .webp/.png logos are what the site uses
+assets/images/appliance-helpers-logo
+assets/images/social-image-appliance-helpers.png
+

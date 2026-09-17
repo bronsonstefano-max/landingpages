@@ -1,0 +1,36 @@
+{
+  "fill": "#41495a",
+  "notes": "Monochrome strip fill matches Appliance Pro Today's brand row. All marks are third-party trademarks; no affiliation or endorsement is implied.",
+  "aptLogos": [
+    { "name": "Amana", "file": "svg/amana.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Bosch", "file": "svg/bosch.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Dacor", "file": "svg/dacor.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Electrolux", "file": "svg/electrolux.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Fisher & Paykel", "file": "svg/fisher-and-paykel.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Frigidaire", "file": "svg/frigidaire.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "GE Appliances", "file": "svg/ge-appliances.svg", "source": "applianceprotoday.com", "inOurList": true, "ourListName": "General Electric" },
+    { "name": "GE Monogram", "file": "svg/ge-monogram.svg", "source": "applianceprotoday.com", "inOurList": false, "note": "On APT logo row; not in our text list. Add if we want parity." },
+    { "name": "JennAir", "file": "svg/jennair.svg", "source": "applianceprotoday.com", "inOurList": true, "ourListName": "Jenn-Air" },
+    { "name": "Kenmore", "file": "svg/kenmore.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "KitchenAid", "file": "svg/kitchenaid.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "LG", "file": "svg/lg.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Magic Chef", "file": "svg/magic-chef.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Maytag", "file": "svg/maytag.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Miele", "file": "svg/miele.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Samsung", "file": "svg/samsung.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Sub-Zero", "file": "svg/sub-zero.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Thermador", "file": "svg/thermador.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Viking", "file": "svg/viking.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Whirlpool", "file": "svg/whirlpool.svg", "source": "applianceprotoday.com", "inOurList": true },
+    { "name": "Wolf", "file": "svg/wolf.svg", "source": "applianceprotoday.com", "inOurList": true }
+  ],
+  "extrasFromOurList": [
+    { "name": "Admiral", "file": "svg/admiral.svg", "source": "Wikimedia Commons (Admiral electrical appliances logo.svg)", "onApt": false },
+    { "name": "Crosley", "file": "svg/crosley.svg", "raster": "png/crosley.png", "source": "https://www.crosley.com/ (header mark navy-retro.png)", "onApt": false },
+    { "name": "Estate", "file": "svg/estate.svg", "source": "Standard-character word mark (USPTO Reg. 1,059,029, Whirlpool Properties). No stylized logo is published.", "onApt": false },
+    { "name": "Hotpoint", "file": "svg/hotpoint.svg", "altFiles": ["svg/hotpoint-usa.svg", "svg/hotpoint-wordmark.svg", "png/hotpoint.png"], "source": "US Hotpoint wordmark (GE Appliances / hotpoint.com)", "onApt": false },
+    { "name": "Marvel", "file": "svg/marvel.svg", "raster": "png/marvel.png", "source": "https://www.marvelrefrigeration.com/ header logo", "onApt": false },
+    { "name": "Speed Queen", "file": "svg/speed-queen.svg", "altFiles": ["svg/speed-queen-classic.svg", "png/speed-queen.png"], "source": "Current mark from Wikimedia (Speed Queen logo.png, sourced from speedqueen.com). Classic Q-mark vector also included.", "onApt": false },
+    { "name": "U-Line", "file": "svg/u-line.svg", "raster": "png/u-line.png", "source": "https://www.u-line.com/ header logo", "onApt": false }
+  ]
+}

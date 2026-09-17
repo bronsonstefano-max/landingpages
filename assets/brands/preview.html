@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brand logos — trusted brands strip</title>
+  <style>
+    :root {
+      --ink: #1c2430;
+      --muted: #5b6573;
+      --fill: #41495a;
+      --line: #e6e8ec;
+      --paper: #f7f6f2;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--paper); color: var(--ink); }
+    body {
+      font-family: "Avenir Next", "Segoe UI", Helvetica, Arial, sans-serif;
+      padding: 32px 24px 80px;
+    }
+    main { max-width: 1080px; margin: 0 auto; }
+    h1 { font-size: 1.6rem; letter-spacing: -0.02em; margin: 0 0 8px; }
+    h2 { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 40px 0 16px; }
+    p.lede { color: var(--muted); max-width: 62ch; line-height: 1.5; margin: 0 0 8px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+      gap: 12px;
+    }
+    figure {
+      margin: 0;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 108px;
+    }
+    figure img {
+      max-width: 100%;
+      max-height: 44px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+    figcaption {
+      margin-top: 12px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .missing { outline: 1px dashed #c9a227; }
+    @media (max-width: 1180px), (max-height: 920px) {
+      body { overflow: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>We service all brands &amp; models</h1>
+    <p class="lede">
+      Logo strip matching Appliance Pro Today, plus the seven brands on our site that they do not show.
+      Marks are monochrome <code>#41495a</code>. Gold outline = not on APT’s row.
+    </p>
+
+    <h2>Appliance Pro Today row (21)</h2>
+    <div class="grid" id="apt"></div>
+
+    <h2>On our list, missing from APT (7)</h2>
+    <div class="grid" id="extras"></div>
+  </main>
+  <script>
+    const apt = [
+      ["Amana", "amana.svg"],
+      ["Bosch", "bosch.svg"],
+      ["Dacor", "dacor.svg"],
+      ["Electrolux", "electrolux.svg"],
+      ["Fisher & Paykel", "fisher-and-paykel.svg"],
+      ["Frigidaire", "frigidaire.svg"],
+      ["GE Appliances", "ge-appliances.svg"],
+      ["GE Monogram", "ge-monogram.svg"],
+      ["JennAir", "jennair.svg"],
+      ["Kenmore", "kenmore.svg"],
+      ["KitchenAid", "kitchenaid.svg"],
+      ["LG", "lg.svg"],
+      ["Magic Chef", "magic-chef.svg"],
+      ["Maytag", "maytag.svg"],
+      ["Miele", "miele.svg"],
+      ["Samsung", "samsung.svg"],
+      ["Sub-Zero", "sub-zero.svg"],
+      ["Thermador", "thermador.svg"],
+      ["Viking", "viking.svg"],
+      ["Whirlpool", "whirlpool.svg"],
+      ["Wolf", "wolf.svg"]
+    ];
+    const extras = [
+      ["Admiral", "admiral.svg"],
+      ["Crosley", "crosley.svg"],
+      ["Estate", "estate.svg"],
+      ["Hotpoint", "hotpoint.svg"],
+      ["Marvel", "marvel.svg"],
+      ["Speed Queen", "speed-queen.svg"],
+      ["U-Line", "u-line.svg"]
+    ];
+    function paint(id, items, missing) {
+      const root = document.getElementById(id);
+      for (const [name, file] of items) {
+        const fig = document.createElement("figure");
+        if (missing) fig.className = "missing";
+        const img = document.createElement("img");
+        img.src = "svg/" + file;
+        img.alt = name;
+        const cap = document.createElement("figcaption");
+        cap.textContent = name;
+        fig.append(img, cap);
+        root.append(fig);
+      }
+    }
+    paint("apt", apt, false);
+    paint("extras", extras, true);
+  </script>
+</body>
+</html>

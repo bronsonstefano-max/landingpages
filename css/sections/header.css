@@ -1,0 +1,141 @@
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border-dashed);
+}
+
+.site-header .container {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 1;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.brand-logo {
+  display: block;
+  height: 48px;
+  width: auto;
+  max-width: min(260px, 52vw);
+  object-fit: contain;
+  object-position: left center;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Desktop-only "Available 24/7" badge -- hidden on mobile/tablet, where
+   the header is already tightly fit (see the narrow-phone tiers below).
+   Its own dot is the pulsing indicator at desktop widths; the phone
+   link's dot (.header-online-dot--inline) is hidden there instead so
+   there's only ever one. */
+.header-availability {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+}
+
+.header-phone {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.header-phone-number {
+  font-weight: 800;
+  text-decoration: underline;
+  font-size: var(--fs-base);
+  white-space: nowrap;
+}
+
+/* Bumped up specifically in the header -- the hero/final-CTA reuses of
+   this class already sit at a larger size in their own context. */
+.header-phone .header-phone-number {
+  font-size: var(--fs-md);
+}
+
+.header-online-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+}
+
+.header-online-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: dot-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes dot-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  75%,
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Phone icons take a brief, occasional shake to draw the eye without
+   being distracting -- most of each cycle they sit still. */
+.icon-phone-shake {
+  display: inline-block;
+  animation: phone-shake 4.5s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes phone-shake {
+  0%,
+  90%,
+  100% {
+    transform: rotate(0deg);
+  }
+  91% {
+    transform: rotate(-16deg);
+  }
+  92.5% {
+    transform: rotate(13deg);
+  }
+  94% {
+    transform: rotate(-10deg);
+  }
+  95.5% {
+    transform: rotate(7deg);
+  }
+  97% {
+    transform: rotate(-4deg);
+  }
+  98.5% {
+    transform: rotate(0deg);
+  }
+}

@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Simple list (services)
+   ========================================================================== */
+.simple-list {
+  border-top: 1px dashed var(--color-border-dashed);
+}
+
+.simple-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block: var(--space-4);
+  border-bottom: 1px dashed var(--color-border-dashed);
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 400;
+  font-size: var(--fs-base);
+}
+
+.simple-list-item:hover {
+  color: var(--color-blue);
+}
+
+.simple-list-item .icon {
+  color: var(--color-blue);
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+}
+
+

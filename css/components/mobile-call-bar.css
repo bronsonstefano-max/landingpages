@@ -1,0 +1,52 @@
+/* ==========================================================================
+   Mobile sticky call bar
+   ========================================================================== */
+.mobile-call-bar {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-call-bar {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    background: #ffffff;
+    box-shadow: 0 -6px 20px rgba(14, 14, 17, 0.15);
+    padding-bottom: env(safe-area-inset-bottom);
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+  }
+
+  .mobile-call-bar.is-visible {
+    transform: translateY(0);
+  }
+
+  .mobile-call-bar-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    background: var(--color-blue);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: var(--fs-md);
+    padding: var(--space-3);
+    min-height: 44px;
+  }
+
+  .mobile-call-bar-sub {
+    text-align: center;
+    font-weight: 700;
+    font-size: var(--fs-sm);
+    color: var(--color-text);
+    padding: var(--space-2) var(--space-4);
+  }
+
+  body.has-mobile-call-bar {
+    padding-bottom: calc(var(--mobile-bar-height) + env(safe-area-inset-bottom));
+  }
+}

@@ -2,32 +2,27 @@
  * Centralized site configuration.
  *
  * Single source of truth for business-specific values used throughout the
- * site. Update the values below and every mention updates automatically
- * via data-cfg attributes -- shared identically by index.html and the
- * three secondary pages (about-us.html, how-it-works.html,
- * do-not-sell.html), since all four load this file (see js/main.js).
+ * landing page. Update the values below and every mention across the page
+ * updates automatically via data-cfg attributes in index.html
+ * (see js/modules/bind-config.js).
  *
- * IMPORTANT — operational claim strings (availabilityClaim, supportClaim,
- * certifiedClaim, factoryTrainedClaim below): these mirror language from
- * the reference design this page was modeled on (24/7 support, same/next
- * -day service, "certified"/"factory-trained" technicians). They are
- * marketing claims, not just copy — confirm each one is actually true for
- * this business before launch, or edit/remove it here. Because they're
- * centralized, changing or deleting one updates every place it appears.
+ * Operational claim strings (availabilityClaim, supportClaim, certifiedClaim,
+ * factoryTrainedClaim) are marketing claims — confirm each one is actually
+ * true for this business before launch, or edit/remove it here.
  */
-window.SITE_CONFIG = {
+export const SITE_CONFIG = {
   brandName: "Appliance Helpers",
+  brandLead: "Appliance",
+  brandTail: "Helpers",
 
-  // Phone number as displayed to visitors.
   phoneDisplay: "(800) 555-5555",
-
-  // Phone number as a tel: URI (E.164 format) for click-to-call links.
   phoneHref: "tel:+18005555555",
 
-  // Hours of operation, e.g. "Mon–Sat, 8AM–7PM".
+  city: "[CITY]",
+  state: "[STATE]",
+  serviceArea: "[SERVICE AREA]",
   hours: "[HOURS]",
 
-  // Operational claims — verify before launch (see note above).
   availabilityClaim: "Same & Next-Day Service Available",
   supportClaim: "24-Hour Support 7 Days a Week",
   certifiedClaim: "Certified Experts",
@@ -38,20 +33,66 @@ window.SITE_CONFIG = {
   // it reflects actual aggregated review data — never a placeholder value.
   ratingValue: 5,
 
+  /**
+   * Dynamic per-visitor city insertion ("{City} Appliance Repair").
+   * Only runs when `city` is still the "[CITY]" placeholder.
+   *
+   * geojs.io is used because it returns MaxMind-class city names (e.g.
+   * Wellington, FL) over HTTPS with CORS. ipinfo/Cloudflare often label
+   * the same AT&T block as the adjacent town. Optional geoLat/geoLon on a
+   * configured city let the service-area map render without an IP lookup.
+   */
+  geoCityEnabled: true,
+  geoCityApiUrl: "https://get.geojs.io/v1/ip/geo.json",
+  geoTimeoutMs: 5000,
+  geoLat: null,
+  geoLon: null,
+
+  mapEnabled: true,
+  serviceRadiusMiles: 15,
+
+  /**
+   * Local-presence numbers (dynamic number insertion).
+   *
+   * The page already knows the visitor's city via geo. To show a local
+   * phone instead of the 800 fallback:
+   *
+   * 1. Buy/lease DIDs in the area codes you serve (Twilio, CallRail,
+   *    CallTrackingMetrics, or a referral-network pool).
+   * 2. Either list them in `numberPool` keyed by NPA ("561") or state
+   *    ("FL"), or point `dniEndpoint` at an API that returns
+   *    { phoneDisplay, phoneHref, areaCode, leaseId } for the payload
+   *    { city, regionCode, areaCode, lat, lon }.
+   * 3. Fill `areaCodeByCity` so "Wellington|FL" → "561" (and so on).
+   *    The endpoint can also return areaCode itself.
+   *
+   * With both pool and endpoint empty, every visitor keeps phoneDisplay.
+   */
+  dniEnabled: true,
+  dniEndpoint: null,
+  areaCodeByCity: {
+    "Wellington|FL": "561",
+    "Royal Palm Beach|FL": "561",
+    "West Palm Beach|FL": "561",
+    "Palm Beach Gardens|FL": "561",
+  },
+  numberPool: {
+    // "561": { display: "(561) 555-0100", href: "tel:+15615550100" },
+  },
+
   // do-not-sell.html's CCPA request form submits here via a background
-  // fetch (see the inline script at the bottom of that file). Leave blank
-  // and the form shows its "not yet connected" note instead of
-  // submitting anywhere. Point this at a deployed Google Apps Script Web
-  // App URL (ends in /exec) to have submissions land as new rows in a
-  // Google Sheet you own -- see the README's "Do Not Sell form backend"
-  // section for the exact script to paste in and how to deploy it.
+  // fetch (see the inline script at the bottom of that file). It's a
+  // deployed Google Apps Script Web App URL (ends in /exec) -- see the
+  // README's "Do Not Sell form backend" section for how it was set up.
+  // Leave blank and the form shows a "not yet connected" note instead of
+  // submitting anywhere.
   doNotSellSheetEndpoint:
     "https://script.google.com/macros/s/AKfycbxt4fEmct5uQl8ETRdWq0h9OUUPn0Ap3hsdznmsGIVuO5rD9ybD7sGIJAAZe1Ivs06e/exec",
 
   // Optional shared secret, sent as a hidden `token` field with every
-  // submission. Only useful if the same value is also set as SHARED_TOKEN
-  // in the Apps Script -- it's a cheap deterrent against spam once the
-  // Web App URL leaks or gets guessed, not real authentication (visible
-  // to anyone who views this file's source). Leave blank to skip it.
+  // submission -- a cheap spam deterrent once the Web App URL leaks, not
+  // real authentication. Leave blank to skip it.
   doNotSellSheetToken: "",
 };
+
+window.SITE_CONFIG = SITE_CONFIG;

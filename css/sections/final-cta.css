@@ -1,0 +1,31 @@
+/* ==========================================================================
+   Final CTA (repeats the hero pattern)
+   ========================================================================== */
+.final-cta {
+  padding-block: var(--space-7);
+  background-color: var(--hero-fallback);
+  background-image: var(--hero-overlay-strong), url("../../assets/images/hero-repair.webp");
+  background-size: cover;
+  background-position: 72% 55%;
+  background-repeat: no-repeat;
+  color: #fff;
+  text-align: center;
+}
+
+.final-cta h2 {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.final-cta .hero-subhead {
+  max-width: 52ch;
+  margin-inline: auto;
+}
+
+.final-cta-actions {
+  margin-top: var(--space-6);
+  display: flex;
+  justify-content: center;
+}
