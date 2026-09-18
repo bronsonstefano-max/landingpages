@@ -18,7 +18,7 @@
   font-size: var(--fs-xl);
   line-height: 1.2;
   letter-spacing: -0.01em;
-  color: var(--color-text);
+  color: var(--color-ink);
 }
 
 .service-area-copy p {
@@ -37,11 +37,11 @@
   position: relative;
   width: 280px;
   height: 280px;
-  border-radius: 18px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   background: #e7eaf0;
   box-shadow: var(--shadow-md);
-  border: 1px solid var(--color-border-dashed);
+  border: 1px solid var(--color-border-strong);
 }
 
 .service-area-tiles {
@@ -71,12 +71,12 @@
 }
 
 .service-area-ring-fill {
-  fill: rgba(22, 87, 255, 0.16);
+  fill: rgba(36, 64, 154, 0.16);
 }
 
 .service-area-ring {
   fill: none;
-  stroke: #1657ff;
+  stroke: #24409a;
   stroke-width: 2.5;
 }
 
@@ -88,13 +88,13 @@
   margin-top: 10px;
   font-size: var(--fs-sm);
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--color-ink);
 }
 
 .service-area-caption .icon {
   width: 1em;
   height: 1em;
-  color: var(--color-blue);
+  color: var(--color-primary);
 }
 
 @media (min-width: 720px) {

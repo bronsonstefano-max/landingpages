@@ -2,35 +2,36 @@
   "site": {
     "canonicalUrl": "https://appliancehelpers.com/",
     "siteName": "Appliance Helpers",
-    "title": "Appliance Repair | Same & Next-Day Service | Appliance Helpers",
-    "description": "Need appliance repair near you? Appliance Helpers connects homeowners with local technicians for refrigerators, washers, dryers, dishwashers, ovens and more. Same and next-day service available.",
+    "title": "Appliance Repair Near You | Same & Next-Day Service | Appliance Helpers",
+    "description": "Appliance acting up? Appliance Helpers puts you in touch with local repair technicians for refrigerators, washers, dryers, dishwashers, ovens, and more — with same- and next-day appointments often available.",
     "ogImage": "assets/images/og-appliance-helpers.jpg",
-    "ogImageAlt": "Appliance Helpers technician providing in-home appliance repair",
+    "ogImageAlt": "Appliance Helpers technician performing an in-home appliance repair",
     "ogImageWidth": 1200,
     "ogImageHeight": 630,
     "ogImageType": "image/jpeg",
     "locale": "en_US",
-    "entityDescription": "Appliance Helpers is a free referral service that connects homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs."
+    "entityDescription": "Appliance Helpers is a free referral service that matches homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs."
   },
   "heroPhoto": {
     "src": "assets/images/appliance-repair.webp",
     "width": 1672,
     "height": 941,
-    "alt": "Appliance repair technician in a kitchen and laundry room, standing with arms crossed beside a tool bag"
+    "alt": "Appliance repair technician standing in a kitchen and laundry room with arms crossed beside a tool bag",
+    "srcset": "assets/images/appliance-repair-card.webp 800w, assets/images/appliance-repair.webp 1672w"
   },
   "heroChecklist": [
     {
-      "text": "We Service All Brands & Models"
+      "text": "All Major Brands & Models Serviced"
     },
     {
-      "text": "Same & Next-Day Service Available",
+      "text": "Same & Next-Day Repairs Available",
       "cfg": "availabilityClaim"
     },
     {
-      "text": "Zero Obligation Up-Front Quotes"
+      "text": "No-Obligation, Up-Front Pricing"
     },
     {
-      "text": "24-Hour Support 7 Days a Week",
+      "text": "24/7 Support, Every Day of the Week",
       "cfg": "supportClaim"
     }
   ],
@@ -57,34 +58,39 @@
   "callouts": [
     {
       "source": "callout-1",
-      "html": "Need your appliance fixed today? Call us now at {{phone}} and we'll help get a technician out to you as soon as possible."
+      "html": "Appliance on the fritz? Call {{phone}} right now and we'll work on getting a technician out to you as soon as we can."
     },
     {
       "source": "callout-2",
-      "html": "Don't wait another day with a broken appliance. Call {{phone}} for fast service, 7 days a week."
+      "html": "No need to live with a broken appliance any longer. Call {{phone}} for fast service, seven days a week."
     }
   ],
   "benefits": [
     {
-      "title": "Fast, On-Time Service:",
-      "body": "We keep scheduling simple, with flexible appointment windows built around your day."
+      "title": "Quick, Reliable Scheduling",
+      "body": "We make booking easy, with flexible appointment windows that fit around your schedule.",
+      "icon": "calendar"
     },
     {
-      "title": "Factory-Trained Technicians:",
+      "title": "Certified, Factory-Trained Techs",
       "titleCfg": "factoryTrainedClaim",
-      "body": "Whatever the brand or model, {{brand}} technicians come prepared to handle the repair."
+      "body": "No matter the brand or model, every {{brand}} technician arrives ready to get the job done.",
+      "icon": "technician"
     },
     {
-      "title": "Same-Day Appliance Repairs:",
-      "body": "Fully stocked service vehicles mean most repairs are completed in a single visit."
+      "title": "Most Repairs Done Same Day",
+      "body": "Our technicians roll up in fully stocked vehicles, so most jobs wrap up in a single visit.",
+      "icon": "bolt"
     },
     {
-      "title": "Always Affordable Pricing:",
-      "body": "No surprise charges \u2014 you'll know the cost before any work begins."
+      "title": "Honest, Affordable Pricing",
+      "body": "No hidden fees or surprise charges — you'll always know the cost upfront before work starts.",
+      "icon": "tag"
     },
     {
-      "title": "In Your Neighborhood:",
-      "body": "With technicians serving {{serviceArea}}, help is closer than you think."
+      "title": "Local Techs Nearby",
+      "body": "With technicians already serving {{serviceArea}}, help is closer than you'd expect.",
+      "icon": "pin"
     }
   ],
   "brands": [
@@ -179,42 +185,42 @@
   ],
   "steps": [
     {
-      "title": "Schedule Your Appliance Repair:",
-      "body": "Call our phone line, let us know about your appliance problem, and we'll find a technician to help as soon as possible."
+      "title": "Call To Get Started",
+      "body": "Give us a call, tell us what's going on with your appliance, and we'll line up a technician to help right away."
     },
     {
-      "title": "Your Appliance Gets Fixed:",
-      "body": "Once your technician arrives, they'll diagnose the problem and explain what work is needed. If you'd like to move forward, they'll get to work on the repair."
+      "title": "We Get It Fixed",
+      "body": "When your technician arrives, they'll diagnose the issue and walk you through what's needed. Give the go-ahead, and they'll take care of the repair."
     }
   ],
   "faqs": [
     {
       "question": "What appliances do you repair?",
-      "answer": "Appliance Helpers connects you with technicians who repair major household appliances, including refrigerators, washers, dryers, dishwashers, ovens, ranges, cooktops, freezers, ice makers, microwaves, garbage disposals, and more."
+      "answer": "Appliance Helpers connects you with technicians who handle repairs on major household appliances — refrigerators, washers, dryers, dishwashers, ovens, ranges, cooktops, freezers, ice makers, microwaves, garbage disposals, and more."
     },
     {
       "question": "Can I get same-day appliance repair?",
-      "answer": "Same-day and next-day appointments are often available, depending on technician schedules in your area. Call {{phone}} and we will match you with the earliest local opening."
+      "answer": "Same-day and next-day appointments are frequently available, depending on technician availability in your area. Call {{phone}} and we'll find you the earliest opening nearby."
     },
     {
       "question": "Do you repair all appliance brands?",
-      "answer": "Yes. Independent technicians in the network work on nearly every major brand and model, including Whirlpool, GE, Samsung, LG, Maytag, KitchenAid, Bosch, Frigidaire, Kenmore, and many others."
+      "answer": "Yes. The independent technicians in our network service nearly every major appliance brand and model — including Whirlpool, GE, Samsung, LG, Maytag, KitchenAid, Bosch, Frigidaire, Kenmore, and many more."
     },
     {
       "question": "How does scheduling work?",
-      "answer": "Call {{phone}}, describe the appliance and the problem, and we will connect you with a local technician. They diagnose the issue in your home, explain the work, and give you a quote before any repair begins."
+      "answer": "Call {{phone}} and tell us about your appliance and the issue — we'll connect you with a local technician. They'll diagnose the problem in your home, walk you through the fix, and quote you before any work starts."
     },
     {
       "question": "Will I know the price before work begins?",
-      "answer": "Yes. You receive an up-front quote after the technician diagnoses the problem, and no repair work starts until you approve it. There is no obligation to proceed."
+      "answer": "Yes. You'll get an up-front quote once the technician diagnoses the problem, and no work begins until you approve it — there's never any obligation to continue."
     },
     {
       "question": "What areas do you serve?",
-      "answer": "Appliance Helpers connects homeowners with local appliance repair technicians in their area. After you call, we match you with a nearby technician when one is available."
+      "answer": "Appliance Helpers matches homeowners with local appliance repair technicians in their area. Once you call, we'll pair you with a nearby technician as soon as one is available."
     },
     {
       "question": "How does Appliance Helpers work?",
-      "answer": "Appliance Helpers is a free referral service. We connect you with independent local appliance repair technicians. Those technicians are not employed by Appliance Helpers, and you choose whether to move forward after you receive a quote."
+      "answer": "Appliance Helpers is a free referral service that connects you with independent, local appliance repair technicians. These technicians aren't employed by Appliance Helpers, and it's always your choice whether to move forward once you've received a quote."
     }
   ],
   "footerLinks": [
@@ -247,5 +253,5 @@
       "href": "do-not-sell.html"
     }
   ],
-  "disclaimer": "Appliance Helpers is a free referral service that helps users connect with local appliance repair experts. All contractors are independent and Appliance Helpers does not warrant or guarantee any work performed. It is the responsibility of the user to verify the contractor they hire has the necessary license and insurance required for the work being performed. Appliance Helpers does not employ the contractors that use our service. 24-hour service and same-day appointments are based on availability, schedule permitting. All related issues are the responsibility of the applicable facility. Any third party products, brands or trademarks listed above are the sole property of their respective owner. No affiliation or endorsement is intended or implied."
+  "disclaimer": "Appliance Helpers is a free referral service that helps homeowners connect with independent, local appliance repair professionals. All contractors are independent, and Appliance Helpers does not warrant or guarantee the work they perform. It is the user's responsibility to confirm that any contractor they hire carries the license and insurance required for the job. Appliance Helpers does not employ the contractors who use this service. Same-day appointments and 24-hour availability depend on technician schedules and are not guaranteed. Any issues arising from work performed remain the responsibility of the applicable service provider. All third-party product names, brands, and trademarks referenced on this site remain the property of their respective owners, and no affiliation or endorsement with Appliance Helpers is implied."
 }

@@ -1,8 +1,18 @@
 /* ==========================================================================
    Design tokens
+   --------------------------------------------------------------------------
+   Palette and type are the site's ORIGINAL ones: royal blue #1657ff with a
+   #0d3fcc pressed state, gold #f5a623 on the stars, the original ink/muted
+   greys, and Poppins on the original fluid clamp scale. What changed in the
+   redesign is layout and structure, not colour or type.
+
+   Blue is the action colour — every CTA, link and icon. Gold is decorative
+   only: star fill, section eyebrow ticks, the rule under a card heading,
+   the leading edge of a call-out. That split is what keeps a page this
+   blue from going flat.
    ========================================================================== */
 :root {
-  /* Color */
+  /* --- Neutrals (original) -------------------------------------------- */
   --color-ink: #0e0e11;
   --color-ink-800: #17181c;
   --color-text: #16181d;
@@ -11,18 +21,51 @@
 
   --color-bg: #ffffff;
   --color-bg-alt: #f2f4f7;
+  --color-border: #e3e6eb;
   --color-border-dashed: #e3e6eb;
+  --color-border-strong: #ccd2dc;
 
+  /* --- Brand (original) ----------------------------------------------- */
   --color-blue: #1657ff;
   --color-blue-dark: #0d3fcc;
+  /* Light tint for blue marks sitting on the navy footer/CTA bands, where
+     #1657ff is too close to the background to register. */
+  --color-blue-light: #8fa9ff;
   --color-blue-contrast: #ffffff;
+
+  /* Semantic aliases used by the components. Both point at the original
+     blue: "primary" for structure, "accent" for the thing you click. */
+  --color-primary: var(--color-blue);
+  --color-primary-dark: var(--color-blue-dark);
+  --color-primary-deep: #0d2a78;
+  --color-primary-soft: #e7edff;
+  --color-primary-softer: #f4f7ff;
+  --color-primary-contrast: #ffffff;
+
+  --color-accent: var(--color-blue);
+  --color-accent-dark: var(--color-blue-dark);
+  --color-accent-soft: #e7edff;
+  --color-accent-contrast: #ffffff;
+
+  /* Gold appears in exactly one place: the star rating. Everything else
+     that used to carry a warm accent tick is blue, so the page reads as a
+     single hue rather than a blue page with orange confetti on it. */
   --color-gold: #f5a623;
   --color-star-empty: #dadfe6;
+  --color-verify: #22c55e; /* the live "open now" dot */
 
-  /* Hero scene: photo stays in the section stylesheet (url() inside var()
-     resolves against the using file). Overlay is a navy scrim — dark enough
-     at the copy that white type holds, open enough at the edges that the
-     technician and laundry room still read. */
+  /* --- Surfaces ------------------------------------------------------- */
+  /* Blueprint grid: pure CSS, zero bytes, sits under the hero and the
+     closing band so both read as "spec sheet" rather than "stock photo". */
+  --grid-line: rgba(22, 87, 255, 0.07);
+  --grid-line-dark: rgba(255, 255, 255, 0.07);
+  --grid-size: 26px;
+
+  /* Hero scene: the photo itself stays in the section stylesheet (a url()
+     inside a var() resolves against the *using* file, not this one).
+     Overlay is a navy scrim — dark enough at the copy that white type
+     holds, open enough at the edges that the technician and the laundry
+     room still read. */
   --hero-overlay: radial-gradient(
       ellipse 90% 80% at 50% 42%,
       rgba(5, 16, 58, 0.78) 0%,
@@ -46,12 +89,14 @@
       rgba(8, 28, 92, 0.4) 100%
     );
   --hero-fallback: #0d2a78;
+  --band-dark: linear-gradient(155deg, #123994 0%, #0d2a78 52%, #081848 100%);
   --footer-bg: linear-gradient(180deg, #123994 0%, #0d2a78 46%, #081848 100%);
 
-  /* Typography */
+  /* --- Typography (original scale) ------------------------------------ */
   --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
 
+  --fs-xs: clamp(0.75rem, 0.73rem + 0.1vw, 0.8125rem);
   --fs-sm: clamp(0.875rem, 0.85rem + 0.15vw, 0.9375rem);
   --fs-base: clamp(1rem, 0.97rem + 0.2vw, 1.0625rem);
   --fs-md: clamp(1.125rem, 1.08rem + 0.3vw, 1.25rem);
@@ -59,14 +104,10 @@
   --fs-xl: clamp(1.375rem, 1.25rem + 0.7vw, 1.75rem);
   --fs-2xl: clamp(2.125rem, 1.8rem + 1.8vw, 2.875rem);
 
-  /* Half the hero photo's rendered height (scales with viewport since the
-     photo's own width does), plus a visible breathing-room gap on each
-     side of the dark/white seam it straddles. */
-  --hero-visual-half: clamp(75px, 7vw + 50px, 105px);
-  --hero-visual-gap: 64px;
-  --hero-overlap: calc(var(--hero-visual-half) + var(--hero-visual-gap));
+  /* Uppercase micro-label used on trust cells + section eyebrows. */
+  --tracking-label: 0.09em;
 
-  /* Spacing scale */
+  /* --- Spacing (original) --------------------------------------------- */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -76,15 +117,22 @@
   --space-7: 2.75rem;
   --space-8: 3.5rem;
 
-  /* Shape */
+  /* --- Shape ---------------------------------------------------------- */
+  --radius-xs: 6px;
   --radius-sm: 8px;
   --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 1px 2px rgba(14, 14, 17, 0.06);
+  --shadow-xs: 0 1px 2px rgba(14, 14, 17, 0.05);
+  --shadow-sm: 0 2px 8px rgba(14, 14, 17, 0.06);
   --shadow-md: 0 8px 24px rgba(14, 14, 17, 0.1);
+  --shadow-lg: 0 20px 46px rgba(14, 14, 17, 0.14);
   --shadow-cta: 0 10px 24px rgba(22, 87, 255, 0.32);
+  --shadow-cta-hover: 0 14px 30px rgba(22, 87, 255, 0.38);
 
   --container-max: 1160px;
+  --header-height: 68px;
   --mobile-bar-height: 124px;
 }

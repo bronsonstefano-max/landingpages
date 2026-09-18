@@ -1,5 +1,13 @@
 /* ==========================================================================
-   Hero
+   Hero — full-bleed repair scene under a navy scrim
+   --------------------------------------------------------------------------
+   The photo is a background image, not an <img>: it has to bleed to all
+   four edges and crop differently per breakpoint, which is exactly what
+   background-size/position do and what an inline image does badly.
+
+   It ships in two sizes — see the media query at the bottom of this file
+   and the matching media-gated <link rel="preload"> pair in layout.html.
+   Those three places must stay in sync.
    ========================================================================== */
 .hero {
   position: relative;
@@ -24,16 +32,6 @@
   z-index: 0;
 }
 
-@media (max-width: 959px) {
-  .hero {
-    min-height: 32rem;
-    background-position: 82% 38%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
 .hero .container {
   position: relative;
   z-index: 1;
@@ -49,31 +47,9 @@
   text-shadow: 0 1px 2px rgba(4, 12, 40, 0.55), 0 2px 22px rgba(4, 12, 40, 0.5);
 }
 
-.hero-location {
-  display: none;
-  margin-top: var(--space-3);
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  color: #f4f7fd;
-  font-size: var(--fs-sm);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-shadow: 0 1px 2px rgba(4, 12, 40, 0.5), 0 1px 14px rgba(4, 12, 40, 0.45);
-}
-
-.hero-location:not([hidden]) {
-  display: inline-flex;
-}
-
-.hero-location .icon {
-  width: 1.05em;
-  height: 1.05em;
-}
-
 .hero-subhead {
   margin-top: var(--space-4);
-  font-size: clamp(1.1875rem, 1.1rem + 0.5vw, 1.375rem);
+  font-size: clamp(1.25rem, 1.1875rem + 0.5vw, 1.4375rem);
   color: #f4f7fd;
   text-shadow: 0 1px 2px rgba(4, 12, 40, 0.5), 0 1px 16px rgba(4, 12, 40, 0.45);
 }
@@ -84,9 +60,15 @@
 
 .hero-cta {
   margin-top: var(--space-6);
-  display: inline-flex;
+  display: flex;
+  justify-content: center;
 }
 
+/* --- Checklist -------------------------------------------------------- */
+/* The four proof points sit inside the hero, over the photo: 2x2 on
+   phones, four-across once there is room (see responsive.css). Left-
+   aligned even though the rest of the hero is centred — ragged-right text
+   is what makes a list scannable as a list. */
 .hero-checklist {
   margin-top: var(--space-6);
   display: grid;
@@ -124,7 +106,52 @@
   stroke-width: 3;
 }
 
-/* Floating cutout is unused: the hero background is now the repair scene. */
-.hero-visual {
-  display: none;
+/* --- Phones ----------------------------------------------------------- */
+/* Placed after the unconditional rules so these overrides win the cascade
+   on equal specificity (source order breaks the tie). */
+@media (max-width: 959px) {
+  .hero {
+    min-height: 28rem;
+    background-image: url("../../assets/images/hero-repair-mobile.webp");
+    background-position: 82% 38%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--space-7);
+  }
+
+  .hero-subhead {
+    margin-top: var(--space-5);
+    /* Tuned (not the type-scale default) so "Same & Next-Day Repairs
+       Available." stays on one line down to a 320px-wide phone, matching
+       the intended two-line layout instead of wrapping into three. */
+    font-size: clamp(0.9375rem, calc(-0.0625rem + 5.05vw), 1.25rem);
+  }
+
+  .star-rating {
+    margin-top: var(--space-5);
+  }
+
+  .hero-checklist {
+    margin-top: var(--space-6);
+  }
+}
+
+/* --- Desktop ---------------------------------------------------------- */
+@media (min-width: 960px) {
+  /* Hero fills the first viewport with its content vertically centred.
+     The header sits above it in normal flow, hence the subtraction.
+     min-height (not height) means a short window, or content that needs
+     more room, still is not clipped. */
+  .hero {
+    min-height: calc(100vh - var(--header-height));
+    padding-block: var(--space-8) var(--space-7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero .container {
+    max-width: 900px;
+  }
 }

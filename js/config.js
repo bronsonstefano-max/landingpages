@@ -23,11 +23,11 @@ export const SITE_CONFIG = {
   serviceArea: "[SERVICE AREA]",
   hours: "[HOURS]",
 
-  availabilityClaim: "Same & Next-Day Service Available",
-  supportClaim: "24-Hour Support 7 Days a Week",
+  availabilityClaim: "Same & Next-Day Repairs Available",
+  supportClaim: "24/7 Support, Every Day of the Week",
   certifiedClaim: "Certified Experts",
-  factoryTrainedClaim: "Factory-Trained Technicians",
-  availabilityBadge: "Available 24/7",
+  factoryTrainedClaim: "Certified, Factory-Trained Techs",
+  availabilityBadge: "Open 24/7",
 
   // Real, user-confirmed rating (out of 5). Only display a rating here if
   // it reflects actual aggregated review data — never a placeholder value.

@@ -1,18 +1,32 @@
-/* Callout boxes (inline phone prompts) */
+/* ==========================================================================
+   Callout — the mid-page "call now" prompts
+   --------------------------------------------------------------------------
+   Warm sand panel with an amber edge on the leading side, so the two
+   in-body phone prompts read as part of the CTA family rather than as
+   another grey information box.
+   ========================================================================== */
 .callout-box {
+  position: relative;
   background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-blue);
   border-radius: var(--radius-md);
-  padding: var(--space-5);
+  padding: var(--space-5) var(--space-5) var(--space-5) var(--space-6);
   font-size: var(--fs-base);
+  line-height: 1.5;
   color: var(--color-text);
+  font-weight: 400;
 }
 
 .callout-box a {
   color: var(--color-blue);
   font-weight: 700;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  white-space: nowrap;
 }
 
 .callout-box a:hover {
-  text-decoration: underline;
+  color: var(--color-blue-dark);
 }

@@ -2,9 +2,9 @@
    Footer
    ========================================================================== */
 .site-footer {
-  background-color: var(--hero-fallback);
+  background-color: var(--color-primary-deep);
   background-image: var(--footer-bg);
-  color: #e8edf8;
+  color: #e6ebf8;
   padding-block: var(--space-2) var(--space-6);
   font-size: var(--fs-sm);
 }
@@ -16,10 +16,22 @@
 .footer-accordion-label {
   padding-block: var(--space-4) var(--space-3);
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  font-size: var(--fs-sm);
+  font-size: var(--fs-xs);
   color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.footer-accordion-label::before {
+  content: "";
+  width: 16px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-blue-light);
+  flex-shrink: 0;
 }
 
 .footer-links {
@@ -30,7 +42,7 @@
 }
 
 .footer-links a {
-  color: #e8edf8;
+  color: #e6ebf8;
   text-decoration: none;
 }
 
@@ -40,8 +52,8 @@
 }
 
 .footer-disclaimer-text {
-  color: rgba(232, 237, 248, 0.78);
-  line-height: 1.6;
+  color: rgba(230, 235, 248, 0.72);
+  line-height: 1.65;
   padding-bottom: var(--space-5);
 }
 
@@ -49,5 +61,11 @@
   margin-top: var(--space-5);
   padding-top: var(--space-4);
   border-top: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(232, 237, 248, 0.78);
+  color: rgba(230, 235, 248, 0.72);
+}
+
+@media (min-width: 720px) {
+  .footer-links {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

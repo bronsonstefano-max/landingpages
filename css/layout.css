@@ -2,7 +2,7 @@
    Layout helpers
    ========================================================================== */
 html {
-  scroll-padding-top: 80px; /* sticky header (64px) + a little air */
+  scroll-padding-top: calc(var(--header-height) + 16px);
 }
 
 .container {
@@ -14,6 +14,31 @@ html {
 
 .section {
   padding-block: var(--space-7);
+}
+
+/* --- Section headings ------------------------------------------------- */
+/* Every section leads with a small uppercase eyebrow over the h2. It gives
+   the page a repeating rhythm and, practically, a second keyword slot that
+   stays visible at a glance. */
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+
+.section-eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-blue);
+  flex-shrink: 0;
 }
 
 .section-heading {
@@ -35,13 +60,60 @@ html {
   margin-top: var(--space-3);
   color: var(--color-text-muted);
   font-size: var(--fs-base);
-  max-width: 60ch;
+  max-width: 62ch;
 }
 
 .section--tight {
-  padding-block: var(--space-6);
+  padding-block: var(--space-5);
 }
 
+/* Sections no longer need a rule of their own — the card/band treatments
+   below do the separating. Kept as a no-op hook so existing markup and the
+   static secondary pages stay valid. */
 .section--ruled {
-  border-top: 1px dashed var(--color-border-dashed);
+  border-top: 0;
+}
+
+/* --- Bands ------------------------------------------------------------ */
+/* A tinted, inset panel used to lift a whole section (brands, service
+   area) off the white page without a full-bleed background. */
+.band-panel {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-5);
+}
+
+@media (min-width: 720px) {
+  .band-panel {
+    padding: var(--space-7) var(--space-6);
+  }
+}
+
+/* Faint CSS blueprint grid. No image request; used behind the hero and the
+   closing CTA band so both read as "spec sheet". */
+.blueprint::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  -webkit-mask-image: radial-gradient(
+    ellipse 85% 75% at 50% 35%,
+    #000 0%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 85% 75% at 50% 35%,
+    #000 0%,
+    transparent 78%
+  );
+  z-index: 0;
+}
+
+.blueprint--dark::before {
+  background-image: linear-gradient(var(--grid-line-dark) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-dark) 1px, transparent 1px);
 }

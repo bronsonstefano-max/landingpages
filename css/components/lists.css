@@ -1,8 +1,76 @@
 /* ==========================================================================
-   Simple list (services)
+   Service grid
+   --------------------------------------------------------------------------
+   The keyword list used to be 18 stacked rows — nearly a full phone screen
+   of scrolling to read them all. As a two-up grid of tiles the same 18
+   service names take about half the height, so more of the keyword set is
+   on screen at once, and each tile is its own tap target that dials.
    ========================================================================== */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.service-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: 52px;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: clamp(0.8125rem, 0.75rem + 0.3vw, 0.9375rem);
+  line-height: 1.25;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.service-chip:hover,
+.service-chip:focus-visible {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+  color: var(--color-primary-dark);
+}
+
+.service-chip .icon {
+  color: var(--color-blue);
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+@media (min-width: 560px) {
+  .service-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) {
+  .service-grid {
+    gap: var(--space-3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-chip {
+    transition: none;
+  }
+  .service-chip:hover {
+    transform: none;
+  }
+}
+
+/* Legacy single-column list classes, still referenced by the static
+   secondary pages' markup. */
 .simple-list {
-  border-top: 1px dashed var(--color-border-dashed);
+  border-top: 1px solid var(--color-border);
 }
 
 .simple-list-item {
@@ -11,15 +79,14 @@
   justify-content: space-between;
   gap: var(--space-3);
   padding-block: var(--space-4);
-  border-bottom: 1px dashed var(--color-border-dashed);
+  border-bottom: 1px solid var(--color-border);
   text-decoration: none;
   color: var(--color-text);
-  font-weight: 400;
   font-size: var(--fs-base);
 }
 
 .simple-list-item:hover {
-  color: var(--color-blue);
+  color: var(--color-primary);
 }
 
 .simple-list-item .icon {
@@ -28,5 +95,3 @@
   height: 1.1em;
   flex-shrink: 0;
 }
-
-

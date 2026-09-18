@@ -4,15 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- The hero background is the LCP element, so it is preloaded at high
+       priority. Two sizes, media-gated so a phone never fetches the 1672px
+       desktop file; these must stay in sync with the matching
+       `max-width: 959px` rule in css/sections/hero.css. -->
+  <link
+    rel="preload"
+    as="image"
+    href="assets/images/hero-repair-mobile.webp"
+    fetchpriority="high"
+    media="(max-width: 959px)"
+  />
   <link
     rel="preload"
     as="image"
     href="assets/images/hero-repair.webp"
     fetchpriority="high"
+    media="(min-width: 960px)"
   />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/poppins-latin-400.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/poppins-latin-700.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/poppins-latin-800.woff2" crossorigin />
+
+  <!-- main.js's imports, so the browser fetches the whole module graph in
+       one parallel wave instead of discovering it one parse-step later. -->
+  <link rel="modulepreload" href="js/config.js" />
+  <link rel="modulepreload" href="js/modules/bind-config.js" />
+  <link rel="modulepreload" href="js/modules/geo-location.js" />
+  <link rel="modulepreload" href="js/modules/service-area-map.js" />
+  <link rel="modulepreload" href="js/modules/local-number.js" />
+  <link rel="modulepreload" href="js/modules/star-rating.js" />
+  <link rel="modulepreload" href="js/modules/mobile-call-bar.js" />
+  <link rel="modulepreload" href="js/modules/call-tracking.js" />
 
   <title>{{seo.title}}</title>
   <meta name="description" content="{{seo.description}}" />

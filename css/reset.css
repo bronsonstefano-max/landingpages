@@ -58,6 +58,6 @@ button {
 }
 
 :focus-visible {
-  outline: 3px solid #ffb020;
-  outline-offset: 2px;
+  outline: 3px solid var(--color-blue-dark);
+  outline-offset: 3px;
 }

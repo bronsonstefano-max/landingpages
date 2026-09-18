@@ -15,9 +15,11 @@ and the same disclaimer; this README documents the combined result.
 
 ```
 css/                  stylesheets, one concern per file
-  main.css            entry point (@import of everything below)
+  main.src.css        import manifest — edit this to change load order
+  main.css            GENERATED bundle of main.src.css's imports (what
+                       index.html actually links — see "Performance" below)
   tokens.css          color, type, space, radius
-  components/         buttons, lists, stars, call bar, …
+  components/         buttons, chips, service tiles, stars, call bar, …
   sections/           header, hero, content column, footer
 js/
   config.js           brand, phone, claims, geo/DNI settings (ES module)
@@ -42,11 +44,12 @@ do-not-sell.html       Secondary page (footer "Do Not Sell My Info" link)
                         — CCPA request form, see "Do Not Sell form backend"
 ```
 
-`index.html` is generated — edit `src/`, `css/`, and `js/`, then rerun the
-build. The three secondary pages above are **not** part of this templating
-system (each is small enough not to warrant it); they're plain static HTML
-that load the same `css/main.css` and `js/main.js` as the generated page,
-so a config or CSS change still applies everywhere from one edit.
+`index.html` and `css/main.css` are generated — edit `src/`, `js/`, and any
+`css/` file except `main.css` itself, then rerun the build. The three
+secondary pages above are **not** part of this templating system (each is
+small enough not to warrant it); they're plain static HTML that load the
+same `css/main.css` and `js/main.js` as the generated page, so a config or
+CSS change still applies everywhere from one edit.
 
 ## Preview
 
@@ -57,6 +60,34 @@ python3 -m http.server 4173
 
 Open [http://localhost:4173](http://localhost:4173). No npm dependencies;
 the build script is plain Python 3, the site itself is plain HTML/CSS/JS.
+
+## Performance
+
+Traffic here is primarily mobile (Google Search Ads), so the hero — the
+first thing a visitor sees — is tuned for that:
+
+- **`css/main.css` is a generated bundle, not hand-written.** The 24-file
+  `@import` chain that used to live there made the browser fetch and parse
+  `main.css` before it even knew the other files existed, adding a full
+  render-blocking round trip before first paint. `main.src.css` still lists
+  the load order; `scripts/build.py` concatenates it into one `main.css`
+  file at build time.
+- **The hero background ships two sizes.** `assets/images/hero-repair.webp`
+  (1672px wide) is for desktop; `assets/images/hero-repair-mobile.webp`
+  (1000px wide, ~30KB vs ~77KB) is what phones actually get, via a
+  `max-width: 959px` rule in `hero.css` and matching `media` attributes on
+  the `<link rel="preload">` tags in `layout.html`. Those two places must
+  stay in sync. Regenerate the mobile file if the source ever changes
+  (requires `pip3 install Pillow`):
+  `python3 -c "from PIL import Image; im = Image.open('assets/images/hero-repair.webp').convert('RGB'); im.resize((1000, round(im.height*1000/im.width)), Image.LANCZOS).save('assets/images/hero-repair-mobile.webp', 'WEBP', quality=72, method=6)"`
+- **The sidebar portrait is served at its display size.** The card is 320px
+  wide, so `assets/images/appliance-repair-card.webp` (800px, ~20KB) is the
+  `srcset` default with the 1672px original as the high-DPI candidate —
+  rather than shipping a 1672px file into a 320px slot.
+- **`js/main.js`'s module graph is preloaded.** `<link rel="modulepreload">`
+  tags in `layout.html` let the browser fetch `config.js` and everything
+  under `js/modules/` in parallel with `main.js` itself, instead of
+  discovering them one parse-step later.
 
 ## ⚠️ Claims to verify before launch
 

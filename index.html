@@ -4,18 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- The hero background is the LCP element, so it is preloaded at high
+       priority. Two sizes, media-gated so a phone never fetches the 1672px
+       desktop file; these must stay in sync with the matching
+       `max-width: 959px` rule in css/sections/hero.css. -->
+  <link
+    rel="preload"
+    as="image"
+    href="assets/images/hero-repair-mobile.webp"
+    fetchpriority="high"
+    media="(max-width: 959px)"
+  />
   <link
     rel="preload"
     as="image"
     href="assets/images/hero-repair.webp"
     fetchpriority="high"
+    media="(min-width: 960px)"
   />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/poppins-latin-400.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/poppins-latin-700.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/poppins-latin-800.woff2" crossorigin />
 
-  <title>Appliance Repair | Same &amp; Next-Day Service | Appliance Helpers</title>
-  <meta name="description" content="Need appliance repair near you? Appliance Helpers connects homeowners with local technicians for refrigerators, washers, dryers, dishwashers, ovens and more. Same and next-day service available." />
+  <!-- main.js's imports, so the browser fetches the whole module graph in
+       one parallel wave instead of discovering it one parse-step later. -->
+  <link rel="modulepreload" href="js/config.js" />
+  <link rel="modulepreload" href="js/modules/bind-config.js" />
+  <link rel="modulepreload" href="js/modules/geo-location.js" />
+  <link rel="modulepreload" href="js/modules/service-area-map.js" />
+  <link rel="modulepreload" href="js/modules/local-number.js" />
+  <link rel="modulepreload" href="js/modules/star-rating.js" />
+  <link rel="modulepreload" href="js/modules/mobile-call-bar.js" />
+  <link rel="modulepreload" href="js/modules/call-tracking.js" />
+
+  <title>Appliance Repair Near You | Same &amp; Next-Day Service | Appliance Helpers</title>
+  <meta name="description" content="Appliance acting up? Appliance Helpers puts you in touch with local repair technicians for refrigerators, washers, dryers, dishwashers, ovens, and more — with same- and next-day appointments often available." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://appliancehelpers.com/" />
   <meta name="theme-color" content="#1657ff" />
@@ -26,23 +49,23 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Appliance Helpers" />
   <meta property="og:locale" content="en_US" />
-  <meta property="og:title" content="Appliance Repair | Same &amp; Next-Day Service | Appliance Helpers" />
-  <meta property="og:description" content="Need appliance repair near you? Appliance Helpers connects homeowners with local technicians for refrigerators, washers, dryers, dishwashers, ovens and more. Same and next-day service available." />
+  <meta property="og:title" content="Appliance Repair Near You | Same &amp; Next-Day Service | Appliance Helpers" />
+  <meta property="og:description" content="Appliance acting up? Appliance Helpers puts you in touch with local repair technicians for refrigerators, washers, dryers, dishwashers, ovens, and more — with same- and next-day appointments often available." />
   <meta property="og:url" content="https://appliancehelpers.com/" />
   <meta property="og:image" content="https://appliancehelpers.com/assets/images/og-appliance-helpers.jpg" />
   <meta property="og:image:secure_url" content="https://appliancehelpers.com/assets/images/og-appliance-helpers.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Appliance Helpers technician providing in-home appliance repair" />
+  <meta property="og:image:alt" content="Appliance Helpers technician performing an in-home appliance repair" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Appliance Repair | Same &amp; Next-Day Service | Appliance Helpers" />
-  <meta name="twitter:description" content="Need appliance repair near you? Appliance Helpers connects homeowners with local technicians for refrigerators, washers, dryers, dishwashers, ovens and more. Same and next-day service available." />
+  <meta name="twitter:title" content="Appliance Repair Near You | Same &amp; Next-Day Service | Appliance Helpers" />
+  <meta name="twitter:description" content="Appliance acting up? Appliance Helpers puts you in touch with local repair technicians for refrigerators, washers, dryers, dishwashers, ovens, and more — with same- and next-day appointments often available." />
   <meta name="twitter:image" content="https://appliancehelpers.com/assets/images/og-appliance-helpers.jpg" />
-  <meta name="twitter:image:alt" content="Appliance Helpers technician providing in-home appliance repair" />
+  <meta name="twitter:image:alt" content="Appliance Helpers technician performing an in-home appliance repair" />
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://appliancehelpers.com/#organization","name":"Appliance Helpers","url":"https://appliancehelpers.com/","logo":{"@type":"ImageObject","url":"https://appliancehelpers.com/assets/images/appliance-helpers-logo.png","width":800,"height":248},"description":"Appliance Helpers is a free referral service that connects homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","areaServed":{"@type":"Country","name":"United States"}},{"@type":"WebSite","@id":"https://appliancehelpers.com/#website","url":"https://appliancehelpers.com/","name":"Appliance Helpers","description":"Appliance Helpers is a free referral service that connects homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","publisher":{"@id":"https://appliancehelpers.com/#organization"},"inLanguage":"en-US"},{"@type":"WebPage","@id":"https://appliancehelpers.com/","url":"https://appliancehelpers.com/","name":"Appliance Repair | Same & Next-Day Service | Appliance Helpers","description":"Need appliance repair near you? Appliance Helpers connects homeowners with local technicians for refrigerators, washers, dryers, dishwashers, ovens and more. Same and next-day service available.","isPartOf":{"@id":"https://appliancehelpers.com/#website"},"about":{"@id":"https://appliancehelpers.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://appliancehelpers.com/assets/images/og-appliance-helpers.jpg","width":1200,"height":630}},{"@type":"Service","name":"Appliance Repair Referral","serviceType":"Appliance repair","provider":{"@id":"https://appliancehelpers.com/#organization"},"areaServed":{"@type":"Country","name":"United States"},"description":"Appliance Helpers is a free referral service that connects homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","url":"https://appliancehelpers.com/"},{"@type":"FAQPage","@id":"https://appliancehelpers.com/#faq","url":"https://appliancehelpers.com/#faq","mainEntity":[{"@type":"Question","name":"What appliances do you repair?","acceptedAnswer":{"@type":"Answer","text":"Appliance Helpers connects you with technicians who repair major household appliances, including refrigerators, washers, dryers, dishwashers, ovens, ranges, cooktops, freezers, ice makers, microwaves, garbage disposals, and more."}},{"@type":"Question","name":"Can I get same-day appliance repair?","acceptedAnswer":{"@type":"Answer","text":"Same-day and next-day appointments are often available, depending on technician schedules in your area. Call (800) 555-5555 and we will match you with the earliest local opening."}},{"@type":"Question","name":"Do you repair all appliance brands?","acceptedAnswer":{"@type":"Answer","text":"Yes. Independent technicians in the network work on nearly every major brand and model, including Whirlpool, GE, Samsung, LG, Maytag, KitchenAid, Bosch, Frigidaire, Kenmore, and many others."}},{"@type":"Question","name":"How does scheduling work?","acceptedAnswer":{"@type":"Answer","text":"Call (800) 555-5555, describe the appliance and the problem, and we will connect you with a local technician. They diagnose the issue in your home, explain the work, and give you a quote before any repair begins."}},{"@type":"Question","name":"Will I know the price before work begins?","acceptedAnswer":{"@type":"Answer","text":"Yes. You receive an up-front quote after the technician diagnoses the problem, and no repair work starts until you approve it. There is no obligation to proceed."}},{"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"Appliance Helpers connects homeowners with local appliance repair technicians in their area. After you call, we match you with a nearby technician when one is available."}},{"@type":"Question","name":"How does Appliance Helpers work?","acceptedAnswer":{"@type":"Answer","text":"Appliance Helpers is a free referral service. We connect you with independent local appliance repair technicians. Those technicians are not employed by Appliance Helpers, and you choose whether to move forward after you receive a quote."}}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://appliancehelpers.com/#organization","name":"Appliance Helpers","url":"https://appliancehelpers.com/","logo":{"@type":"ImageObject","url":"https://appliancehelpers.com/assets/images/appliance-helpers-logo.png","width":800,"height":248},"description":"Appliance Helpers is a free referral service that matches homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","areaServed":{"@type":"Country","name":"United States"}},{"@type":"WebSite","@id":"https://appliancehelpers.com/#website","url":"https://appliancehelpers.com/","name":"Appliance Helpers","description":"Appliance Helpers is a free referral service that matches homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","publisher":{"@id":"https://appliancehelpers.com/#organization"},"inLanguage":"en-US"},{"@type":"WebPage","@id":"https://appliancehelpers.com/","url":"https://appliancehelpers.com/","name":"Appliance Repair Near You | Same & Next-Day Service | Appliance Helpers","description":"Appliance acting up? Appliance Helpers puts you in touch with local repair technicians for refrigerators, washers, dryers, dishwashers, ovens, and more \u2014 with same- and next-day appointments often available.","isPartOf":{"@id":"https://appliancehelpers.com/#website"},"about":{"@id":"https://appliancehelpers.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://appliancehelpers.com/assets/images/og-appliance-helpers.jpg","width":1200,"height":630}},{"@type":"Service","name":"Appliance Repair Referral","serviceType":"Appliance repair","provider":{"@id":"https://appliancehelpers.com/#organization"},"areaServed":{"@type":"Country","name":"United States"},"description":"Appliance Helpers is a free referral service that matches homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","url":"https://appliancehelpers.com/"},{"@type":"FAQPage","@id":"https://appliancehelpers.com/#faq","url":"https://appliancehelpers.com/#faq","mainEntity":[{"@type":"Question","name":"What appliances do you repair?","acceptedAnswer":{"@type":"Answer","text":"Appliance Helpers connects you with technicians who handle repairs on major household appliances \u2014 refrigerators, washers, dryers, dishwashers, ovens, ranges, cooktops, freezers, ice makers, microwaves, garbage disposals, and more."}},{"@type":"Question","name":"Can I get same-day appliance repair?","acceptedAnswer":{"@type":"Answer","text":"Same-day and next-day appointments are frequently available, depending on technician availability in your area. Call (800) 555-5555 and we'll find you the earliest opening nearby."}},{"@type":"Question","name":"Do you repair all appliance brands?","acceptedAnswer":{"@type":"Answer","text":"Yes. The independent technicians in our network service nearly every major appliance brand and model \u2014 including Whirlpool, GE, Samsung, LG, Maytag, KitchenAid, Bosch, Frigidaire, Kenmore, and many more."}},{"@type":"Question","name":"How does scheduling work?","acceptedAnswer":{"@type":"Answer","text":"Call (800) 555-5555 and tell us about your appliance and the issue \u2014 we'll connect you with a local technician. They'll diagnose the problem in your home, walk you through the fix, and quote you before any work starts."}},{"@type":"Question","name":"Will I know the price before work begins?","acceptedAnswer":{"@type":"Answer","text":"Yes. You'll get an up-front quote once the technician diagnoses the problem, and no work begins until you approve it \u2014 there's never any obligation to continue."}},{"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"Appliance Helpers matches homeowners with local appliance repair technicians in their area. Once you call, we'll pair you with a nearby technician as soon as one is available."}},{"@type":"Question","name":"How does Appliance Helpers work?","acceptedAnswer":{"@type":"Answer","text":"Appliance Helpers is a free referral service that connects you with independent, local appliance repair technicians. These technicians aren't employed by Appliance Helpers, and it's always your choice whether to move forward once you've received a quote."}}]}]}</script>
 
   <link rel="stylesheet" href="css/main.css" />
 </head>
@@ -102,6 +125,14 @@
       <path d="M12 21s7-6.4 7-11.4A7 7 0 0 0 5 9.6C5 14.6 12 21 12 21Z" />
       <circle cx="12" cy="9.6" r="2.3" />
     </symbol>
+    <symbol id="icon-tag" viewBox="0 0 24 24">
+      <path d="M11.3 3.2H20a.8.8 0 0 1 .8.8v8.7a1.6 1.6 0 0 1-.47 1.13l-6.4 6.4a1.6 1.6 0 0 1-2.26 0l-7.23-7.23a1.6 1.6 0 0 1 0-2.26l6.4-6.4a1.6 1.6 0 0 1 1.13-.47Z" />
+      <path d="M16.3 7.7h.01" />
+    </symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24">
+      <rect x="3.4" y="5.2" width="17.2" height="15.4" rx="2" />
+      <path d="M3.4 10h17.2M8.2 3.4v3.6M15.8 3.4v3.6" />
+    </symbol>
   </svg>
 
   <header class="site-header">
@@ -118,7 +149,7 @@
       <div class="header-right">
         <span class="header-availability">
           <span class="header-online-dot" aria-hidden="true"></span>
-          <span data-cfg="availabilityBadge">Available 24/7</span>
+          <span data-cfg="availabilityBadge">Open 24/7</span>
         </span>
         <a
           id="header-call-button"
@@ -139,12 +170,9 @@
     <section class="hero">
       <div class="container">
         <h1><span data-geo-location-prefix></span>Appliance Repair</h1>
-        <p class="hero-location" data-geo-reveal hidden>
-          <svg class="icon" aria-hidden="true"><use href="#icon-pin"></use></svg>
-          <span data-geo-city-state></span>
-        </p>
+
         <p class="hero-subhead">
-          <span data-cfg="availabilityClaim">Same &amp; Next-Day Service Available</span>.
+          <span data-cfg="availabilityClaim">Same &amp; Next-Day Repairs Available</span>.<br />
           Call us at
           <a
             id="hero-phone-link"
@@ -170,24 +198,24 @@
           </a>
         </div>
 
-        <div class="star-rating" data-star-rating role="img" aria-label="Rated 4.5 out of 5 stars"></div>
+        <div class="star-rating" data-star-rating role="img" aria-label="Rated 5 out of 5 stars"></div>
 
         <ul class="hero-checklist">
                     <li class="hero-checklist-item">
             <span class="hero-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-            <span>We Service All Brands &amp; Models</span>
+            <span>All Major Brands &amp; Models Serviced</span>
           </li>
           <li class="hero-checklist-item">
             <span class="hero-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-            <span data-cfg="availabilityClaim">Same &amp; Next-Day Service Available</span>
+            <span data-cfg="availabilityClaim">Same &amp; Next-Day Repairs Available</span>
           </li>
           <li class="hero-checklist-item">
             <span class="hero-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-            <span>Zero Obligation Up-Front Quotes</span>
+            <span>No-Obligation, Up-Front Pricing</span>
           </li>
           <li class="hero-checklist-item">
             <span class="hero-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-            <span data-cfg="supportClaim">24-Hour Support 7 Days a Week</span>
+            <span data-cfg="supportClaim">24/7 Support, Every Day of the Week</span>
           </li>
         </ul>
       </div>
@@ -198,85 +226,86 @@
         <div class="content-main">
           <div class="section intro-section" id="services">
             <div class="section-heading">
-              <h2><span class="heading-strong">Quick &amp; Affordable</span> In-Home Appliance Repair Services</h2>
+              <p class="section-eyebrow">Appliance Repair Services</p>
+              <h2><span class="heading-strong">Fast &amp; Affordable</span> In-Home Appliance Repair</h2>
               <p>
-                <span data-cfg="brandName">Appliance Helpers</span> connects homeowners with local
+                <span data-cfg="brandName">Appliance Helpers</span> matches homeowners with local
                 technicians who repair refrigerators, washers, dryers, dishwashers,
                 ovens, ranges, freezers, microwaves, and other major household
-                appliances &mdash; no matter which store or brand yours came from.
+                appliances &mdash; regardless of where you bought it or which brand it is.
               </p>
             </div>
 
-            <nav class="simple-list" aria-label="Appliance repair services">
-                            <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+            <nav class="service-grid" aria-label="Appliance repair services">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Laundry Machine Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Washer Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Dryer Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Kitchen Appliance Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Refrigerator Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Freezer Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Ice Maker Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Dishwasher Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Oven &amp; Range Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Stove &amp; Cooktop Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Vent Hood Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Garbage Disposal Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Microwave Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Trash Compactor Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Ice Machine Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Wine &amp; Keg Cooler Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Beverage Center Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
-              <a class="simple-list-item" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
+              <a class="service-chip" href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="service-list">
                 <span><span class="visually-hidden">Call about </span>Water Softener Repair</span>
                 <svg class="icon" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
               </a>
@@ -285,61 +314,69 @@
 
           <div class="section section--tight">
             <p class="callout-box">
-              Need your appliance fixed today? Call us now at <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="callout-1"><span data-cfg="phoneDisplay">(800) 555-5555</span></a> and we'll help get a technician out to you as soon as possible.
+              Appliance on the fritz? Call <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="callout-1"><span data-cfg="phoneDisplay">(800) 555-5555</span></a> right now and we'll work on getting a technician out to you as soon as we can.
             </p>
           </div>
 
           <div class="section">
             <div class="section-heading">
-              <h2><span class="heading-strong">Appliance Repair Done Right:</span><br />Quality Service You Can Trust</h2>
+              <p class="section-eyebrow">Why Homeowners Call Us</p>
+              <h2><span class="heading-strong">Reliable Appliance Repair,</span><br />Done The Right Way</h2>
               <p>
-                A broken appliance can throw off your whole day. At <span data-cfg="brandName">Appliance Helpers</span>,
-                we aim to get things fixed quickly, professionally, and at
-                a fair price.
+                A broken appliance can derail your whole day. At <span data-cfg="brandName">Appliance Helpers</span>,
+                our goal is simple: get it fixed fast, done right, and
+                priced fairly.
               </p>
             </div>
 
-            <ul class="benefit-list">
-                            <li class="benefit-list-item">
-                <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-                <p><strong>Fast, On-Time Service:</strong> We keep scheduling simple, with flexible appointment windows built around your day.</p>
+            <ul class="benefit-grid">
+              <li class="benefit-card">
+                <span class="benefit-card-icon" aria-hidden="true"><svg class="icon"><use href="#icon-calendar"></use></svg></span>
+                <h3 class="benefit-card-title"><strong>Quick, Reliable Scheduling</strong></h3>
+                <p>We make booking easy, with flexible appointment windows that fit around your schedule.</p>
               </li>
-              <li class="benefit-list-item">
-                <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-                <p><strong data-cfg="factoryTrainedClaim">Factory-Trained Technicians:</strong> Whatever the brand or model, <span data-cfg="brandName">Appliance Helpers</span> technicians come prepared to handle the repair.</p>
+              <li class="benefit-card">
+                <span class="benefit-card-icon" aria-hidden="true"><svg class="icon"><use href="#icon-technician"></use></svg></span>
+                <h3 class="benefit-card-title"><strong data-cfg="factoryTrainedClaim">Certified, Factory-Trained Techs</strong></h3>
+                <p>No matter the brand or model, every <span data-cfg="brandName">Appliance Helpers</span> technician arrives ready to get the job done.</p>
               </li>
-              <li class="benefit-list-item">
-                <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-                <p><strong>Same-Day Appliance Repairs:</strong> Fully stocked service vehicles mean most repairs are completed in a single visit.</p>
+              <li class="benefit-card">
+                <span class="benefit-card-icon" aria-hidden="true"><svg class="icon"><use href="#icon-bolt"></use></svg></span>
+                <h3 class="benefit-card-title"><strong>Most Repairs Done Same Day</strong></h3>
+                <p>Our technicians roll up in fully stocked vehicles, so most jobs wrap up in a single visit.</p>
               </li>
-              <li class="benefit-list-item">
-                <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-                <p><strong>Always Affordable Pricing:</strong> No surprise charges — you'll know the cost before any work begins.</p>
+              <li class="benefit-card">
+                <span class="benefit-card-icon" aria-hidden="true"><svg class="icon"><use href="#icon-tag"></use></svg></span>
+                <h3 class="benefit-card-title"><strong>Honest, Affordable Pricing</strong></h3>
+                <p>No hidden fees or surprise charges — you'll always know the cost upfront before work starts.</p>
               </li>
-              <li class="benefit-list-item">
-                <span class="benefit-check-icon" aria-hidden="true"><svg class="icon"><use href="#icon-check"></use></svg></span>
-                <p><strong>In Your Neighborhood:</strong> With technicians serving <span data-cfg="serviceArea">[SERVICE AREA]</span>, help is closer than you think.</p>
+              <li class="benefit-card">
+                <span class="benefit-card-icon" aria-hidden="true"><svg class="icon"><use href="#icon-pin"></use></svg></span>
+                <h3 class="benefit-card-title"><strong>Local Techs Nearby</strong></h3>
+                <p>With technicians already serving <span data-cfg="serviceArea">[SERVICE AREA]</span>, help is closer than you'd expect.</p>
               </li>
             </ul>
           </div>
 
           <div class="section section--tight">
             <p class="callout-box">
-              Don't wait another day with a broken appliance. Call <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="callout-2"><span data-cfg="phoneDisplay">(800) 555-5555</span></a> for fast service, 7 days a week.
+              No need to live with a broken appliance any longer. Call <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="callout-2"><span data-cfg="phoneDisplay">(800) 555-5555</span></a> for fast service, seven days a week.
             </p>
           </div>
 
           <div class="section" id="brands">
-            <div class="section-heading">
-              <h2><span class="heading-strong">Your Local Appliance Service Center</span> For All Major Brands &amp; Models</h2>
-              <p>
-                No matter where or when you bought it, certified technicians
-                work on nearly every major appliance brand — including yours.
-              </p>
-            </div>
+            <div class="band-panel">
+              <div class="section-heading">
+                <p class="section-eyebrow">Brands We Service</p>
+                <h2><span class="heading-strong">Local Appliance Repair</span> For Every Major Brand &amp; Model</h2>
+                <p>
+                  However old it is or wherever you bought it, our certified
+                  technicians can service nearly every major appliance brand &mdash; including yours.
+                </p>
+              </div>
 
-            <ul class="brand-logo-wall" aria-label="Brands we service">
-                            <li>
+              <ul class="brand-logo-wall" aria-label="Brands we service">
+              <li>
                 <img src="assets/brands/svg/amana.svg" alt="Amana" loading="lazy" decoding="async" />
               </li>
               <li>
@@ -402,113 +439,125 @@
               <li>
                 <img src="assets/brands/svg/wolf.svg" alt="Wolf" loading="lazy" decoding="async" />
               </li>
-            </ul>
-            <p class="brand-logo-footnote">Plus dozens of other makes and models.</p>
+              </ul>
+              <p class="brand-logo-footnote">Plus dozens more makes and models we service.</p>
+            </div>
 
             <p class="closing-copy">
-              Ready to speak with a certified appliance repair expert?
-              Contact us anytime at
+              Ready to talk to a certified appliance repair expert?
+              Reach us anytime at
               <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="brands-closing">
                 <span data-cfg="phoneDisplay">(800) 555-5555</span>
               </a>
-              to troubleshoot a problem, schedule your appointment, or request a quote.
+              to troubleshoot an issue, book your appointment, or get a quote.
             </p>
           </div>
 
           <div class="section section--ruled" id="how-it-works">
             <div class="section-heading">
-              <h2><span class="heading-strong" data-cfg="brandName">Appliance Helpers</span>: The Trusted Name For Appliance Repair</h2>
+              <p class="section-eyebrow">How It Works</p>
+              <h2><span class="heading-strong" data-cfg="brandName">Appliance Helpers</span>: Your Go-To For Appliance Repair</h2>
               <p>
                 From the kitchen to the laundry room,
                 <span data-cfg="brandName">Appliance Helpers</span>
-                connects homeowners with local technicians for refrigerator,
+                pairs homeowners with local technicians for refrigerator,
                 washer, dryer, dishwasher, oven, and other major-appliance repairs.
                 Same-day and next-day appointments are generally available,
-                schedule permitting. Here's how it works:
+                scheduling permitting. Here's how it works:
               </p>
             </div>
 
-            <ol class="numbered-steps">
-                            <li class="numbered-step">
-                <span class="numbered-step-number" aria-hidden="true">1</span>
-                <p><strong>Schedule Your Appliance Repair:</strong> Call our phone line, let us know about your appliance problem, and we'll find a technician to help as soon as possible.</p>
+            <ol class="step-timeline">
+              <li class="step">
+                <span class="step-marker" aria-hidden="true">1</span>
+                <div class="step-body">
+                  <h3 class="step-title">Call To Get Started</h3>
+                  <p>Give us a call, tell us what's going on with your appliance, and we'll line up a technician to help right away.</p>
+                </div>
               </li>
-              <li class="numbered-step">
-                <span class="numbered-step-number" aria-hidden="true">2</span>
-                <p><strong>Your Appliance Gets Fixed:</strong> Once your technician arrives, they'll diagnose the problem and explain what work is needed. If you'd like to move forward, they'll get to work on the repair.</p>
+              <li class="step">
+                <span class="step-marker" aria-hidden="true">2</span>
+                <div class="step-body">
+                  <h3 class="step-title">We Get It Fixed</h3>
+                  <p>When your technician arrives, they'll diagnose the issue and walk you through what's needed. Give the go-ahead, and they'll take care of the repair.</p>
+                </div>
               </li>
             </ol>
 
             <p class="closing-copy">
-              Discover the <span data-cfg="brandName">Appliance Helpers</span> difference today! All you have to do is
+              See the <span data-cfg="brandName">Appliance Helpers</span> difference for yourself! Just
               pick up the phone and call
               <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="how-it-works-closing">
                 <span data-cfg="phoneDisplay">(800) 555-5555</span>
-              </a>. Let us do the rest.
+              </a> &mdash; we'll take it from there.
             </p>
           </div>
 
-          <div class="section section--ruled service-area" data-service-area hidden>
-            <div class="service-area-panel">
-              <div class="service-area-copy">
-                <h2>Do you service my area?</h2>
-                <p>
-                  Yes — our technician partners work in
-                  <span data-geo-area>your area</span>.
-                  Same-day and next-day appointments are generally available.
-                </p>
-              </div>
-
-              <figure class="service-area-visual">
-                <div class="service-area-frame" data-service-area-frame>
-                  <div class="service-area-tiles" data-service-area-tiles aria-hidden="true"></div>
-                  <svg class="service-area-overlay" data-service-area-overlay aria-hidden="true"></svg>
+          <div class="section service-area" data-service-area hidden>
+            <div class="band-panel">
+              <div class="service-area-panel">
+                <div class="service-area-copy">
+                  <p class="section-eyebrow">Local Coverage</p>
+                  <h2>Is My Area Covered?</h2>
+                  <p>
+                    Yes &mdash; our partner technicians serve
+                    <span data-geo-area>your area</span>,
+                    with same-day and next-day appointments generally available.
+                  </p>
                 </div>
-                <figcaption class="service-area-caption">
-                  <svg class="icon" aria-hidden="true"><use href="#icon-pin"></use></svg>
-                  <span data-geo-city-state></span>
-                </figcaption>
-              </figure>
+
+                <figure class="service-area-visual">
+                  <div class="service-area-frame" data-service-area-frame>
+                    <div class="service-area-tiles" data-service-area-tiles aria-hidden="true"></div>
+                    <svg class="service-area-overlay" data-service-area-overlay aria-hidden="true"></svg>
+                  </div>
+                  <figcaption class="service-area-caption">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-pin"></use></svg>
+                    <span data-geo-city-state></span>
+                  </figcaption>
+                </figure>
+              </div>
             </div>
           </div>
 
           <section class="section section--ruled" id="faq" aria-labelledby="faq-heading">
             <div class="section-heading">
-              <h2 id="faq-heading">Appliance Repair Questions, Answered</h2>
+              <p class="section-eyebrow">Common Questions</p>
+              <h2 id="faq-heading">Got Appliance Repair Questions? We've Got Answers</h2>
               <p>
-                Straight answers about scheduling, brands, pricing, and how
-                <span data-cfg="brandName">Appliance Helpers</span> connects you with a local technician.
+                Quick answers on scheduling, brands, pricing, and how
+                <span data-cfg="brandName">Appliance Helpers</span> pairs you with a local technician.
               </p>
             </div>
 
             <div class="faq-list">
               <details class="faq-item">
                 <summary><span>What appliances do you repair?</span><svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg></summary>
-                <p class="faq-answer">Appliance Helpers connects you with technicians who repair major household appliances, including refrigerators, washers, dryers, dishwashers, ovens, ranges, cooktops, freezers, ice makers, microwaves, garbage disposals, and more.</p>
+                <p class="faq-answer">Appliance Helpers connects you with technicians who handle repairs on major household appliances — refrigerators, washers, dryers, dishwashers, ovens, ranges, cooktops, freezers, ice makers, microwaves, garbage disposals, and more.</p>
               </details>
               <details class="faq-item">
                 <summary><span>Can I get same-day appliance repair?</span><svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg></summary>
-                <p class="faq-answer">Same-day and next-day appointments are often available, depending on technician schedules in your area. Call <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="faq-2"><span data-cfg="phoneDisplay">(800) 555-5555</span></a> and we will match you with the earliest local opening.</p>
+                <p class="faq-answer">Same-day and next-day appointments are frequently available, depending on technician availability in your area. Call <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="faq-2"><span data-cfg="phoneDisplay">(800) 555-5555</span></a> and we'll find you the earliest opening nearby.</p>
               </details>
               <details class="faq-item">
                 <summary><span>Do you repair all appliance brands?</span><svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg></summary>
-                <p class="faq-answer">Yes. Independent technicians in the network work on nearly every major brand and model, including Whirlpool, GE, Samsung, LG, Maytag, KitchenAid, Bosch, Frigidaire, Kenmore, and many others.</p>
+                <p class="faq-answer">Yes. The independent technicians in our network service nearly every major appliance brand and model — including Whirlpool, GE, Samsung, LG, Maytag, KitchenAid, Bosch, Frigidaire, Kenmore, and many more.</p>
               </details>
               <details class="faq-item">
                 <summary><span>How does scheduling work?</span><svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg></summary>
-                <p class="faq-answer">Call <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="faq-4"><span data-cfg="phoneDisplay">(800) 555-5555</span></a>, describe the appliance and the problem, and we will connect you with a local technician. They diagnose the issue in your home, explain the work, and give you a quote before any repair begins.</p>
+                <p class="faq-answer">Call <a href="tel:+18005555555" data-cfg-href="phoneHref" data-call-source="faq-4"><span data-cfg="phoneDisplay">(800) 555-5555</span></a> and tell us about your appliance and the issue — we'll connect you with a local technician. They'll diagnose the problem in your home, walk you through the fix, and quote you before any work starts.</p>
               </details>
               <details class="faq-item">
                 <summary><span>Will I know the price before work begins?</span><svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg></summary>
-                <p class="faq-answer">Yes. You receive an up-front quote after the technician diagnoses the problem, and no repair work starts until you approve it. There is no obligation to proceed.</p>
+                <p class="faq-answer">Yes. You'll get an up-front quote once the technician diagnoses the problem, and no work begins until you approve it — there's never any obligation to continue.</p>
               </details>
               <details class="faq-item">
                 <summary><span>What areas do you serve?</span><svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg></summary>
-                <p class="faq-answer">Appliance Helpers connects homeowners with local appliance repair technicians in their area. After you call, we match you with a nearby technician when one is available.</p>
+                <p class="faq-answer">Appliance Helpers matches homeowners with local appliance repair technicians in their area. Once you call, we'll pair you with a nearby technician as soon as one is available.</p>
               </details>
               <details class="faq-item">
                 <summary><span>How does Appliance Helpers work?</span><svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg></summary>
-                <p class="faq-answer">Appliance Helpers is a free referral service. We connect you with independent local appliance repair technicians. Those technicians are not employed by Appliance Helpers, and you choose whether to move forward after you receive a quote.</p>
+                <p class="faq-answer">Appliance Helpers is a free referral service that connects you with independent, local appliance repair technicians. These technicians aren't employed by Appliance Helpers, and it's always your choice whether to move forward once you've received a quote.</p>
               </details>
             </div>
           </section>
@@ -519,6 +568,8 @@
             <img
               class="sidebar-card-photo"
               src="assets/images/appliance-repair.webp"
+              srcset="assets/images/appliance-repair-card.webp 800w, assets/images/appliance-repair.webp 1672w"
+              sizes="320px"
               width="1672"
               height="941"
               alt=""
@@ -526,8 +577,9 @@
               decoding="async"
             />
             <div class="sidebar-card-body">
+              <p class="sidebar-card-eyebrow">Talk to someone now</p>
               <h3><span data-geo-location-prefix></span>Appliance Repair</h3>
-              <p>Need Your Repair Done Today? Call Now For Fast Service.</p>
+              <p class="sidebar-card-sub">Need It Fixed Today? Call Now For Fast Service.</p>
               <a
                 id="sidebar-call-button"
                 class="btn-banner"
@@ -535,9 +587,12 @@
                 data-cfg-href="phoneHref"
                 data-call-source="sidebar-card"
               >
-                <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg>
+                <svg class="icon icon-phone-shake" aria-hidden="true"><use href="#icon-phone"></use></svg>
                 <span data-cfg="phoneDisplay">(800) 555-5555</span>
               </a>
+              <p class="sidebar-card-note">
+                Free referral service &middot; No obligation to book
+              </p>
             </div>
           </div>
         </aside>
@@ -546,11 +601,11 @@
 
     <div class="section-divider" role="presentation"></div>
 
-    <section class="final-cta" aria-labelledby="final-cta-heading">
+    <section class="final-cta blueprint blueprint--dark" aria-labelledby="final-cta-heading">
       <div class="container">
         <h2 id="final-cta-heading"><span data-geo-location-prefix></span>Appliance Repair</h2>
         <p class="hero-subhead">
-          Fast, <span data-cfg="availabilityClaim">Same-Day Service Available</span>! Call us at
+          <span data-cfg="availabilityClaim">Same &amp; Next-Day Repairs Available</span>! Call us at
           <a
             href="tel:+18005555555"
             class="header-phone-number"
@@ -572,6 +627,9 @@
             </span>
           </a>
         </div>
+        <p class="final-cta-note">
+          Free referral service. No obligation &mdash; you approve the quote before any work starts.
+        </p>
       </div>
     </section>
   </main>
@@ -594,7 +652,7 @@
       <div class="footer-accordion">
         <div class="footer-accordion-label">Disclaimer</div>
         <p class="footer-disclaimer-text">
-          Appliance Helpers is a free referral service that helps users connect with local appliance repair experts. All contractors are independent and Appliance Helpers does not warrant or guarantee any work performed. It is the responsibility of the user to verify the contractor they hire has the necessary license and insurance required for the work being performed. Appliance Helpers does not employ the contractors that use our service. 24-hour service and same-day appointments are based on availability, schedule permitting. All related issues are the responsibility of the applicable facility. Any third party products, brands or trademarks listed above are the sole property of their respective owner. No affiliation or endorsement is intended or implied.
+          Appliance Helpers is a free referral service that helps homeowners connect with independent, local appliance repair professionals. All contractors are independent, and Appliance Helpers does not warrant or guarantee the work they perform. It is the user's responsibility to confirm that any contractor they hire carries the license and insurance required for the job. Appliance Helpers does not employ the contractors who use this service. Same-day appointments and 24-hour availability depend on technician schedules and are not guaranteed. Any issues arising from work performed remain the responsibility of the applicable service provider. All third-party product names, brands, and trademarks referenced on this site remain the property of their respective owners, and no affiliation or endorsement with Appliance Helpers is implied.
         </p>
       </div>
 
@@ -614,7 +672,7 @@
       Call <span data-cfg="phoneDisplay">(800) 555-5555</span>
     </a>
     <p class="mobile-call-bar-sub">
-      Need Help Fast? Call Us Now For <span data-cfg="availabilityClaim">Same &amp; Next-Day Service</span>!
+      Need Help Fast? <span data-cfg="availabilityClaim">Same &amp; Next-Day Repairs Available</span> &mdash; Call Now!
     </p>
   </div>
 

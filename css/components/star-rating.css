@@ -2,7 +2,7 @@
    rest of the hero doesn't shift down when they appear. */
 .star-rating {
   margin-top: var(--space-4);
-  font-size: var(--fs-xl);
+  font-size: calc(var(--fs-xl) * 0.85);
   min-height: 1.2em;
   display: flex;
   justify-content: center;

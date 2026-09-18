@@ -1,5 +1,9 @@
 /* ==========================================================================
    Buttons
+   --------------------------------------------------------------------------
+   One action colour on the whole site: amber. Every amber thing dials the
+   phone. Shape is a chunky rounded rect with a warm double shadow (a soft
+   glow plus a 2px hard edge) so the button reads as a physical key.
    ========================================================================== */
 .btn {
   display: inline-flex;
@@ -9,26 +13,34 @@
   text-decoration: none;
   border: none;
   cursor: pointer;
-  font-weight: 700;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background-color 0.15s ease;
 }
 
+/* Primary call-to-action. Pill-shaped, with the icon in a white disc on
+   the trailing edge -- hence the lopsided padding. */
 .btn-pill {
   background: var(--color-blue);
   color: var(--color-blue-contrast);
   border-radius: var(--radius-pill);
-  padding: var(--space-5) var(--space-3) var(--space-5) var(--space-7);
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-8);
   font-size: clamp(1.1875rem, 1.1rem + 0.5vw, 1.375rem);
   box-shadow: var(--shadow-cta);
+  max-width: 100%;
 }
 
 .btn-pill:hover,
 .btn-pill:focus-visible {
   background: var(--color-blue-dark);
+  box-shadow: var(--shadow-cta-hover);
+  transform: translateY(-1px);
 }
 
 .btn-pill:active {
   transform: translateY(1px);
+  box-shadow: var(--shadow-xs);
 }
 
 .btn-pill-icon {
@@ -48,6 +60,8 @@
   height: 1.1em;
 }
 
+/* Full-width call button (sidebar card). Pill, to match every other
+   action on the page. */
 .btn-banner {
   display: flex;
   align-items: center;
@@ -60,10 +74,51 @@
   padding: var(--space-4);
   font-size: var(--fs-md);
   font-weight: 800;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-cta);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-banner:hover,
 .btn-banner:focus-visible {
   background: var(--color-blue-dark);
+  box-shadow: var(--shadow-cta-hover);
+}
+
+.btn-banner .icon {
+  width: 1.05em;
+  height: 1.05em;
+}
+
+/* Secondary, low-emphasis action on a dark band. */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-pill);
+  padding: 0.85rem 1.3rem;
+  font-weight: 700;
+  font-size: var(--fs-base);
+  color: #ffffff;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn-pill,
+  .btn-banner {
+    transition: none;
+  }
+
+  .btn-pill:hover {
+    transform: none;
+  }
 }

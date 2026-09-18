@@ -1,31 +1,56 @@
 /* ==========================================================================
-   Final CTA (repeats the hero pattern)
+   Final CTA — the page's one dark band
+   --------------------------------------------------------------------------
+   Deep indigo with the blueprint grid, no photograph. Dropping the
+   background image here removes a full-width decode from the bottom of the
+   page and makes the amber button the highest-contrast thing on screen at
+   exactly the moment the visitor decides.
    ========================================================================== */
 .final-cta {
-  padding-block: var(--space-7);
-  background-color: var(--hero-fallback);
-  background-image: var(--hero-overlay-strong), url("../../assets/images/hero-repair.webp");
-  background-size: cover;
-  background-position: 72% 55%;
-  background-repeat: no-repeat;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--space-8);
+  background-color: var(--color-primary-deep);
+  background-image: var(--band-dark);
   color: #fff;
   text-align: center;
+}
+
+.final-cta .container {
+  position: relative;
+  z-index: 1;
 }
 
 .final-cta h2 {
   font-size: var(--fs-2xl);
   font-weight: 800;
   letter-spacing: -0.02em;
+  line-height: 1.05;
   color: #fff;
+  text-wrap: balance;
 }
 
 .final-cta .hero-subhead {
-  max-width: 52ch;
+  max-width: 48ch;
   margin-inline: auto;
+  color: rgba(232, 238, 251, 0.88);
+}
+
+.final-cta .hero-subhead .header-phone-number {
+  color: #ffffff;
 }
 
 .final-cta-actions {
   margin-top: var(--space-6);
   display: flex;
   justify-content: center;
+}
+
+.final-cta-note {
+  margin-top: var(--space-5);
+  font-size: var(--fs-sm);
+  color: rgba(232, 238, 251, 0.7);
+  max-width: 46ch;
+  margin-inline: auto;
 }

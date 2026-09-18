@@ -1,5 +1,9 @@
 /* ==========================================================================
    Mobile sticky call bar
+   --------------------------------------------------------------------------
+   A floating amber key on a light tray rather than a full-bleed blue slab:
+   it matches every other CTA on the page and leaves the page edges visible
+   so it reads as an overlay, not as the end of the document.
    ========================================================================== */
 .mobile-call-bar {
   display: none;
@@ -13,10 +17,14 @@
     right: 0;
     bottom: 0;
     z-index: 50;
-    background: #ffffff;
-    box-shadow: 0 -6px 20px rgba(14, 14, 17, 0.15);
-    padding-bottom: env(safe-area-inset-bottom);
-    transform: translateY(100%);
+    background: rgba(255, 255, 255, 0.97);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--color-border);
+    box-shadow: 0 -8px 26px rgba(15, 23, 41, 0.14);
+    padding: var(--space-3) var(--space-4) var(--space-2);
+    padding-bottom: calc(var(--space-2) + env(safe-area-inset-bottom));
+    transform: translateY(110%);
     transition: transform 0.25s ease;
   }
 
@@ -35,18 +43,31 @@
     font-weight: 800;
     font-size: var(--fs-md);
     padding: var(--space-3);
-    min-height: 44px;
+    min-height: 50px;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-cta);
+  }
+
+  .mobile-call-bar-main .icon {
+    width: 1.05em;
+    height: 1.05em;
   }
 
   .mobile-call-bar-sub {
     text-align: center;
-    font-weight: 700;
-    font-size: var(--fs-sm);
-    color: var(--color-text);
-    padding: var(--space-2) var(--space-4);
+    font-weight: 600;
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+    padding: var(--space-2) var(--space-2) 0;
   }
 
   body.has-mobile-call-bar {
     padding-bottom: calc(var(--mobile-bar-height) + env(safe-area-inset-bottom));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-call-bar {
+      transition: none;
+    }
   }
 }

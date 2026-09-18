@@ -1,20 +1,20 @@
 /* ==========================================================================
-   Narrow-phone fit
+   Breakpoint fit-ups
    --------------------------------------------------------------------------
-   Poppins is ~20% wider than the system fallback, so the header row
-   (brand + phone, both nowrap) and the sticky call bar overflow the
-   viewport on small phones once the real font loads. Scale them down
-   below 480px rather than letting the page scroll sideways.
+   Poppins is ~20% wider than the system fallback, so the header row (brand
+   + call block, both nowrap) overflows small phones once the real font
+   loads. Scale it down rather than letting the page scroll sideways.
    ========================================================================== */
+
 @media (max-width: 479px) {
   .site-header .container {
-    padding-inline: 20px;
+    padding-inline: 18px;
     gap: var(--space-3);
   }
 
   .brand-logo {
-    height: 32px;
-    max-width: min(168px, 46vw);
+    height: 34px;
+    max-width: min(150px, 42vw);
   }
 
   .header-phone .header-phone-number {
@@ -23,24 +23,20 @@
 
   .mobile-call-bar-main {
     font-size: 1rem;
-    gap: var(--space-1);
-  }
-
-  .mobile-call-bar-sub {
-    padding-inline: var(--space-3);
+    gap: var(--space-2);
   }
 }
 
 /* Smallest phones still in use (320px, e.g. iPhone SE 1st gen). */
 @media (max-width: 359px) {
   .site-header .container {
-    padding-inline: 16px;
+    padding-inline: 14px;
     gap: var(--space-2);
   }
 
   .brand-logo {
     height: 28px;
-    max-width: 136px;
+    max-width: 124px;
   }
 
   .header-phone .header-phone-number {
@@ -50,15 +46,40 @@
   .mobile-call-bar-main {
     font-size: 0.9375rem;
   }
+
+  .hero-checklist {
+    gap: var(--space-2) var(--space-3);
+  }
+
+  .hero-checklist-item {
+    gap: var(--space-2);
+  }
+
+  .service-chip {
+    padding: var(--space-2);
+  }
+}
+
+/* The hero subhead is a deliberate two-line block: the availability claim
+   on line one, the phone number on line two. Below 960px the type scale is
+   tuned (not the default clamp) so line one stays on one line down to a
+   320px-wide phone instead of wrapping into three. */
+@media (max-width: 959px) {
+  .hero-subhead {
+    font-size: clamp(0.90625rem, calc(-0.264rem + 5.85vw), 1.25rem);
+  }
 }
 
 /* ==========================================================================
-   Desktop header: availability badge + dividers
+   Desktop header: availability badge + divider, and the wider hero
+   --------------------------------------------------------------------------
+   The availability badge carries the pulsing dot at these widths, so the
+   phone link's own inline dot is hidden -- there should only ever be one.
    ========================================================================== */
 @media (min-width: 900px) {
   .brand {
     padding-right: var(--space-5);
-    border-right: 1px solid var(--color-border-dashed);
+    border-right: 1px solid var(--color-border);
   }
 
   .header-availability {
@@ -69,12 +90,10 @@
     padding-left: var(--space-1);
   }
 
-  .header-phone .header-online-dot--inline {
+  /* The dot stays on the phone number here too; the availability badge
+     beside it drops its own (see header.css) so only one thing pulses. */
+  .header-availability .header-online-dot {
     display: none;
-  }
-
-  .hero .container {
-    max-width: 900px;
   }
 
   .hero-checklist {

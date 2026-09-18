@@ -1,5 +1,5 @@
 /* ==========================================================================
-   FAQ
+   FAQ — separated cards rather than a hairline-divided stack
    ========================================================================== */
 .faq-list {
   display: flex;
@@ -8,25 +8,29 @@
 }
 
 .faq-item {
-  border-bottom: 1px dashed var(--color-border-dashed);
-  padding-block: var(--space-2);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding-inline: var(--space-4);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.faq-item[open] {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
 }
 
 .faq-item summary {
   cursor: pointer;
   list-style: none;
-  padding: var(--space-3) 0;
+  padding-block: var(--space-4);
   font-weight: 700;
   color: var(--color-text);
+  font-size: var(--fs-base);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-}
-
-.faq-item summary:focus-visible {
-  outline: 2px solid var(--color-blue);
-  outline-offset: 4px;
 }
 
 .faq-item summary::-webkit-details-marker,
@@ -37,26 +41,41 @@
 
 .faq-toggle-icon {
   flex-shrink: 0;
-  color: var(--color-blue);
-  transition: transform 0.15s ease;
+  width: 26px;
+  height: 26px;
+  padding: 5px;
+  border-radius: var(--radius-xs);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  transition: transform 0.18s ease, background-color 0.15s ease;
 }
 
 .faq-item[open] .faq-toggle-icon {
   transform: rotate(45deg);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
 }
 
 .faq-answer {
-  padding-bottom: var(--space-3);
+  padding-bottom: var(--space-4);
   color: var(--color-text-muted);
-  max-width: 60ch;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  max-width: 64ch;
 }
 
 .faq-answer a {
-  color: var(--color-blue);
-  font-weight: 700;
-  text-decoration: none;
+  color: var(--color-accent-dark);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  white-space: nowrap;
 }
 
-.faq-answer a:hover {
-  text-decoration: underline;
+@media (prefers-reduced-motion: reduce) {
+  .faq-item,
+  .faq-toggle-icon {
+    transition: none;
+  }
 }

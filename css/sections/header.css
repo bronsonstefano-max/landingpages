@@ -1,20 +1,27 @@
 /* ==========================================================================
    Header
+   --------------------------------------------------------------------------
+   The phone number is no longer a plain underlined link — it's the same
+   amber action block as every other CTA, so the one thing to do on this
+   page looks identical in the header, the hero, the body and the footer.
    ========================================================================== */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: var(--color-bg);
-  border-bottom: 1px solid var(--color-border-dashed);
+  background: rgba(255, 255, 255, 0.94);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  backdrop-filter: saturate(160%) blur(10px);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .site-header .container {
-  height: 64px;
+  min-height: var(--header-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
+  padding-block: var(--space-2);
 }
 
 .brand {
@@ -27,9 +34,9 @@
 
 .brand-logo {
   display: block;
-  height: 48px;
+  height: 44px;
   width: auto;
-  max-width: min(260px, 52vw);
+  max-width: min(240px, 48vw);
   object-fit: contain;
   object-position: left center;
 }
@@ -40,11 +47,8 @@
   gap: var(--space-4);
 }
 
-/* Desktop-only "Available 24/7" badge -- hidden on mobile/tablet, where
-   the header is already tightly fit (see the narrow-phone tiers below).
-   Its own dot is the pulsing indicator at desktop widths; the phone
-   link's dot (.header-online-dot--inline) is hidden there instead so
-   there's only ever one. */
+/* Desktop-only availability pill — the header is already tightly packed on
+   phones, where the sticky call bar carries the same reassurance. */
 .header-availability {
   display: none;
   align-items: center;
@@ -54,6 +58,10 @@
   white-space: nowrap;
 }
 
+/* --- The call block --------------------------------------------------- */
+/* A phone number, not a button: underlined, ink-coloured, tel: href. The
+   page already has plenty of blue buttons; making the masthead number a
+   third one competed with the hero CTA instead of supporting it. */
 .header-phone {
   display: flex;
   align-items: center;
@@ -70,18 +78,19 @@
   white-space: nowrap;
 }
 
-/* Bumped up specifically in the header -- the hero/final-CTA reuses of
+/* Bumped specifically in the header -- the hero and final-CTA reuses of
    this class already sit at a larger size in their own context. */
 .header-phone .header-phone-number {
   font-size: var(--fs-md);
 }
 
+/* --- Live dot (also used by the static secondary pages) --------------- */
 .header-online-dot {
   position: relative;
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #22c55e;
+  background: var(--color-verify);
   flex-shrink: 0;
 }
 
@@ -90,7 +99,7 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: #22c55e;
+  background: var(--color-verify);
   animation: dot-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
@@ -106,8 +115,15 @@
   }
 }
 
+/* The dot that rides beside the phone number itself. It is the one that
+   shows at every width — the availability wording beside it drops its own
+   dot on desktop (see responsive.css) so only one thing ever pulses. */
+.header-online-dot--inline {
+  display: block;
+}
+
 /* Phone icons take a brief, occasional shake to draw the eye without
-   being distracting -- most of each cycle they sit still. */
+   being distracting — most of each cycle they sit still. */
 .icon-phone-shake {
   display: inline-block;
   animation: phone-shake 4.5s ease-in-out infinite;
@@ -137,5 +153,12 @@
   }
   98.5% {
     transform: rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-online-dot::after,
+  .icon-phone-shake {
+    animation: none;
   }
 }
