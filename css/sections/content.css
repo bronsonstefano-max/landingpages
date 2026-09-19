@@ -13,21 +13,19 @@
 .closing-copy {
   margin-top: var(--space-6);
   color: var(--color-text-muted);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-base);
   line-height: 1.6;
 }
 
 .closing-copy a {
-  color: var(--color-accent-dark);
+  color: var(--color-blue);
   font-weight: 800;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
+  text-decoration: none;
   white-space: nowrap;
 }
 
 .closing-copy a:hover {
-  color: var(--color-ink);
+  color: var(--color-blue-dark);
 }
 
 /* ==========================================================================

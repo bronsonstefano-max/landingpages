@@ -17,28 +17,23 @@ html {
 }
 
 /* --- Section headings ------------------------------------------------- */
-/* Every section leads with a small uppercase eyebrow over the h2. It gives
-   the page a repeating rhythm and, practically, a second keyword slot that
-   stays visible at a glance. */
+/* Every section still leads with a short label ahead of its h2 in the
+   markup (a second keyword slot for search engines), but it's visually
+   hidden rather than shown on the page — same clip-based technique as
+   .visually-hidden, not display:none/visibility:hidden. Those two remove
+   the element from the accessibility tree and can read as manipulative
+   "hidden text" to a crawler; this pattern keeps it in the accessibility
+   tree and in the rendered DOM search engines index, just off-screen. */
 .section-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--fs-xs);
-  font-weight: 800;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--color-primary);
-  margin-bottom: var(--space-3);
-}
-
-.section-eyebrow::before {
-  content: "";
-  width: 18px;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--color-blue);
-  flex-shrink: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .section-heading {
@@ -60,6 +55,7 @@ html {
   margin-top: var(--space-3);
   color: var(--color-text-muted);
   font-size: var(--fs-base);
+  line-height: 1.6;
   max-width: 62ch;
 }
 

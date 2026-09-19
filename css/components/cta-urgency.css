@@ -1,0 +1,14 @@
+/* ==========================================================================
+   "Call by {time}" urgency note
+   --------------------------------------------------------------------------
+   Sits under the hero and final-cta buttons, on their dark backgrounds. The
+   time itself is filled in by js/modules/call-by.js (client clock, 2 hours
+   ahead); the markup ships a static fallback time so the line still reads
+   sensibly with JS disabled or before the script runs.
+   ========================================================================== */
+.cta-urgency-note {
+  margin-top: var(--space-4);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.82);
+}

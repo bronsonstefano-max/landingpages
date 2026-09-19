@@ -132,14 +132,20 @@ def render_callout(template: str, callout: dict) -> str:
     return template.replace("{{calloutHtml}}", body)
 
 
+CHECK_ICON = (
+    '<span class="benefit-check-icon" aria-hidden="true">'
+    '<svg class="icon"><use href="#icon-check"></use></svg></span>'
+)
+
+
 def render_benefits(items: list[dict]) -> str:
     rows = []
     for item in items:
         title = html.escape(item["title"], quote=False)
         if item.get("titleCfg"):
-            title_html = f'<strong data-cfg="{html.escape(item["titleCfg"])}">{title}</strong>'
+            title_html = f'<strong data-cfg="{html.escape(item["titleCfg"])}">{title}:</strong>'
         else:
-            title_html = f"<strong>{title}</strong>"
+            title_html = f"<strong>{title}:</strong>"
         body = (
             html.escape(item["body"], quote=False)
             .replace("{{brand}}", BRAND_SPAN)
@@ -148,12 +154,10 @@ def render_benefits(items: list[dict]) -> str:
         # html.escape would have escaped the replacement if we escaped after.
         # We escaped first, then inserted raw spans — but {{brand}} was in the
         # source as a placeholder, so escape left it intact. Good.
-        tile = icon_tile("benefit-card-icon", item.get("icon", "check"))
         rows.append(
-            '              <li class="benefit-card">\n'
-            f"                {tile}\n"
-            f'                <h3 class="benefit-card-title">{title_html}</h3>\n'
-            f"                <p>{body}</p>\n"
+            '              <li class="benefit-list-item">\n'
+            f"                {CHECK_ICON}\n"
+            f"                <p>{title_html} {body}</p>\n"
             "              </li>"
         )
     return "\n".join(rows)
@@ -204,11 +208,9 @@ def render_steps(items: list[dict]) -> str:
     for i, item in enumerate(items, start=1):
         rows.append(
             '              <li class="step">\n'
-            f'                <span class="step-marker" aria-hidden="true">{i}</span>\n'
-            '                <div class="step-body">\n'
-            f'                  <h3 class="step-title">{html.escape(item["title"], quote=False)}</h3>\n'
-            f"                  <p>{html.escape(item['body'], quote=False)}</p>\n"
-            "                </div>\n"
+            f'                <h3 class="step-title"><span class="step-number">{i}.</span> '
+            f'{html.escape(item["title"], quote=False)}</h3>\n'
+            f"                <p>{html.escape(item['body'], quote=False)}</p>\n"
             "              </li>"
         )
     return "\n".join(rows)

@@ -1,10 +1,10 @@
 /* ==========================================================================
    Final CTA — the page's one dark band
    --------------------------------------------------------------------------
-   Deep indigo with the blueprint grid, no photograph. Dropping the
-   background image here removes a full-width decode from the bottom of the
-   page and makes the amber button the highest-contrast thing on screen at
-   exactly the moment the visitor decides.
+   Flat deep indigo — the same solid color as the footer right below it, so
+   the two read as one continuous dark band with no visible seam — plus the
+   blueprint grid, no photograph, so the CTA button stays the highest-
+   contrast thing on screen at exactly the moment the visitor decides.
    ========================================================================== */
 .final-cta {
   position: relative;
@@ -12,7 +12,6 @@
   overflow: hidden;
   padding-block: var(--space-8);
   background-color: var(--color-primary-deep);
-  background-image: var(--band-dark);
   color: #fff;
   text-align: center;
 }
@@ -45,12 +44,4 @@
   margin-top: var(--space-6);
   display: flex;
   justify-content: center;
-}
-
-.final-cta-note {
-  margin-top: var(--space-5);
-  font-size: var(--fs-sm);
-  color: rgba(232, 238, 251, 0.7);
-  max-width: 46ch;
-  margin-inline: auto;
 }

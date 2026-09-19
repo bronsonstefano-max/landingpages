@@ -3,7 +3,6 @@
    ========================================================================== */
 .site-footer {
   background-color: var(--color-primary-deep);
-  background-image: var(--footer-bg);
   color: #e6ebf8;
   padding-block: var(--space-2) var(--space-6);
   font-size: var(--fs-sm);

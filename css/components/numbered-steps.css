@@ -1,9 +1,10 @@
 /* ==========================================================================
-   "How it works" step timeline
+   "How it works" step list
    --------------------------------------------------------------------------
-   Numbered markers joined by a dashed connector, so two steps read as one
-   short, finite process — the point being "this is quick", which is the
-   actual objection at this spot on the page.
+   A plain run-in numbered list — "1. Title:" on one line, the explanation
+   as an ordinary paragraph below it — rather than a circle-badge timeline.
+   The number hangs in the left margin so the title and body paragraph
+   share one left edge, the way a numbered list reads in body copy.
    ========================================================================== */
 .step-timeline {
   list-style: none;
@@ -15,40 +16,15 @@
 }
 
 .step {
-  position: relative;
-  display: grid;
-  grid-template-columns: 46px 1fr;
-  column-gap: var(--space-4);
-  align-items: start;
+  padding-left: 1.75rem;
 }
 
-.step-marker {
-  position: relative;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.step-number {
+  display: inline-block;
+  margin-left: -1.75rem;
+  width: 1.75rem;
+  color: var(--color-blue);
   font-weight: 800;
-  font-size: var(--fs-md);
-  flex-shrink: 0;
-  box-shadow: 0 0 0 6px var(--color-primary-soft);
-}
-
-/* Dashed connector running the full height of the step, from under this
-   marker down to the next one. Anchored to the <li> (not the marker) so it
-   stretches with however tall the step's copy happens to be. */
-.step:not(:last-child)::before {
-  content: "";
-  position: absolute;
-  left: 23px;
-  top: calc(46px + 10px);
-  bottom: calc(-1 * var(--space-5) + 4px);
-  border-left: 2px dashed var(--color-border-strong);
-  transform: translateX(-1px);
 }
 
 .step-title {
@@ -56,14 +32,17 @@
   line-height: 1.3;
   color: var(--color-text);
   font-weight: 800;
-  padding-top: 0.5rem;
 }
 
-.step-body p {
+.step-title::after {
+  content: ":";
+}
+
+.step p {
   margin-top: var(--space-2);
   color: var(--color-text-muted);
   font-size: var(--fs-base);
-  line-height: 1.55;
+  line-height: 1.6;
   max-width: 58ch;
 }
 

@@ -1,9 +1,9 @@
 /* ==========================================================================
    Mobile sticky call bar
    --------------------------------------------------------------------------
-   A floating amber key on a light tray rather than a full-bleed blue slab:
-   it matches every other CTA on the page and leaves the page edges visible
-   so it reads as an overlay, not as the end of the document.
+   A blue call button on a light tray, with a bold subtext line underneath —
+   matches the persistent bottom call bar competitor sites use, distinct
+   from the page's pill-shaped CTAs (rounded-rect corners, not a pill).
    ========================================================================== */
 .mobile-call-bar {
   display: none;
@@ -41,24 +41,19 @@
     color: #fff;
     text-decoration: none;
     font-weight: 800;
-    font-size: var(--fs-md);
-    padding: var(--space-3);
-    min-height: 50px;
-    border-radius: var(--radius-pill);
+    font-size: var(--fs-lg);
+    padding: var(--space-4);
+    min-height: 58px;
+    border-radius: var(--radius-sm);
     box-shadow: var(--shadow-cta);
-  }
-
-  .mobile-call-bar-main .icon {
-    width: 1.05em;
-    height: 1.05em;
   }
 
   .mobile-call-bar-sub {
     text-align: center;
-    font-weight: 600;
-    font-size: var(--fs-xs);
-    color: var(--color-text-muted);
-    padding: var(--space-2) var(--space-2) 0;
+    font-weight: 800;
+    font-size: var(--fs-base);
+    color: var(--color-text);
+    padding: var(--space-3) var(--space-2) 0;
   }
 
   body.has-mobile-call-bar {

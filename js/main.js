@@ -8,6 +8,7 @@
  * 5. Mobile sticky call bar
  * 6. Call-click dataLayer hook
  * 7. Local-presence number (after geo), when a pool or DNI endpoint is set
+ * 8. "Call by {time}" urgency line (client clock, 2 hours ahead)
  */
 import { SITE_CONFIG } from "./config.js";
 import { bindConfig, syncHeadMetadata } from "./modules/bind-config.js";
@@ -17,6 +18,7 @@ import { initLocalNumber } from "./modules/local-number.js";
 import { renderStarRating } from "./modules/star-rating.js";
 import { initMobileCallBar } from "./modules/mobile-call-bar.js";
 import { initCallTracking } from "./modules/call-tracking.js";
+import { initCallByTime } from "./modules/call-by.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   bindConfig(SITE_CONFIG);
@@ -27,4 +29,5 @@ document.addEventListener("DOMContentLoaded", () => {
   renderStarRating(SITE_CONFIG);
   initMobileCallBar();
   initCallTracking();
+  initCallByTime();
 });
