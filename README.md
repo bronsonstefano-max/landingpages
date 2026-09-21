@@ -92,14 +92,27 @@ first thing a visitor sees, and the page's LCP element — is tuned for that:
   each one also carries `fetchpriority="low"`, since none of it runs
   before first paint and it shouldn't compete with the hero image, fonts,
   or CSS for bandwidth on a constrained connection.
-- **The hero background ships two sizes.** `assets/images/hero-repair.webp`
-  (1672px wide) is for desktop; `assets/images/hero-repair-mobile.webp`
-  (1000px wide, ~30KB vs ~77KB) is what phones actually get, via a
-  `max-width: 959px` rule in `hero.css` and matching `media` attributes on
-  the `<link rel="preload">` tags in `layout.html`. Those two places must
-  stay in sync. Regenerate the mobile file if the source ever changes
-  (requires `pip3 install Pillow`):
-  `python3 -c "from PIL import Image; im = Image.open('assets/images/hero-repair.webp').convert('RGB'); im.resize((1000, round(im.height*1000/im.width)), Image.LANCZOS).save('assets/images/hero-repair-mobile.webp', 'WEBP', quality=72, method=6)"`
+- **The hero background ships two sizes, each in AVIF + WebP.**
+  `assets/images/hero-repair.webp` (1672px wide) is for desktop;
+  `assets/images/hero-repair-mobile.webp` (1000px wide, ~30KB vs ~77KB) is
+  what phones actually get, via a `max-width: 959px` rule in `hero.css`
+  and matching `media` attributes on the `<link rel="preload">` tags in
+  `layout.html`. Those two places must stay in sync. The matching `.avif`
+  file next to each `.webp` one is ~35% smaller at the same visual
+  quality (`hero.css`'s `image-set()` picks it for any browser that can
+  decode it; the WebP is the fallback, not a leftover). Regenerate all
+  four if the source photo ever changes (requires
+  `pip3 install Pillow pillow-avif-plugin`):
+  ```
+  python3 -c "
+  from PIL import Image
+  im = Image.open('assets/images/hero-repair.webp').convert('RGB')
+  mobile = im.resize((1000, round(im.height*1000/im.width)), Image.LANCZOS)
+  mobile.save('assets/images/hero-repair-mobile.webp', 'WEBP', quality=72, method=6)
+  im.save('assets/images/hero-repair.avif', 'AVIF', quality=55)
+  mobile.save('assets/images/hero-repair-mobile.avif', 'AVIF', quality=50)
+  "
+  ```
 - **The sidebar portrait is served at its display size.** The card is 320px
   wide, so `assets/images/appliance-repair-card.webp` (800px, ~20KB) is the
   `srcset` default with the 1672px original as the high-DPI candidate —

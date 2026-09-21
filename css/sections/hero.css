@@ -8,6 +8,13 @@
    It ships in two sizes — see the media query at the bottom of this file
    and the matching media-gated <link rel="preload"> pair in layout.html.
    Those three places must stay in sync.
+
+   Each size also ships as AVIF (roughly a third smaller than the WebP at
+   matching visual quality — see the regeneration command in README.md).
+   `image-set()` picks it when the browser can decode it and falls back to
+   the plain WebP `url()` otherwise; older WebKit needs the prefixed
+   `-webkit-image-set()` spelling, unprefixed `image-set()` wins the
+   cascade in anything new enough to support it unprefixed.
    ========================================================================== */
 .hero {
   position: relative;
@@ -15,6 +22,14 @@
   color: #ffffff;
   background-color: var(--hero-fallback);
   background-image: url("../../assets/images/hero-repair.webp");
+  background-image: -webkit-image-set(
+    url("../../assets/images/hero-repair.avif") type("image/avif"),
+    url("../../assets/images/hero-repair.webp") type("image/webp")
+  );
+  background-image: image-set(
+    url("../../assets/images/hero-repair.avif") type("image/avif"),
+    url("../../assets/images/hero-repair.webp") type("image/webp")
+  );
   background-size: cover;
   background-position: 70% 40%;
   background-repeat: no-repeat;
@@ -113,6 +128,14 @@
   .hero {
     min-height: 28rem;
     background-image: url("../../assets/images/hero-repair-mobile.webp");
+    background-image: -webkit-image-set(
+      url("../../assets/images/hero-repair-mobile.avif") type("image/avif"),
+      url("../../assets/images/hero-repair-mobile.webp") type("image/webp")
+    );
+    background-image: image-set(
+      url("../../assets/images/hero-repair-mobile.avif") type("image/avif"),
+      url("../../assets/images/hero-repair-mobile.webp") type("image/webp")
+    );
     background-position: 82% 38%;
     display: flex;
     align-items: center;
