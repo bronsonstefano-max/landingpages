@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- Header + hero CSS, inlined so first paint never waits on a network
+       round trip for css/main.css. Generated from the same source files
+       (see CRITICAL_CSS_FILES in scripts/build.py) — edit those, not this
+       block, then rerun the build. -->
+  <style>@font-face { font-family: "Poppins"; font-style: normal; font-weight: 400; font-display: swap; src: url("assets/fonts/poppins-latin-400.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } @font-face { font-family: "Poppins"; font-style: normal; font-weight: 700; font-display: swap; src: url("assets/fonts/poppins-latin-700.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } @font-face { font-family: "Poppins"; font-style: normal; font-weight: 800; font-display: swap; src: url("assets/fonts/poppins-latin-800.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; } :root { --color-ink: #0e0e11; --color-ink-800: #17181c; --color-text: #16181d; --color-text-muted: #3c4966; --color-text-faint: #8991a0; --color-bg: #ffffff; --color-bg-alt: #f2f4f7; --color-border: #e3e6eb; --color-border-dashed: #e3e6eb; --color-border-strong: #ccd2dc; --color-blue: #1657ff; --color-blue-dark: #0d3fcc; --color-blue-light: #8fa9ff; --color-blue-contrast: #ffffff; --color-primary: var(--color-blue); --color-primary-dark: var(--color-blue-dark); --color-primary-deep: #0d2a78; --color-primary-soft: #e7edff; --color-primary-softer: #f4f7ff; --color-primary-contrast: #ffffff; --color-accent: var(--color-blue); --color-accent-dark: var(--color-blue-dark); --color-accent-soft: #e7edff; --color-accent-contrast: #ffffff; --color-gold: #f5a623; --color-star-empty: #dadfe6; --color-verify: #22c55e; --grid-line: rgba(22, 87, 255, 0.07); --grid-line-dark: rgba(255, 255, 255, 0.07); --grid-size: 26px; --hero-overlay: radial-gradient( ellipse 90% 80% at 50% 42%, rgba(3, 8, 28, 0.7) 0%, rgba(5, 14, 46, 0.64) 48%, rgba(8, 22, 70, 0.5) 100% ), linear-gradient( 180deg, rgba(4, 10, 34, 0.48) 0%, rgba(5, 14, 46, 0.4) 100% ); --hero-overlay-strong: radial-gradient( ellipse 90% 80% at 50% 42%, rgba(3, 8, 28, 0.96) 0%, rgba(5, 14, 46, 0.92) 50%, rgba(8, 22, 70, 0.82) 100% ), linear-gradient( 180deg, rgba(4, 10, 34, 0.76) 0%, rgba(5, 14, 46, 0.68) 100% ); --hero-fallback: #050d20; --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; --fs-xs: clamp(0.75rem, 0.73rem + 0.1vw, 0.8125rem); --fs-sm: clamp(0.875rem, 0.85rem + 0.15vw, 0.9375rem); --fs-base: clamp(1rem, 0.97rem + 0.2vw, 1.0625rem); --fs-md: clamp(1.125rem, 1.08rem + 0.3vw, 1.25rem); --fs-lg: clamp(1.25rem, 1.18rem + 0.4vw, 1.5rem); --fs-xl: clamp(1.375rem, 1.25rem + 0.7vw, 1.75rem); --fs-2xl: clamp(2.125rem, 1.8rem + 1.8vw, 2.875rem); --tracking-label: 0.09em; --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.5rem; --space-6: 2rem; --space-7: 2.75rem; --space-8: 3.5rem; --radius-xs: 6px; --radius-sm: 8px; --radius-md: 12px; --radius-lg: 18px; --radius-xl: 24px; --radius-pill: 999px; --shadow-xs: 0 1px 2px rgba(14, 14, 17, 0.05); --shadow-sm: 0 2px 8px rgba(14, 14, 17, 0.06); --shadow-md: 0 8px 24px rgba(14, 14, 17, 0.1); --shadow-lg: 0 20px 46px rgba(14, 14, 17, 0.14); --shadow-cta: 0 10px 28px rgba(22, 87, 255, 0.4); --shadow-cta-hover: 0 16px 36px rgba(22, 87, 255, 0.46); --container-max: 1160px; --header-height: 68px; --mobile-bar-height: 124px; } *, *::before, *::after { box-sizing: border-box; } html { -webkit-text-size-adjust: 100%; } body { margin: 0; font-family: var(--font-sans); font-size: var(--fs-base); line-height: 1.55; color: var(--color-text); background: var(--color-bg); -webkit-font-smoothing: antialiased; } img, svg { display: block; max-width: 100%; } a { color: inherit; } ul, ol { margin: 0; padding: 0; list-style: none; } h1, h2, h3, p { margin: 0; } button { font: inherit; } @media (prefers-reduced-motion: reduce) { * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } } :focus-visible { outline: 3px solid var(--color-blue-dark); outline-offset: 3px; } .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; } html { scroll-padding-top: calc(var(--header-height) + 16px); } .container { width: 100%; max-width: var(--container-max); margin-inline: auto; padding-inline: var(--space-5); } .section { padding-block: var(--space-7); } .section-eyebrow { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; } .section-heading { margin-bottom: var(--space-6); } .section-heading h2 { font-size: var(--fs-xl); line-height: 1.2; letter-spacing: -0.01em; color: var(--color-text); } .heading-strong { font-weight: 800; } .section-heading p { margin-top: var(--space-3); color: var(--color-text-muted); font-size: var(--fs-base); line-height: 1.6; max-width: 62ch; } .section--tight { padding-block: var(--space-5); } .section--ruled { border-top: 0; } .band-panel { background: var(--color-bg-alt); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-6) var(--space-5); } @media (min-width: 720px) { .band-panel { padding: var(--space-7) var(--space-6); } } .blueprint::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px); background-size: var(--grid-size) var(--grid-size); -webkit-mask-image: radial-gradient( ellipse 85% 75% at 50% 35%, #000 0%, transparent 78% ); mask-image: radial-gradient( ellipse 85% 75% at 50% 35%, #000 0%, transparent 78% ); z-index: 0; } .blueprint--dark::before { background-image: linear-gradient(var(--grid-line-dark) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line-dark) 1px, transparent 1px); } .icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; } .icon { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; } .icon-filled { fill: currentColor; stroke: none; } .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-3); text-decoration: none; border: none; cursor: pointer; font-weight: 800; letter-spacing: -0.01em; transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease; } .btn-pill { background: var(--color-blue); color: var(--color-blue-contrast); border-radius: var(--radius-pill); padding: var(--space-4) var(--space-4) var(--space-4) var(--space-8); font-size: clamp(1.1875rem, 1.1rem + 0.5vw, 1.375rem); box-shadow: var(--shadow-cta); max-width: 100%; } .btn-pill:hover, .btn-pill:focus-visible { background: var(--color-blue-dark); box-shadow: var(--shadow-cta-hover); transform: translateY(-1px); } .btn-pill:active { transform: translateY(1px); box-shadow: var(--shadow-xs); } .btn-pill-icon { width: 2.25em; height: 2.25em; border-radius: 50%; background: #ffffff; color: var(--color-blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0; } .btn-pill-icon .icon { width: 1.1em; height: 1.1em; } .btn-banner { display: flex; align-items: center; justify-content: center; gap: var(--space-2); width: 100%; background: var(--color-blue); color: #ffffff; text-decoration: none; padding: var(--space-4); font-size: var(--fs-md); font-weight: 800; border-radius: var(--radius-pill); box-shadow: var(--shadow-cta); transition: background-color 0.15s ease, box-shadow 0.15s ease; } .btn-banner:hover, .btn-banner:focus-visible { background: var(--color-blue-dark); box-shadow: var(--shadow-cta-hover); } .btn-banner .icon { width: 1.05em; height: 1.05em; } .btn-ghost { display: inline-flex; align-items: center; gap: var(--space-2); border-radius: var(--radius-pill); padding: 0.85rem 1.3rem; font-weight: 700; font-size: var(--fs-base); color: #ffffff; text-decoration: none; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.24); } .btn-ghost:hover, .btn-ghost:focus-visible { background: rgba(255, 255, 255, 0.18); } @media (prefers-reduced-motion: reduce) { .btn, .btn-pill, .btn-banner { transition: none; } .btn-pill:hover { transform: none; } } .cta-urgency-note { margin-top: var(--space-4); font-size: var(--fs-sm); font-weight: 700; color: rgba(255, 255, 255, 0.82); } .star-rating { margin-top: var(--space-4); font-size: calc(var(--fs-xl) * 0.85); min-height: 1.2em; display: flex; justify-content: center; gap: 4px; } .star-rating .star { width: 1.2em; height: 1.2em; display: inline-block; position: relative; } .star-rating .star-icon { width: 100%; height: 100%; } .star-rating .star-full .star-icon { color: var(--color-gold); } .star-rating .star-empty .star-icon { color: var(--color-star-empty); } .star-rating .star-half .star-bg, .star-rating .star-half .star-fill { position: absolute; inset: 0; } .star-rating .star-half .star-bg .star-icon { color: var(--color-star-empty); } .star-rating .star-half .star-fill { clip-path: inset(0 50% 0 0); } .star-rating .star-half .star-fill .star-icon { color: var(--color-gold); } .skip-link { position: absolute; left: var(--space-4); top: -100px; background: #fff; color: var(--color-text); padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); z-index: 100; transition: top 0.15s ease; } .skip-link:focus { top: var(--space-4); } .site-header { position: sticky; top: 0; z-index: 40; background: rgba(255, 255, 255, 0.94); -webkit-backdrop-filter: saturate(160%) blur(10px); backdrop-filter: saturate(160%) blur(10px); border-bottom: 1px solid var(--color-border); } .site-header .container { min-height: var(--header-height); display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding-block: var(--space-2); } .brand { display: flex; align-items: center; flex-shrink: 1; min-width: 0; text-decoration: none; } .brand-logo { display: block; height: 52px; width: auto; max-width: min(240px, 48vw); object-fit: contain; object-position: left center; } .header-right { display: flex; align-items: center; gap: var(--space-4); } .header-availability { display: none; align-items: center; gap: var(--space-2); color: var(--color-text-muted); font-size: var(--fs-sm); white-space: nowrap; } .header-phone { display: flex; align-items: center; gap: var(--space-2); text-decoration: none; color: var(--color-text); white-space: nowrap; } .header-phone-number { font-weight: 800; text-decoration: underline; font-size: var(--fs-base); white-space: nowrap; } .header-phone .header-phone-number { font-size: var(--fs-lg); } .header-online-dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--color-verify); flex-shrink: 0; } .header-online-dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--color-verify); animation: dot-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite; } @keyframes dot-pulse { 0% { transform: scale(1); opacity: 0.7; } 75%, 100% { transform: scale(2.5); opacity: 0; } } .header-online-dot--inline { display: block; } .icon-phone-shake { display: inline-block; animation: phone-shake 4.5s ease-in-out infinite; transform-origin: 50% 50%; } @keyframes phone-shake { 0%, 90%, 100% { transform: rotate(0deg); } 91% { transform: rotate(-16deg); } 92.5% { transform: rotate(13deg); } 94% { transform: rotate(-10deg); } 95.5% { transform: rotate(7deg); } 97% { transform: rotate(-4deg); } 98.5% { transform: rotate(0deg); } } @media (prefers-reduced-motion: reduce) { .header-online-dot::after, .icon-phone-shake { animation: none; } } .hero { position: relative; isolation: isolate; color: #ffffff; background-color: var(--hero-fallback); background-image: url("assets/images/hero-repair.webp"); background-size: cover; background-position: 70% 40%; background-repeat: no-repeat; padding-block: var(--space-8); text-align: center; overflow: hidden; } .hero::before { content: ""; position: absolute; inset: 0; background: var(--hero-overlay); pointer-events: none; z-index: 0; } .hero .container { position: relative; z-index: 1; max-width: 640px; } .hero h1 { font-size: var(--fs-2xl); font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; color: #ffffff; text-shadow: 0 1px 2px rgba(4, 12, 40, 0.55), 0 2px 22px rgba(4, 12, 40, 0.5); } .hero-subhead { margin-top: var(--space-4); font-size: clamp(1.25rem, 1.1875rem + 0.5vw, 1.4375rem); color: #f4f7fd; text-shadow: 0 1px 2px rgba(4, 12, 40, 0.5), 0 1px 16px rgba(4, 12, 40, 0.45); } .hero-subhead .header-phone-number { color: #ffffff; } .hero-cta { margin-top: var(--space-6); display: flex; justify-content: center; } .hero-checklist { margin-top: var(--space-6); display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3) var(--space-4); text-align: left; } .hero-checklist-item { display: flex; align-items: flex-start; gap: var(--space-2); font-size: clamp(0.9375rem, 0.88rem + 0.3vw, 1.0625rem); font-weight: 700; color: #ffffff; text-shadow: 0 1px 2px rgba(4, 12, 40, 0.5), 0 1px 12px rgba(4, 12, 40, 0.45); } .hero-check-icon { width: 20px; height: 20px; border-radius: 50%; background: rgba(255, 255, 255, 0.12); color: #ffffff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.1em; } .hero-check-icon .icon { width: 0.75em; height: 0.75em; stroke-width: 3; } @media (max-width: 959px) { .hero { min-height: 28rem; background-image: url("assets/images/hero-repair-mobile.webp"); background-position: 82% 38%; display: flex; align-items: center; justify-content: center; padding-block: var(--space-7); } .hero-subhead { margin-top: var(--space-5); font-size: clamp(0.9375rem, calc(-0.0625rem + 5.05vw), 1.25rem); } .star-rating { margin-top: var(--space-5); } .hero-checklist { margin-top: var(--space-6); } } @media (min-width: 960px) { .hero { min-height: calc(100vh - var(--header-height)); padding-block: var(--space-8) var(--space-7); display: flex; align-items: center; justify-content: center; } .hero .container { max-width: 900px; } } @media (max-width: 479px) { .site-header .container { padding-inline: 18px; gap: var(--space-3); } .brand-logo { height: 40px; max-width: min(150px, 42vw); } .header-phone .header-phone-number { font-size: clamp(14px, -2px + 4.445vw, 18px); } .mobile-call-bar-main { font-size: 1rem; gap: var(--space-2); } } @media (max-width: 359px) { .site-header .container { padding-inline: 14px; gap: var(--space-2); } .brand-logo { height: 33px; max-width: 124px; } .header-phone .header-phone-number { font-size: 0.8125rem; } .mobile-call-bar-main { font-size: 0.9375rem; } .hero-checklist { gap: var(--space-2) var(--space-3); } .hero-checklist-item { gap: var(--space-2); } .service-chip { padding: var(--space-2); } } @media (max-width: 959px) { .hero-subhead { font-size: clamp(0.90625rem, calc(-0.264rem + 5.85vw), 1.25rem); } } @media (min-width: 900px) { .brand { padding-right: var(--space-5); border-right: 1px solid var(--color-border); } .header-availability { display: flex; } .header-phone { padding-left: var(--space-1); } .header-availability .header-online-dot { display: none; } .hero-checklist { grid-template-columns: repeat(4, 1fr); } }</style>
+
   <!-- The hero background is the LCP element, so it is preloaded at high
        priority. Two sizes, media-gated so a phone never fetches the 1672px
        desktop file; these must stay in sync with the matching
@@ -26,17 +32,28 @@
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/poppins-latin-700.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/poppins-latin-800.woff2" crossorigin />
 
+  <!-- The full stylesheet (everything the inlined block above already
+       covers, plus every section further down the page). Loaded as
+       non-blocking: the browser fetches it at low priority under a media
+       it doesn't currently match, then swaps it to "all" once it lands, so
+       it never competes with the hero image/fonts for bandwidth on the
+       way to first paint. -->
+  <link rel="stylesheet" href="css/main.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="css/main.css" /></noscript>
+
   <!-- main.js's imports, so the browser fetches the whole module graph in
-       one parallel wave instead of discovering it one parse-step later. -->
-  <link rel="modulepreload" href="js/config.js" />
-  <link rel="modulepreload" href="js/modules/bind-config.js" />
-  <link rel="modulepreload" href="js/modules/geo-location.js" />
-  <link rel="modulepreload" href="js/modules/service-area-map.js" />
-  <link rel="modulepreload" href="js/modules/local-number.js" />
-  <link rel="modulepreload" href="js/modules/star-rating.js" />
-  <link rel="modulepreload" href="js/modules/mobile-call-bar.js" />
-  <link rel="modulepreload" href="js/modules/call-tracking.js" />
-  <link rel="modulepreload" href="js/modules/call-by.js" />
+       one parallel wave instead of discovering it one parse-step later.
+       Low priority: none of this runs before first paint, so it shouldn't
+       compete with the hero image/fonts/CSS for bandwidth. -->
+  <link rel="modulepreload" href="js/config.js" fetchpriority="low" />
+  <link rel="modulepreload" href="js/modules/bind-config.js" fetchpriority="low" />
+  <link rel="modulepreload" href="js/modules/geo-location.js" fetchpriority="low" />
+  <link rel="modulepreload" href="js/modules/service-area-map.js" fetchpriority="low" />
+  <link rel="modulepreload" href="js/modules/local-number.js" fetchpriority="low" />
+  <link rel="modulepreload" href="js/modules/star-rating.js" fetchpriority="low" />
+  <link rel="modulepreload" href="js/modules/mobile-call-bar.js" fetchpriority="low" />
+  <link rel="modulepreload" href="js/modules/call-tracking.js" fetchpriority="low" />
+  <link rel="modulepreload" href="js/modules/call-by.js" fetchpriority="low" />
 
   <title>Appliance Repair Near You | Same &amp; Next-Day Service | Appliance Helpers</title>
   <meta name="description" content="Appliance acting up? Appliance Helpers puts you in touch with local repair technicians for refrigerators, washers, dryers, dishwashers, ovens, and more — with same- and next-day appointments often available." />
@@ -66,9 +83,7 @@
   <meta name="twitter:image" content="https://appliancehelpers.com/assets/images/og-appliance-helpers.jpg" />
   <meta name="twitter:image:alt" content="Appliance Helpers technician performing an in-home appliance repair" />
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://appliancehelpers.com/#organization","name":"Appliance Helpers","url":"https://appliancehelpers.com/","logo":{"@type":"ImageObject","url":"https://appliancehelpers.com/assets/images/appliance-helpers-logo.png","width":800,"height":248},"description":"Appliance Helpers is a free referral service that matches homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","areaServed":{"@type":"Country","name":"United States"}},{"@type":"WebSite","@id":"https://appliancehelpers.com/#website","url":"https://appliancehelpers.com/","name":"Appliance Helpers","description":"Appliance Helpers is a free referral service that matches homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","publisher":{"@id":"https://appliancehelpers.com/#organization"},"inLanguage":"en-US"},{"@type":"WebPage","@id":"https://appliancehelpers.com/","url":"https://appliancehelpers.com/","name":"Appliance Repair Near You | Same & Next-Day Service | Appliance Helpers","description":"Appliance acting up? Appliance Helpers puts you in touch with local repair technicians for refrigerators, washers, dryers, dishwashers, ovens, and more \u00e2\u20ac\u201d with same- and next-day appointments often available.","isPartOf":{"@id":"https://appliancehelpers.com/#website"},"about":{"@id":"https://appliancehelpers.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://appliancehelpers.com/assets/images/og-appliance-helpers.jpg","width":1200,"height":630}},{"@type":"Service","name":"Appliance Repair Referral","serviceType":"Appliance repair","provider":{"@id":"https://appliancehelpers.com/#organization"},"areaServed":{"@type":"Country","name":"United States"},"description":"Appliance Helpers is a free referral service that matches homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","url":"https://appliancehelpers.com/"},{"@type":"FAQPage","@id":"https://appliancehelpers.com/#faq","url":"https://appliancehelpers.com/#faq","mainEntity":[{"@type":"Question","name":"What appliances do you repair?","acceptedAnswer":{"@type":"Answer","text":"Appliance Helpers connects you with technicians who handle repairs on major household appliances \u00e2\u20ac\u201d refrigerators, washers, dryers, dishwashers, ovens, ranges, cooktops, freezers, ice makers, microwaves, garbage disposals, and more."}},{"@type":"Question","name":"Can I get same-day appliance repair?","acceptedAnswer":{"@type":"Answer","text":"Same-day and next-day appointments are frequently available, depending on technician availability in your area. Call (800) 555-5555 and we'll find you the earliest opening nearby."}},{"@type":"Question","name":"Do you repair all appliance brands?","acceptedAnswer":{"@type":"Answer","text":"Yes. The independent technicians in our network service nearly every major appliance brand and model \u00e2\u20ac\u201d including Whirlpool, GE, Samsung, LG, Maytag, KitchenAid, Bosch, Frigidaire, Kenmore, and many more."}},{"@type":"Question","name":"How does scheduling work?","acceptedAnswer":{"@type":"Answer","text":"Call (800) 555-5555 and tell us about your appliance and the issue \u00e2\u20ac\u201d we'll connect you with a local technician. They'll diagnose the problem in your home, walk you through the fix, and quote you before any work starts."}},{"@type":"Question","name":"Will I know the price before work begins?","acceptedAnswer":{"@type":"Answer","text":"Yes. You'll get an up-front quote once the technician diagnoses the problem, and no work begins until you approve it \u00e2\u20ac\u201d there's never any obligation to continue."}},{"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"Appliance Helpers matches homeowners with local appliance repair technicians in their area. Once you call, we'll pair you with a nearby technician as soon as one is available."}},{"@type":"Question","name":"How does Appliance Helpers work?","acceptedAnswer":{"@type":"Answer","text":"Appliance Helpers is a free referral service that connects you with independent, local appliance repair technicians. These technicians aren't employed by Appliance Helpers, and it's always your choice whether to move forward once you've received a quote."}}]}]}</script>
-
-  <link rel="stylesheet" href="css/main.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://appliancehelpers.com/#organization","name":"Appliance Helpers","url":"https://appliancehelpers.com/","logo":{"@type":"ImageObject","url":"https://appliancehelpers.com/assets/images/appliance-helpers-logo.png","width":800,"height":247},"description":"Appliance Helpers is a free referral service that matches homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","areaServed":{"@type":"Country","name":"United States"}},{"@type":"WebSite","@id":"https://appliancehelpers.com/#website","url":"https://appliancehelpers.com/","name":"Appliance Helpers","description":"Appliance Helpers is a free referral service that matches homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","publisher":{"@id":"https://appliancehelpers.com/#organization"},"inLanguage":"en-US"},{"@type":"WebPage","@id":"https://appliancehelpers.com/","url":"https://appliancehelpers.com/","name":"Appliance Repair Near You | Same & Next-Day Service | Appliance Helpers","description":"Appliance acting up? Appliance Helpers puts you in touch with local repair technicians for refrigerators, washers, dryers, dishwashers, ovens, and more \u2014 with same- and next-day appointments often available.","isPartOf":{"@id":"https://appliancehelpers.com/#website"},"about":{"@id":"https://appliancehelpers.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://appliancehelpers.com/assets/images/og-appliance-helpers.jpg","width":1200,"height":630}},{"@type":"Service","name":"Appliance Repair Referral","serviceType":"Appliance repair","provider":{"@id":"https://appliancehelpers.com/#organization"},"areaServed":{"@type":"Country","name":"United States"},"description":"Appliance Helpers is a free referral service that matches homeowners with local technicians for refrigerator, washer, dryer, dishwasher, oven, and other major-appliance repairs.","url":"https://appliancehelpers.com/"},{"@type":"FAQPage","@id":"https://appliancehelpers.com/#faq","url":"https://appliancehelpers.com/#faq","mainEntity":[{"@type":"Question","name":"What appliances do you repair?","acceptedAnswer":{"@type":"Answer","text":"Appliance Helpers connects you with technicians who handle repairs on major household appliances \u2014 refrigerators, washers, dryers, dishwashers, ovens, ranges, cooktops, freezers, ice makers, microwaves, garbage disposals, and more."}},{"@type":"Question","name":"Can I get same-day appliance repair?","acceptedAnswer":{"@type":"Answer","text":"Same-day and next-day appointments are frequently available, depending on technician availability in your area. Call (800) 555-5555 and we'll find you the earliest opening nearby."}},{"@type":"Question","name":"Do you repair all appliance brands?","acceptedAnswer":{"@type":"Answer","text":"Yes. The independent technicians in our network service nearly every major appliance brand and model \u2014 including Whirlpool, GE, Samsung, LG, Maytag, KitchenAid, Bosch, Frigidaire, Kenmore, and many more."}},{"@type":"Question","name":"How does scheduling work?","acceptedAnswer":{"@type":"Answer","text":"Call (800) 555-5555 and tell us about your appliance and the issue \u2014 we'll connect you with a local technician. They'll diagnose the problem in your home, walk you through the fix, and quote you before any work starts."}},{"@type":"Question","name":"Will I know the price before work begins?","acceptedAnswer":{"@type":"Answer","text":"Yes. You'll get an up-front quote once the technician diagnoses the problem, and no work begins until you approve it \u2014 there's never any obligation to continue."}},{"@type":"Question","name":"What areas do you serve?","acceptedAnswer":{"@type":"Answer","text":"We have local technicians on standby in your area, ready to help with your appliance repair needs. Once you call, we'll pair you with a nearby technician as soon as one is available."}},{"@type":"Question","name":"How does Appliance Helpers work?","acceptedAnswer":{"@type":"Answer","text":"Appliance Helpers is a free referral service that connects you with independent, local appliance repair technicians. These technicians aren't employed by Appliance Helpers, and it's always your choice whether to move forward once you've received a quote."}}]}]}</script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -144,7 +159,7 @@
           src="assets/images/appliance-helpers-logo.webp"
           alt="Appliance Helpers"
           width="800"
-          height="248"
+          height="247"
         />
       </a>
       <div class="header-right">
@@ -234,10 +249,10 @@
               <p class="section-eyebrow">Appliance Repair Services</p>
               <h2><span class="heading-strong">Fast &amp; Affordable</span> In-Home Appliance Repair</h2>
               <p>
-                <span data-cfg="brandName">Appliance Helpers</span> matches homeowners with local
-                technicians who repair refrigerators, washers, dryers, dishwashers,
-                ovens, ranges, freezers, microwaves, and other major household
-                appliances &mdash; regardless of where you bought it or which brand it is.
+                Appliance broken? You&rsquo;re in the right place. Technicians in your
+                area are standing by right now, ready to handle anything from a
+                minor issue to a major breakdown &mdash; any major brand, no matter
+                where you bought it.
               </p>
             </div>
 
@@ -377,67 +392,88 @@
 
               <ul class="brand-logo-wall" aria-label="Brands we service">
               <li>
-                <img src="assets/brands/svg/amana.svg" alt="Amana" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/amana.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Amana</span>
               </li>
               <li>
-                <img src="assets/brands/svg/bosch.svg" alt="Bosch" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/bosch.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Bosch</span>
               </li>
               <li>
-                <img src="assets/brands/svg/dacor.svg" alt="Dacor" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/dacor.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Dacor</span>
               </li>
               <li>
-                <img src="assets/brands/svg/electrolux.svg" alt="Electrolux" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/electrolux.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Electrolux</span>
               </li>
               <li>
-                <img src="assets/brands/svg/fisher-and-paykel.svg" alt="Fisher &amp; Paykel" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/fisher-and-paykel.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Fisher &amp; Paykel</span>
               </li>
               <li>
-                <img src="assets/brands/svg/frigidaire.svg" alt="Frigidaire" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/frigidaire.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Frigidaire</span>
               </li>
               <li>
-                <img src="assets/brands/svg/ge-appliances.svg" alt="GE Appliances" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/ge-appliances.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">GE Appliances</span>
               </li>
               <li>
-                <img src="assets/brands/svg/ge-monogram.svg" alt="GE Monogram" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/ge-monogram.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">GE Monogram</span>
               </li>
               <li>
-                <img src="assets/brands/svg/jennair.svg" alt="JennAir" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/jennair.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">JennAir</span>
               </li>
               <li>
-                <img src="assets/brands/svg/kenmore.svg" alt="Kenmore" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/kenmore.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Kenmore</span>
               </li>
               <li>
-                <img src="assets/brands/svg/kitchenaid.svg" alt="KitchenAid" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/kitchenaid.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">KitchenAid</span>
               </li>
               <li>
-                <img src="assets/brands/svg/lg.svg" alt="LG" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/lg.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">LG</span>
               </li>
               <li class="brand-logo-wall__omit-2 brand-logo-wall__omit-4">
-                <img src="assets/brands/svg/magic-chef.svg" alt="Magic Chef" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/magic-chef.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Magic Chef</span>
               </li>
               <li>
-                <img src="assets/brands/svg/maytag.svg" alt="Maytag" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/maytag.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Maytag</span>
               </li>
               <li>
-                <img src="assets/brands/svg/miele.svg" alt="Miele" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/miele.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Miele</span>
               </li>
               <li>
-                <img src="assets/brands/svg/samsung.svg" alt="Samsung" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/samsung.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Samsung</span>
               </li>
               <li>
-                <img src="assets/brands/svg/sub-zero.svg" alt="Sub-Zero" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/sub-zero.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Sub-Zero</span>
               </li>
               <li>
-                <img src="assets/brands/svg/thermador.svg" alt="Thermador" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/thermador.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Thermador</span>
               </li>
               <li>
-                <img src="assets/brands/svg/viking.svg" alt="Viking" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/viking.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Viking</span>
               </li>
               <li>
-                <img src="assets/brands/svg/whirlpool.svg" alt="Whirlpool" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/whirlpool.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Whirlpool</span>
               </li>
               <li>
-                <img src="assets/brands/svg/wolf.svg" alt="Wolf" loading="lazy" decoding="async" />
+                <img src="assets/brands/svg/wolf.svg" alt="" loading="lazy" decoding="async" />
+                <span class="visually-hidden">Wolf</span>
               </li>
               </ul>
               <p class="brand-logo-footnote">Plus dozens more makes and models we service.</p>
@@ -547,7 +583,7 @@
               </details>
               <details class="faq-item">
                 <summary><span>What areas do you serve?</span><svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg></summary>
-                <p class="faq-answer">Appliance Helpers matches homeowners with local appliance repair technicians in their area. Once you call, we'll pair you with a nearby technician as soon as one is available.</p>
+                <p class="faq-answer">We have local technicians on standby in <span data-geo-area>your area</span>, ready to help with your appliance repair needs. Once you call, we'll pair you with a nearby technician as soon as one is available.</p>
               </details>
               <details class="faq-item">
                 <summary><span>How does Appliance Helpers work?</span><svg class="icon faq-toggle-icon" aria-hidden="true"><use href="#icon-plus"></use></svg></summary>
@@ -661,6 +697,9 @@
       data-cfg-href="phoneHref"
       data-call-source="mobile-sticky"
     >
+      <span class="mobile-call-bar-icon">
+        <svg class="icon icon-filled icon-phone-shake" aria-hidden="true"><use href="#icon-phone"></use></svg>
+      </span>
       Call <span data-cfg="phoneDisplay">(800) 555-5555</span>
     </a>
     <p class="mobile-call-bar-sub">

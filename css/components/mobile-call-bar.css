@@ -36,16 +36,47 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-2);
+    gap: var(--space-3);
     background: var(--color-blue);
     color: #fff;
     text-decoration: none;
     font-weight: 800;
     font-size: var(--fs-lg);
     padding: var(--space-4);
-    min-height: 58px;
+    min-height: 60px;
     border-radius: var(--radius-sm);
     box-shadow: var(--shadow-cta);
+  }
+
+  /* A round badge gives the phone glyph enough visual weight to read as a
+     tap target next to the bold price-sized digits, and its pulse ring is
+     the "this is live, answer it" cue competitor call bars use. */
+  .mobile-call-bar-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .mobile-call-bar-icon .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mobile-call-bar-icon::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    animation: mobile-call-bar-pulse 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
 
   .mobile-call-bar-sub {
@@ -64,5 +95,21 @@
     .mobile-call-bar {
       transition: none;
     }
+
+    .mobile-call-bar-icon::after {
+      animation: none;
+    }
+  }
+}
+
+@keyframes mobile-call-bar-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  75%,
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
   }
 }

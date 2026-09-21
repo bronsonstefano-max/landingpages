@@ -216,7 +216,7 @@
     },
     {
       "question": "What areas do you serve?",
-      "answer": "Appliance Helpers matches homeowners with local appliance repair technicians in their area. Once you call, we'll pair you with a nearby technician as soon as one is available."
+      "answer": "We have local technicians on standby in {{geoArea}}, ready to help with your appliance repair needs. Once you call, we'll pair you with a nearby technician as soon as one is available."
     },
     {
       "question": "How does Appliance Helpers work?",

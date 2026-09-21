@@ -34,7 +34,7 @@
 
 .brand-logo {
   display: block;
-  height: 44px;
+  height: 52px;
   width: auto;
   max-width: min(240px, 48vw);
   object-fit: contain;
@@ -81,7 +81,7 @@
 /* Bumped specifically in the header -- the hero and final-CTA reuses of
    this class already sit at a larger size in their own context. */
 .header-phone .header-phone-number {
-  font-size: var(--fs-md);
+  font-size: var(--fs-lg);
 }
 
 /* --- Live dot (also used by the static secondary pages) --------------- */

@@ -64,14 +64,34 @@ the build script is plain Python 3, the site itself is plain HTML/CSS/JS.
 ## Performance
 
 Traffic here is primarily mobile (Google Search Ads), so the hero — the
-first thing a visitor sees — is tuned for that:
+first thing a visitor sees, and the page's LCP element — is tuned for that:
 
-- **`css/main.css` is a generated bundle, not hand-written.** The 24-file
-  `@import` chain that used to live there made the browser fetch and parse
-  `main.css` before it even knew the other files existed, adding a full
-  render-blocking round trip before first paint. `main.src.css` still lists
-  the load order; `scripts/build.py` concatenates it into one `main.css`
-  file at build time.
+- **Header + hero CSS is inlined; everything else loads async.**
+  `scripts/build.py`'s `render_critical_css()` concatenates the small
+  subset of files needed to render the header and hero (`CRITICAL_CSS_FILES`
+  — tokens, reset, base, layout, buttons, icons, star-rating,
+  cta-urgency, skip-link, header, hero, responsive) straight into a
+  `<style>` block in `<head>`, so first paint never waits on a network
+  round trip for `css/main.css`. The full stylesheet — which ships that
+  same subset again plus every section further down the page — loads via
+  the standard `media="print"` → `onload="this.media='all'"` swap (with a
+  `<noscript>` fallback), so it never competes with the hero image/fonts
+  for bandwidth on the way to LCP. Edit the files under `css/`, not the
+  inlined block itself, and rerun the build.
+- **`css/main.css` is a generated, minified bundle, not hand-written.**
+  The 24-file `@import` chain that used to live there made the browser
+  fetch and parse `main.css` before it even knew the other files existed,
+  adding a full render-blocking round trip before first paint. `main.src.css`
+  still lists the load order; `scripts/build.py`'s `bundle_css()`
+  concatenates it into one file and `minify_css()` strips comments and
+  collapses whitespace (comments alone were ~40% of the source bytes).
+- **`js/main.js`'s module graph is preloaded, at low priority.**
+  `<link rel="modulepreload">` tags in `layout.html` let the browser fetch
+  `config.js` and everything under `js/modules/` in parallel with
+  `main.js` itself instead of discovering them one parse-step later —
+  each one also carries `fetchpriority="low"`, since none of it runs
+  before first paint and it shouldn't compete with the hero image, fonts,
+  or CSS for bandwidth on a constrained connection.
 - **The hero background ships two sizes.** `assets/images/hero-repair.webp`
   (1672px wide) is for desktop; `assets/images/hero-repair-mobile.webp`
   (1000px wide, ~30KB vs ~77KB) is what phones actually get, via a
@@ -84,10 +104,6 @@ first thing a visitor sees — is tuned for that:
   wide, so `assets/images/appliance-repair-card.webp` (800px, ~20KB) is the
   `srcset` default with the 1672px original as the high-DPI candidate —
   rather than shipping a 1672px file into a 320px slot.
-- **`js/main.js`'s module graph is preloaded.** `<link rel="modulepreload">`
-  tags in `layout.html` let the browser fetch `config.js` and everything
-  under `js/modules/` in parallel with `main.js` itself, instead of
-  discovering them one parse-step later.
 
 ## ⚠️ Claims to verify before launch
 
