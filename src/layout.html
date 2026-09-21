@@ -10,22 +10,19 @@
        block, then rerun the build. -->
   <style>{{criticalCss}}</style>
 
-  <!-- The hero background is the LCP element, so it is preloaded at high
-       priority. Two sizes, media-gated so a phone never fetches the 1672px
-       desktop file; these must stay in sync with the matching
-       `max-width: 959px` rule in css/sections/hero.css. AVIF, not WebP —
-       that's what the image-set() in hero.css actually picks for any
-       browser that can decode it (smaller file, same visual quality); the
-       `type` attribute makes a browser that can't decode AVIF skip this
-       preload entirely rather than fetch a file it won't end up using. -->
-  <link
-    rel="preload"
-    as="image"
-    href="assets/images/hero-repair-mobile.avif"
-    type="image/avif"
-    fetchpriority="high"
-    media="(max-width: 959px)"
-  />
+  <!-- The desktop hero background is the LCP element there, so it's
+       preloaded at high priority — AVIF, not WebP, since that's what the
+       image-set() in hero.css actually picks for any browser that can
+       decode it (smaller file, same visual quality); the `type` attribute
+       makes a browser that can't decode AVIF skip this preload entirely
+       rather than fetch a file it won't end up using. Must stay in sync
+       with the `min-width: 960px` rule in css/sections/hero.css.
+
+       There's no matching preload for the mobile hero photo: below
+       `max-width: 959px`, hero.css inlines it as a data URI straight into
+       the critical CSS above instead of linking it as a file, so it's
+       already in this response — a separate preload would just be an
+       unused, wasted fetch. -->
   <link
     rel="preload"
     as="image"

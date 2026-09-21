@@ -96,9 +96,9 @@ first thing a visitor sees, and the page's LCP element — is tuned for that:
   `assets/images/hero-repair.webp` (1672px wide) is for desktop;
   `assets/images/hero-repair-mobile.webp` (1000px wide, ~30KB vs ~77KB) is
   what phones actually get, via a `max-width: 959px` rule in `hero.css`
-  and matching `media` attributes on the `<link rel="preload">` tags in
-  `layout.html`. Those two places must stay in sync. The matching `.avif`
-  file next to each `.webp` one is ~35% smaller at the same visual
+  and a matching `media` attribute on the desktop `<link rel="preload">`
+  tag in `layout.html`. Those two places must stay in sync. The matching
+  `.avif` file next to each `.webp` one is smaller at matching visual
   quality (`hero.css`'s `image-set()` picks it for any browser that can
   decode it; the WebP is the fallback, not a leftover). Regenerate all
   four if the source photo ever changes (requires
@@ -110,9 +110,25 @@ first thing a visitor sees, and the page's LCP element — is tuned for that:
   mobile = im.resize((1000, round(im.height*1000/im.width)), Image.LANCZOS)
   mobile.save('assets/images/hero-repair-mobile.webp', 'WEBP', quality=72, method=6)
   im.save('assets/images/hero-repair.avif', 'AVIF', quality=55)
-  mobile.save('assets/images/hero-repair-mobile.avif', 'AVIF', quality=50)
+  mobile.save('assets/images/hero-repair-mobile.avif', 'AVIF', quality=38)
   "
   ```
+- **The mobile hero AVIF is inlined as a data URI, not linked.** On a
+  narrow viewport it's the LCP resource, so `hero_mobile_avif_data_uri()`
+  in `scripts/build.py` base64-encodes it straight into the `{{heroMobileAvifDataUri}}`
+  token in `hero.css`'s `max-width: 959px` rule when building the critical,
+  inlined `<style>` block — the browser has the photo's bytes the moment
+  it has the HTML, no second round trip to discover and fetch it. That's
+  also why there's no mobile entry among the `<link rel="preload">` tags:
+  a file that's never fetched separately has nothing to preload. The same
+  token resolves differently when `bundle_css()` builds the *async*
+  `css/main.css` — it gets the plain external `.avif` file there instead,
+  since that copy only ever runs after the inlined one already painted
+  the hero, and inlining ~18KB of base64 into an async file nobody needs
+  it from would just be dead weight. Keep quality low here specifically
+  (currently 38, well below the desktop/WebP quality levels) — every KB
+  is duplicated ~4/3 by base64 and shipped on literally every mobile page
+  load, so it's worth more scrutiny than a normal linked image file.
 - **The sidebar portrait is served at its display size.** The card is 320px
   wide, so `assets/images/appliance-repair-card.webp` (800px, ~20KB) is the
   `srcset` default with the 1672px original as the high-DPI candidate —

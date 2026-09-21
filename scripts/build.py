@@ -3,10 +3,12 @@
 
 from __future__ import annotations
 
+import base64
 import html
 import json
 import re
 import shutil
+from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -66,6 +68,32 @@ def minify_css(text: str) -> str:
     return text.strip()
 
 
+@lru_cache(maxsize=1)
+def hero_mobile_avif_data_uri() -> str:
+    """Base64 data: URI for the mobile hero AVIF — see the comment on its
+    `{{heroMobileAvifDataUri}}` token in css/sections/hero.css for why."""
+    data = (ROOT / "assets" / "images" / "hero-repair-mobile.avif").read_bytes()
+    return "data:image/avif;base64," + base64.b64encode(data).decode("ascii")
+
+
+HERO_MOBILE_TOKEN = "{{heroMobileAvifDataUri}}"
+
+
+def _resolve_hero_token_for_bundle(text: str) -> str:
+    """css/main.css's copy of this rule only ever runs *after* the critical
+    inline copy already painted the hero (it loads async, well past first
+    paint), so inlining the ~18KB data URI here again would just be dead
+    weight on every page load, mobile and desktop alike. It gets the plain
+    external file instead — same one the WebP fallback next to it uses."""
+    return text.replace(HERO_MOBILE_TOKEN, "../assets/images/hero-repair-mobile.avif")
+
+
+def _resolve_hero_token_for_critical(text: str) -> str:
+    if HERO_MOBILE_TOKEN in text:
+        text = text.replace(HERO_MOBILE_TOKEN, hero_mobile_avif_data_uri())
+    return text
+
+
 def bundle_css() -> str:
     """Concatenate css/main.src.css's @import chain into one file.
 
@@ -85,6 +113,7 @@ def bundle_css() -> str:
         text = (CSS_DIR / rel_path).read_text()
         if "/" in rel_path:
             text = text.replace('url("../../', 'url("../')
+        text = _resolve_hero_token_for_bundle(text)
         parts.append(text)
     return minify_css("\n".join(parts)) + "\n"
 
@@ -123,6 +152,7 @@ def render_critical_css() -> str:
         # not served from css/ like main.css is, so relative asset URLs
         # need one more "../" stripped than the bundled file uses.
         text = text.replace('url("../', 'url("')
+        text = _resolve_hero_token_for_critical(text)
         parts.append(text)
     return minify_css("\n".join(parts))
 

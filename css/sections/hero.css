@@ -127,13 +127,22 @@
 @media (max-width: 959px) {
   .hero {
     min-height: 28rem;
+    /* The AVIF is inlined as a data URI (see hero_mobile_avif_data_uri()
+       in scripts/build.py) instead of linked as a file. On mobile this is
+       the LCP resource, and inlining it removes a whole network round
+       trip from the critical path — the browser has the photo's bytes as
+       soon as it has the HTML, instead of having to discover and fetch it
+       afterward. The WebP stays a real file: only browsers that can't
+       decode AVIF fall back to it, and that's rare enough not to inline.
+       No -webkit-image-set() duplicate here on purpose — that would mean
+       shipping this ~18KB data URI twice in the critical path just to
+       cover pre-2021 Safari, which isn't worth doubling this specific,
+       expensive inline; -webkit-image-set() below still fully applies to
+       every other background-image in this file, where duplicating a
+       short url() costs nothing. */
     background-image: url("../../assets/images/hero-repair-mobile.webp");
-    background-image: -webkit-image-set(
-      url("../../assets/images/hero-repair-mobile.avif") type("image/avif"),
-      url("../../assets/images/hero-repair-mobile.webp") type("image/webp")
-    );
     background-image: image-set(
-      url("../../assets/images/hero-repair-mobile.avif") type("image/avif"),
+      url("{{heroMobileAvifDataUri}}") type("image/avif"),
       url("../../assets/images/hero-repair-mobile.webp") type("image/webp")
     );
     background-position: 82% 38%;
